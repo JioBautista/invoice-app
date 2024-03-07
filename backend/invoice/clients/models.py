@@ -24,5 +24,6 @@ class client_test(models.Model):
     total = models.IntegerField()
 
 
+
 class Meta:
     ordering = ["created"]
