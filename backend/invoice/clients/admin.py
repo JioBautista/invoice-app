@@ -17,4 +17,7 @@ class ClientAdmin(admin.ModelAdmin):
     )
 
 
-admin.site.register(client_test, ClientAdmin)
+admin.site.register(
+    client_test,
+    ClientAdmin,
+)
