@@ -13,6 +13,7 @@ class ClientsSerializers(serializers.ModelSerializer):
     class Meta:
         model = client_test
         fields = "__all__"
+        owner = serializers.ReadOnlyField(source="owner.username")
 
 
 class UserSerializer(serializers.ModelSerializer):
