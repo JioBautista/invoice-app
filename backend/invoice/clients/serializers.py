@@ -17,10 +17,10 @@ class ClientsSerializers(serializers.ModelSerializer):
 
 
 class UserSerializer(serializers.ModelSerializer):
-    owner = serializers.PrimaryKeyRelatedField(
+    client = serializers.PrimaryKeyRelatedField(
         many=True, queryset=client_test.objects.all()
     )
 
     class Meta:
         model = User
-        fields = ["id", "username", "owner"]
+        fields = ["id", "username", "client"]
