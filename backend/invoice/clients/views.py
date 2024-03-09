@@ -2,7 +2,8 @@ from rest_framework import status
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from clients.models import client_test
-from clients.serializers import ClientsSerializers
+from clients.serializers import ClientsSerializers, UserSerializer
+from django.contrib.auth.models import User
 
 # Create your views here.
 
@@ -40,3 +41,8 @@ def client_details(request, pk, format=None):
     elif request.method == "DELETE":
         client.delete()
         return Response(status=status.HTTP_204_NO_CONTENT)
+
+
+class UserList(generics.ListAPIView):
+    queryset = User.objects.all()
+    serializer_class = UserSerializer

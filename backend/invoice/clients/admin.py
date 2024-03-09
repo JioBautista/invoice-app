@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import client_test
+from .models import client_test, SenderAddress
 
 # Register your models here.
 
@@ -21,3 +21,10 @@ admin.site.register(
     client_test,
     ClientAdmin,
 )
+
+
+class SenderAdmin(admin.ModelAdmin):
+    list_display = ("street", "city", "postCode", "country")
+
+
+admin.site.register(SenderAddress, SenderAdmin)
