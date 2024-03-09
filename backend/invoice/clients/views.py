@@ -9,7 +9,7 @@ class ClientList(generics.ListCreateAPIView):
     serializer_class = ClientsSerializers
 
     def perform_create(self, serializer):
-        serializer.save(ower=self.request.user)
+        serializer.save(owner=self.request.user)
 
 
 class ClientDetail(generics.RetrieveUpdateDestroyAPIView):
