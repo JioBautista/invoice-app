@@ -9,6 +9,16 @@ from rest_framework.reverse import reverse
 from django.contrib.auth.models import User
 
 
+@api_view(["GET"])
+def api_foot(request, format=None):
+    return Response(
+        {
+            "users": reverse("user-list", request=request, format=format),
+            "clients": reverse("client-list", request=request, format=format),
+        }
+    )
+
+
 class ClientList(generics.ListCreateAPIView):
     queryset = client_test.objects.all()
     serializer_class = ClientsSerializers
@@ -32,13 +42,3 @@ class UserList(generics.ListAPIView):
 class UserDetail(generics.RetrieveAPIView):
     queryset = User.objects.all()
     serializer_class = UserSerializer
-
-
-@api_view(["GET"])
-def api_foot(request, format=None):
-    return Response(
-        {
-            "users": reverse("user-list", request=request, format=format),
-            "clients": reverse("client-list", request=request, format=format),
-        }
-    )
