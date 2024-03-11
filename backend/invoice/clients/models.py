@@ -15,6 +15,9 @@ class SenderAddress(models.Model):
 
 
 class client_test(models.Model):
+    owner = models.ForeignKey(
+        "auth.User", related_name="client", on_delete=models.CASCADE
+    )
     createdAt = models.DateField()
     paymentDue = models.DateField(blank=True, null=True)
     description = models.CharField(max_length=200)
@@ -30,9 +33,6 @@ class client_test(models.Model):
         max_length=200,
     )
     total = models.IntegerField()
-    owner = models.ForeignKey(
-        "auth.User", related_name="client", on_delete=models.CASCADE
-    )
 
 
 class Meta:
