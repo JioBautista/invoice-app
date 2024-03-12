@@ -1,13 +1,9 @@
 from django.urls import path, include
-from rest_framework.urlpatterns import format_suffix_patterns
-from . import views
+from rest_framework.routers import DefaultRouter
+from clients import views
 
-urlpatterns = [
-    path("", views.api_foot),
-    path("clients/", views.ClientList.as_view(), name="client-list"),
-    path("clients/<int:pk>", views.ClientDetail.as_view(), name="client-detail"),
-    path("users/", views.UserList.as_view(), name="user-list"),
-    path("users/<int:pk>/", views.UserDetail.as_view(), name="user-detail"),
-]
+router = DefaultRouter()
+router.register(r"clients", views.ClientViewSet, basename="client")
+router.register(r"users", views.UserViewSet, basename="user")
 
-urlpatterns = format_suffix_patterns(urlpatterns)
+urlpatterns = [path("", include(router.urls))]
