@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import ClientInfo, ClientAddress
+from .models import ClientInfo, ClientAddress, SenderAddress, ClientItems
 
 # Register your models here.
 
@@ -16,6 +16,7 @@ class ClientAdmin(admin.ModelAdmin):
         "status",
         "total",
     )
+    filter_horizontal = ("items",)
 
 
 admin.site.register(
@@ -29,3 +30,17 @@ class ClientAddressAdmin(admin.ModelAdmin):
 
 
 admin.site.register(ClientAddress, ClientAddressAdmin)
+
+
+class SenderAddressAdmin(admin.ModelAdmin):
+    list_display = ("street", "city", "postCode", "country")
+
+
+admin.site.register(SenderAddress, SenderAddressAdmin)
+
+
+class ClientItemsAdmin(admin.ModelAdmin):
+    list_display = ("name", "quantity", "price", "total")
+
+
+admin.site.register(ClientItems, ClientItemsAdmin)

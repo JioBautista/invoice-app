@@ -1,20 +1,14 @@
 from rest_framework import serializers
-from clients.models import ClientInfo, ClientAddress
+from clients.models import ClientInfo
 from django.contrib.auth.models import User
 
 
-class AddressSerializers(serializers.ModelSerializer):
-    class Meta:
-        model = ClientAddress
-        fields = "__all__"
-
-
 class ClientsSerializers(serializers.ModelSerializer):
-    client_address = AddressSerializers(read_only=True)
 
     class Meta:
         model = ClientInfo
-        fields = "__all__"
+        exclude = ["owner"]
+        depth = 1
         owner = serializers.ReadOnlyField(source="owner.username")
 
 
