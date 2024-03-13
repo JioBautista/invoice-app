@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from clients.models import client_test
+from clients.models import ClientInfo
 from django.contrib.auth.models import User
 
 
@@ -7,7 +7,7 @@ class ClientsSerializers(serializers.HyperlinkedModelSerializer):
     url = serializers.HyperlinkedIdentityField(view_name="client-detail")
 
     class Meta:
-        model = client_test
+        model = ClientInfo
         fields = "__all__"
         owner = serializers.ReadOnlyField(source="owner.username")
 

@@ -1,4 +1,4 @@
-from clients.models import client_test
+from clients.models import ClientInfo
 from clients.serializers import ClientsSerializers, UserSerializer
 from clients.permissions import IsOwnerOrReadOnly
 from rest_framework import permissions, viewsets
@@ -6,7 +6,7 @@ from django.contrib.auth.models import User
 
 
 class ClientViewSet(viewsets.ModelViewSet):
-    queryset = client_test.objects.all()
+    queryset = ClientInfo.objects.all()
     serializer_class = ClientsSerializers
     permission_classes = [permissions.IsAuthenticatedOrReadOnly, IsOwnerOrReadOnly]
 

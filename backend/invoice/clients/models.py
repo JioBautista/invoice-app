@@ -14,7 +14,7 @@ class SenderAddress(models.Model):
     country = models.CharField(default="United Kingdom", max_length=200)
 
 
-class client_test(models.Model):
+class ClientInfo(models.Model):
     owner = models.ForeignKey(
         "auth.User", related_name="client", on_delete=models.CASCADE
     )
