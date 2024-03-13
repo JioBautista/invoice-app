@@ -7,6 +7,8 @@ from django.db import models
 #       "postCode": "E1 3EZ",
 #       "country": "United Kingdom"
 #     },
+
+
 class SenderAddress(models.Model):
     street = models.CharField(default="19 Union Terrace", max_length=200)
     city = models.CharField(default="London", max_length=200)
@@ -14,20 +16,28 @@ class SenderAddress(models.Model):
     country = models.CharField(default="United Kingdom", max_length=200)
 
 
-class ClientInfo(models.Model):
-    owner = models.ForeignKey(
-        "auth.User", related_name="client", on_delete=models.CASCADE
-    )
-    createdAt = models.DateField()
-    paymentDue = models.DateField(blank=True, null=True)
-    description = models.CharField(max_length=200)
-    paymentTerms = models.IntegerField()
-    clientName = models.CharField(max_length=100)
-    clientEmail = models.EmailField(unique=True)
+class ClientAddress(models.Model):
     street = models.CharField(max_length=200)
     city = models.CharField(max_length=200)
     postCode = models.CharField(max_length=200)
     country = models.CharField(max_length=200)
+
+
+class ClientInfo(models.Model):
+    owner = models.ForeignKey(
+        "auth.User", related_name="client", on_delete=models.CASCADE
+    )
+    client_address = models.OneToOneField(
+        ClientAddress,
+        on_delete=models.CASCADE,
+        primary_key=True,
+    )
+    created_at = models.DateField()
+    payment_due = models.DateField(blank=True, null=True)
+    description = models.CharField(max_length=200)
+    payment_terms = models.IntegerField()
+    client_name = models.CharField(max_length=100)
+    client_email = models.EmailField(unique=True)
     status = models.CharField(
         choices=[("paid", "Paid"), ("pending", "Pending"), ("draft", "Draft")],
         max_length=200,

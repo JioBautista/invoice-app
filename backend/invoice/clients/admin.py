@@ -1,30 +1,31 @@
 from django.contrib import admin
-from .models import client_test, SenderAddress
+from .models import ClientInfo, ClientAddress
 
 # Register your models here.
 
 
 class ClientAdmin(admin.ModelAdmin):
     list_display = (
-        "createdAt",
-        "paymentDue",
+        "created_at",
+        "payment_due",
         "description",
-        "paymentTerms",
-        "clientName",
-        "clientEmail",
+        "payment_terms",
+        "client_name",
+        "client_email",
+        "client_address",
         "status",
         "total",
     )
 
 
 admin.site.register(
-    client_test,
+    ClientInfo,
     ClientAdmin,
 )
 
 
-class SenderAdmin(admin.ModelAdmin):
+class ClientAddressAdmin(admin.ModelAdmin):
     list_display = ("street", "city", "postCode", "country")
 
 
-admin.site.register(SenderAddress, SenderAdmin)
+admin.site.register(ClientAddress, ClientAddressAdmin)

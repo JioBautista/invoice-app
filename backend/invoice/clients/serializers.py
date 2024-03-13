@@ -1,10 +1,16 @@
 from rest_framework import serializers
-from clients.models import ClientInfo
+from clients.models import ClientInfo, ClientAddress
 from django.contrib.auth.models import User
 
 
-class ClientsSerializers(serializers.HyperlinkedModelSerializer):
-    url = serializers.HyperlinkedIdentityField(view_name="client-detail")
+class AddressSerializers(serializers.ModelSerializer):
+    class Meta:
+        model = ClientAddress
+        fields = "__all__"
+
+
+class ClientsSerializers(serializers.ModelSerializer):
+    client_address = AddressSerializers(read_only=True)
 
     class Meta:
         model = ClientInfo
@@ -12,10 +18,7 @@ class ClientsSerializers(serializers.HyperlinkedModelSerializer):
         owner = serializers.ReadOnlyField(source="owner.username")
 
 
-class UserSerializer(serializers.HyperlinkedModelSerializer):
-    client = serializers.HyperlinkedRelatedField(
-        many=True, view_name="client-detail", read_only=True
-    )
+class UserSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = User
