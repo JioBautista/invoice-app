@@ -13,19 +13,27 @@ export default function InvoiceList({ data }) {
           <Paper sx={{ mb: 3, padding: 3 }} elevation={3}>
             <Grid container spacing={1} justifyContent={"space-between"}>
               <Grid item xs={6} sm={2}>
-                <Typography>#{items.invoice_num}</Typography>
+                <Typography sx={{ fontWeight: "bold" }}>
+                  #{items.invoice_num}
+                </Typography>
               </Grid>
-              <Grid item xs={6} sm={2}>
-                <Typography>{items.client_name}</Typography>
+              <Grid item xs={6} sm={3}>
+                <Typography sx={{ color: "#858BB2" }} variant="body1">
+                  {items.client_name}
+                </Typography>
               </Grid>
-              <Grid item xs={8} sm={3}>
-                <Typography>Due {items.payment_due}</Typography>
+              <Grid item xs={6} sm={3}>
+                <Typography sx={{ color: "#7E88C3" }} variant="body1">
+                  Due {items.payment_due}
+                </Typography>
               </Grid>
-              <Grid item xs={4} sm={2}>
-                <Typography>{items.total}</Typography>
+              <Grid item xs={3} sm={2}>
+                <Typography sx={{ fontWeight: "bold" }} variant="body1">
+                  {items.total}
+                </Typography>
               </Grid>
-              <Grid item xs={"auto"} sm={2}>
-                <Typography>{items.status}</Typography>
+              <Grid item xs={3} sm={2}>
+                <Typography variant="button">{items.status}</Typography>
               </Grid>
             </Grid>
           </Paper>

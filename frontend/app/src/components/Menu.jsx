@@ -20,15 +20,17 @@ function Menu() {
         spacing={2}
       >
         <Box sx={{ flexGrow: 1 }}>
-          <Typography variant="h6">Invoices</Typography>
-          <Typography variant="caption">No Invoices</Typography>
+          <Typography variant="h4" sx={{ fontWeight: "bold" }}>
+            Invoices
+          </Typography>
+          <Typography variant="subtitle1">No Invoices</Typography>
         </Box>
         <Filter />
         <Button
           variant="contained"
-          size="small"
+          size="medium"
           startIcon={<AddCircleIcon />}
-          sx={{ borderRadius: "1rem" }}
+          sx={{ borderRadius: "1.25rem" }}
         >
           New
         </Button>
