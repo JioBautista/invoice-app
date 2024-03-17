@@ -3,19 +3,23 @@ import Filter from "./Filter";
 import Box from "@mui/material/Box";
 import { Button } from "@mui/material";
 import AddCircleIcon from "@mui/icons-material/AddCircle";
+import IconButton from "@mui/material/IconButton";
 import Stack from "@mui/material/Stack";
 import Typography from "@mui/material/Typography";
+import useMediaQuery from "@mui/material/useMediaQuery";
 import "@fontsource/roboto/300.css";
 import "@fontsource/roboto/400.css";
 import "@fontsource/roboto/500.css";
 import "@fontsource/roboto/700.css";
 
-function Menu() {
+function Menu({ data }) {
+  const mobile = useMediaQuery("(max-width:500px)");
+
   return (
     <Box sx={{ mb: 10 }}>
       <Stack
         direction="row"
-        alignItems={"end"}
+        alignItems={"center"}
         justifyContent={"space-between"}
         spacing={2}
       >
@@ -23,17 +27,24 @@ function Menu() {
           <Typography variant="h4" sx={{ fontWeight: "bold" }}>
             Invoices
           </Typography>
-          <Typography variant="subtitle1">No Invoices</Typography>
+          <Typography variant="subtitle1">
+            {data ? `Total number of invoices: ${data.length}` : "No invoices"}
+          </Typography>
         </Box>
         <Filter />
-        <Button
-          variant="contained"
-          size="medium"
-          startIcon={<AddCircleIcon />}
-          sx={{ borderRadius: "1.25rem" }}
-        >
-          New
-        </Button>
+        {mobile ? (
+          <IconButton color="primary">
+            <AddCircleIcon fontSize="large" />
+          </IconButton>
+        ) : (
+          <Button
+            variant="contained"
+            startIcon={<AddCircleIcon />}
+            sx={{ borderRadius: "1.25rem" }}
+          >
+            New Invoice
+          </Button>
+        )}
       </Stack>
     </Box>
   );

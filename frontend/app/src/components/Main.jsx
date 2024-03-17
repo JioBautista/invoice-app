@@ -23,7 +23,7 @@ function Main() {
   console.log(data);
   return (
     <Container maxWidth="md">
-      <Menu />
+      <Menu data={data} />
       <InvoiceList data={data} />
     </Container>
   );
