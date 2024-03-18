@@ -1,17 +1,42 @@
-import * as React from "react";
+import React from "react";
+import axios from "axios";
+import Menu from "./Menu";
+import { Container } from "@mui/material";
+import { Link } from "react-router-dom";
 import Paper from "@mui/material/Paper";
 import Grid from "@mui/material/Grid";
-import Box from "@mui/material/Box";
-import Stack from "@mui/material/Stack";
-import { Typography } from "@mui/material";
+import Typography from "@mui/material/Typography";
 import ArrowForwardIosIcon from "@mui/icons-material/ArrowForwardIos";
 
-export default function InvoiceList({ data }) {
+function ClientList({ handleData, clientId }) {
+  const [data, setData] = React.useState([]);
+
+  const fetchData = async () => {
+    try {
+      const response = await axios.get("http://127.0.0.1:8000/clients/");
+      setData(response.data.results);
+    } catch (error) {
+      console.error("Error Fetching data", error);
+    }
+  };
+
+  React.useEffect(() => {
+    fetchData();
+  }, []);
+
+  console.log(data);
   return (
-    <>
-      {data ? (
-        data.map((items) => (
-          <React.Fragment key={items.id}>
+    <Container maxWidth="md">
+      <Menu data={data} />
+      {data.map((items) => (
+        <React.Fragment key={items.id}>
+          <Link
+            to={`/${items.id}`}
+            style={{ textDecoration: "none" }}
+            onClick={() => {
+              handleData(items.id);
+            }}
+          >
             <Paper sx={{ mb: 3, padding: 3 }} elevation={3}>
               <Grid
                 container
@@ -41,6 +66,7 @@ export default function InvoiceList({ data }) {
                   </Typography>
                 </Grid>
                 <Grid item xs={"auto"} sm={1}>
+                  {/* <Chip label={items.status} color="primary" size="small" /> */}
                   <Typography variant="button">{items.status}</Typography>
                 </Grid>
                 <Grid item xs={"auto"}>
@@ -48,26 +74,11 @@ export default function InvoiceList({ data }) {
                 </Grid>
               </Grid>
             </Paper>
-          </React.Fragment>
-        ))
-      ) : (
-        <Box>
-          <Stack spacing={1} alignItems={"center"} sx={{ textAlign: "center" }}>
-            <img src="/assets/illustration-empty.svg" />
-            <Typography variant="h4" sx={{ fontWeight: "bold" }}>
-              There is nothing here
-            </Typography>
-            <Typography
-              sx={{ width: "29ch", color: "#888EB0" }}
-              variant="subtitle1"
-            >
-              Create an invoice by clicking the{" "}
-              <span style={{ fontWeight: "bold" }}>New</span> button and get
-              started
-            </Typography>
-          </Stack>
-        </Box>
-      )}
-    </>
+          </Link>
+        </React.Fragment>
+      ))}
+    </Container>
   );
 }
+
+export default ClientList;
