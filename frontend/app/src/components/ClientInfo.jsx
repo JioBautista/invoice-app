@@ -11,32 +11,13 @@ import Grid from "@mui/material/Grid";
 import { Link } from "react-router-dom";
 import { useMediaQuery } from "@mui/material";
 
-function ClientInfo({ clientId }) {
-  const [data, setData] = React.useState([]);
-  const [clientItems, setClientItems] = React.useState([]);
-  const [clientAddress, setClientAddress] = React.useState("");
-  const [senderAddress, setSenderAddress] = React.useState("");
+function ClientInfo({ clientId, clientData }) {
+  // const [data, setData] = React.useState([]);
+  // const [clientItems, setClientItems] = React.useState([]);
+  // const [clientAddress, setClientAddress] = React.useState("");
+  // const [senderAddress, setSenderAddress] = React.useState("");
   const mobile = useMediaQuery("(max-width:600px)");
 
-  const fetchData = async () => {
-    try {
-      const response = await axios.get(
-        `http://127.0.0.1:8000/clients/${clientId}/`
-      );
-      setData(response.data);
-      setClientAddress(response.data.client_address);
-      setSenderAddress(response.data.sender_address);
-      setClientItems(response.data.items);
-    } catch (error) {
-      console.error("Error Fetching data", error);
-    }
-  };
-
-  React.useEffect(() => {
-    fetchData();
-  }, [clientId]);
-
-  console.log(data);
   return (
     <Container maxWidth="md">
       {/* CLIENT INFO BUTTONS */}
@@ -58,13 +39,11 @@ function ClientInfo({ clientId }) {
             <Button
               variant="contained"
               color={
-                data.status === "pending" || data.status === "draft"
+                clientData.status === "pending" || clientData.status === "draft"
                   ? "error"
                   : "info"
               }
-            >
-              {data.status}
-            </Button>
+            ></Button>
           </Box>
           <ButtonGroup variant="contained">
             <Button>Edit</Button>
@@ -79,43 +58,43 @@ function ClientInfo({ clientId }) {
         <Grid container spacing={3} sx={{ mb: 10 }}>
           {/* GRID ITEM 1 */}
           <Grid item xs={12} sm={6}>
-            <Typography variant="h6">#{data.invoice_num}</Typography>
-            <Typography variant="subtitle1">{data.description}</Typography>
+            <Typography variant="h6">#</Typography>
+            <Typography variant="subtitle1"></Typography>
           </Grid>
 
           {/* GRID ITEM 2 */}
           <Grid item xs={12} sm={6} textAlign={mobile ? "left" : "right"}>
-            <Typography>{senderAddress.street}</Typography>
-            <Typography>{senderAddress.city}</Typography>
-            <Typography>{senderAddress.postCode}</Typography>
-            <Typography>{senderAddress.country}</Typography>
+            <Typography></Typography>
+            <Typography></Typography>
+            <Typography></Typography>
+            <Typography></Typography>
           </Grid>
 
           {/* GRID ITEM 3 */}
           <Grid item xs={6} sm={2}>
             <Typography>Invoice Date</Typography>
-            <Typography fontWeight={"bold"}>{data.created_at}</Typography>
+            <Typography fontWeight={"bold"}></Typography>
           </Grid>
 
           {/* GRID ITEM 4 */}
           <Grid item xs={6} sm={3}>
             <Typography>Payment Due</Typography>
-            <Typography fontWeight={"bold"}>{data.payment_due}</Typography>
+            <Typography fontWeight={"bold"}></Typography>
           </Grid>
 
           {/* GRID ITEM 5 */}
           <Grid item xs={12} sm={3}>
             <Typography>Bill To</Typography>
-            <Typography fontWeight={"bold"}>{data.client_name}</Typography>
-            <Typography>{clientAddress.street}</Typography>
-            <Typography>{clientAddress.postCode}</Typography>
-            <Typography>{clientAddress.country}</Typography>
+            <Typography fontWeight={"bold"}></Typography>
+            <Typography>{clientData.client_name}</Typography>
+            <Typography></Typography>
+            <Typography></Typography>
           </Grid>
 
           {/* GRID ITEM 6 */}
           <Grid item xs={12} sm={4}>
             <Typography>Sent to</Typography>
-            <Typography fontWeight={"bold"}>{data.client_email}</Typography>
+            <Typography fontWeight={"bold"}></Typography>
           </Grid>
         </Grid>
 
@@ -135,21 +114,20 @@ function ClientInfo({ clientId }) {
               <Grid item xs={6}>
                 <Typography textAlign={"right"}>Total</Typography>
               </Grid>
-              {clientItems.map((items) => (
+              {/* {clientItems.map((items) => (
                 <React.Fragment key={items.id}>
                   <Grid item xs={6}>
-                    <Typography fontWeight={"bold"}>{items.name}</Typography>
-                    <Typography fontWeight={"bold"}>
-                      {items.quantity} x {items.price}
-                    </Typography>
+                    <Typography fontWeight={"bold"}></Typography>
+                    <Typography fontWeight={"bold"}>x</Typography>
                   </Grid>
                   <Grid item xs={6}>
-                    <Typography fontWeight={"bold"} textAlign={"right"}>
-                      {items.total}
-                    </Typography>
+                    <Typography
+                      fontWeight={"bold"}
+                      textAlign={"right"}
+                    ></Typography>
                   </Grid>
                 </React.Fragment>
-              ))}
+              ))} */}
             </Grid>
           </Box>
           <Box
@@ -166,7 +144,7 @@ function ClientInfo({ clientId }) {
               color={"white"}
             >
               <Typography variant="h4">Grand Total</Typography>
-              <Typography variant="h4">{data.total}</Typography>
+              <Typography variant="h4"></Typography>
             </Stack>
           </Box>
         </Box>
