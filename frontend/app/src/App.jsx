@@ -8,7 +8,7 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 function App() {
   const [clientId, setClientId] = React.useState("");
   const [clientData, setClientData] = React.useState("");
-  const [data, setData] = React.useState();
+  const [data, setData] = React.useState("");
 
   const handleData = (data) => {
     setClientId(data);
@@ -30,17 +30,15 @@ function App() {
       );
       setClientData(response.data);
     } catch (error) {
-      console.error("Error Fetching data", error);
+      console.log(error);
     }
   };
 
   React.useEffect(() => {
     fetchData();
     fetchClient();
-  }, [clientData]);
+  }, [clientId]);
 
-  console.log(data);
-  console.log(clientData);
   return (
     <BrowserRouter>
       <Routes>
@@ -50,8 +48,8 @@ function App() {
             element={<ClientList handleData={handleData} data={data} />}
           />
           <Route
-            path={`client`}
-            element={<ClientInfo clientId={clientId} clientData={clientData} />}
+            path={`clients/${clientId}`}
+            element={<ClientInfo clientData={clientData} />}
           />
         </Route>
       </Routes>

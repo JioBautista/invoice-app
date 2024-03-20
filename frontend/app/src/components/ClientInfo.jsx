@@ -11,19 +11,18 @@ import Grid from "@mui/material/Grid";
 import { Link } from "react-router-dom";
 import { useMediaQuery } from "@mui/material";
 
-function ClientInfo({ clientId, clientData }) {
-  // const [data, setData] = React.useState([]);
-  // const [clientItems, setClientItems] = React.useState([]);
-  // const [clientAddress, setClientAddress] = React.useState("");
-  // const [senderAddress, setSenderAddress] = React.useState("");
+function ClientInfo({ clientData }) {
   const mobile = useMediaQuery("(max-width:600px)");
 
+  console.log(clientData);
   return (
     <Container maxWidth="md">
       {/* CLIENT INFO BUTTONS */}
-      <Button variant="outlined" sx={{ mb: 3 }}>
-        Go Back
-      </Button>
+      <Link to="/" style={{ textDecoration: "none" }}>
+        <Button variant="outlined" sx={{ mb: 3 }}>
+          Go Back
+        </Button>
+      </Link>
 
       <Paper elevation={3} sx={{ padding: mobile ? 2 : 5, mb: 6 }}>
         <Stack
@@ -43,7 +42,9 @@ function ClientInfo({ clientId, clientData }) {
                   ? "error"
                   : "info"
               }
-            ></Button>
+            >
+              {clientData.status}
+            </Button>
           </Box>
           <ButtonGroup variant="contained">
             <Button>Edit</Button>
@@ -58,43 +59,64 @@ function ClientInfo({ clientId, clientData }) {
         <Grid container spacing={3} sx={{ mb: 10 }}>
           {/* GRID ITEM 1 */}
           <Grid item xs={12} sm={6}>
-            <Typography variant="h6">#</Typography>
-            <Typography variant="subtitle1"></Typography>
+            <Typography variant="h6">#{clientData.invoice_num}</Typography>
+            <Typography variant="subtitle1">
+              {clientData.description}
+            </Typography>
           </Grid>
 
           {/* GRID ITEM 2 */}
           <Grid item xs={12} sm={6} textAlign={mobile ? "left" : "right"}>
-            <Typography></Typography>
-            <Typography></Typography>
-            <Typography></Typography>
-            <Typography></Typography>
+            {clientData && clientData.sender_address ? (
+              <>
+                <Typography>{clientData.sender_address.street}</Typography>
+                <Typography>{clientData.sender_address.city}</Typography>
+                <Typography>{clientData.sender_address.postCode}</Typography>
+                <Typography>{clientData.sender_address.country}</Typography>
+              </>
+            ) : (
+              <Typography>""</Typography>
+            )}
           </Grid>
 
           {/* GRID ITEM 3 */}
           <Grid item xs={6} sm={2}>
             <Typography>Invoice Date</Typography>
-            <Typography fontWeight={"bold"}></Typography>
+            <Typography fontWeight={"bold"}>{clientData.created_at}</Typography>
           </Grid>
 
           {/* GRID ITEM 4 */}
           <Grid item xs={6} sm={3}>
             <Typography>Payment Due</Typography>
-            <Typography fontWeight={"bold"}></Typography>
+            <Typography fontWeight={"bold"}>
+              {clientData.payment_due}
+            </Typography>
           </Grid>
 
           {/* GRID ITEM 5 */}
           <Grid item xs={12} sm={3}>
             <Typography>Bill To</Typography>
-            <Typography fontWeight={"bold"}></Typography>
-            <Typography>{clientData.client_name}</Typography>
-            <Typography></Typography>
-            <Typography></Typography>
+            <Typography fontWeight={"bold"}>
+              {clientData.client_name}
+            </Typography>
+            {clientData && clientData.client_address ? (
+              <>
+                <Typography>{clientData.client_address.street}</Typography>
+                <Typography>{clientData.client_address.city}</Typography>
+                <Typography>{clientData.client_address.postCode}</Typography>
+                <Typography>{clientData.client_address.country}</Typography>
+              </>
+            ) : (
+              <Typography>""</Typography>
+            )}
           </Grid>
 
           {/* GRID ITEM 6 */}
           <Grid item xs={12} sm={4}>
             <Typography>Sent to</Typography>
-            <Typography fontWeight={"bold"}></Typography>
+            <Typography fontWeight={"bold"}>
+              {clientData.client_email}
+            </Typography>
           </Grid>
         </Grid>
 

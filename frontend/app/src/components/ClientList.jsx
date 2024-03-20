@@ -15,7 +15,7 @@ function ClientList({ handleData, data }) {
         data.results.map((items) => (
           <React.Fragment key={items.id}>
             <Link
-              to={`client`}
+              to={`clients/${items.id}`}
               style={{ textDecoration: "none" }}
               onClick={() => {
                 handleData(items.id);
