@@ -1,6 +1,7 @@
 import React from "react";
 import Menu from "./Menu";
 import { Container } from "@mui/material";
+import Stack from "@mui/material/Stack";
 import { Link } from "react-router-dom";
 import Paper from "@mui/material/Paper";
 import Grid from "@mui/material/Grid";
@@ -15,7 +16,7 @@ function ClientList({ handleData, data }) {
         data.results.map((items) => (
           <React.Fragment key={items.id}>
             <Link
-              to={`clients/${items.id}`}
+              to={`client-info`}
               style={{ textDecoration: "none" }}
               onClick={() => {
                 handleData(items.id);
@@ -62,7 +63,18 @@ function ClientList({ handleData, data }) {
           </React.Fragment>
         ))
       ) : (
-        <Typography>Error</Typography>
+        <Container maxWidth="xs" sx={{ textAlign: "center" }}>
+          <Stack spacing={1} alignItems={"center"}>
+            <img src="/assets/illustration-empty.svg" />
+            <Typography variant="h5" fontWeight={"bold"}>
+              There is nothing here
+            </Typography>
+            <Typography variant="subtitle1" maxWidth={"29ch"}>
+              Create an invoice by clicking the New Invoice button and get
+              started
+            </Typography>
+          </Stack>
+        </Container>
       )}
     </Container>
   );

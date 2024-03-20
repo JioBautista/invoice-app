@@ -74,9 +74,7 @@ function ClientInfo({ clientData }) {
                 <Typography>{clientData.sender_address.postCode}</Typography>
                 <Typography>{clientData.sender_address.country}</Typography>
               </>
-            ) : (
-              <Typography>""</Typography>
-            )}
+            ) : null}
           </Grid>
 
           {/* GRID ITEM 3 */}
@@ -106,9 +104,7 @@ function ClientInfo({ clientData }) {
                 <Typography>{clientData.client_address.postCode}</Typography>
                 <Typography>{clientData.client_address.country}</Typography>
               </>
-            ) : (
-              <Typography>""</Typography>
-            )}
+            ) : null}
           </Grid>
 
           {/* GRID ITEM 6 */}

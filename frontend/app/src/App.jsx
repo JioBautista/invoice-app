@@ -3,7 +3,7 @@ import Layout from "./layout/Layout";
 import ClientList from "./components/ClientList";
 import ClientInfo from "./components/ClientInfo";
 import axios from "axios";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { BrowserRouter, Routes, Route, useParams } from "react-router-dom";
 
 function App() {
   const [clientId, setClientId] = React.useState("");
@@ -39,6 +39,7 @@ function App() {
     fetchClient();
   }, [clientId]);
 
+  console.log(data);
   return (
     <BrowserRouter>
       <Routes>
@@ -48,7 +49,7 @@ function App() {
             element={<ClientList handleData={handleData} data={data} />}
           />
           <Route
-            path={`clients/${clientId}`}
+            path={`client-info`}
             element={<ClientInfo clientData={clientData} />}
           />
         </Route>

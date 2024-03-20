@@ -38,9 +38,11 @@ function Menu({ data }) {
           >
             Invoices
           </Typography>
-          <Typography variant="body1">
-            {data ? `Total number of invoices: ${data.length}` : `No invoices`}
-          </Typography>
+          {data ? (
+            <Typography>Total number of invoices: {data.count}</Typography>
+          ) : (
+            <Typography>No Invoices</Typography>
+          )}
         </Box>
 
         <Box sx={{ minWidth: 120 }}>
