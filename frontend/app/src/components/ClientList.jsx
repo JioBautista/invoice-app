@@ -2,13 +2,15 @@ import React from "react";
 import Menu from "./Menu";
 import { Container } from "@mui/material";
 import Stack from "@mui/material/Stack";
-import { Link } from "react-router-dom";
+import { Link, useLoaderData } from "react-router-dom";
 import Paper from "@mui/material/Paper";
 import Grid from "@mui/material/Grid";
 import Typography from "@mui/material/Typography";
 import ArrowForwardIosIcon from "@mui/icons-material/ArrowForwardIos";
 
-function ClientList({ handleData, data }) {
+function ClientList() {
+  const { data } = useLoaderData();
+  console.log(data);
   return (
     <Container maxWidth="md">
       <Menu data={data} />

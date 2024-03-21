@@ -1,9 +1,32 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
-import App from "./App.jsx";
+import App, { fetchData as appLoader } from "./App.jsx";
+import ClientList from "./components/ClientList.jsx";
+import ClientInfo from "./components/ClientInfo.jsx";
+import ErrorPage from "./components/ErrorPage.jsx";
+import { createBrowserRouter, RouterProvider } from "react-router-dom";
+
+const router = createBrowserRouter([
+  {
+    path: "/",
+    element: <App />,
+    errorElement: <ErrorPage />,
+    children: [
+      {
+        path: "clients",
+        element: <ClientList />,
+        loader: appLoader,
+      },
+      {
+        path: "clients/:clientId",
+        element: <ClientInfo />,
+      },
+    ],
+  },
+]);
 
 ReactDOM.createRoot(document.getElementById("root")).render(
   <React.StrictMode>
-    <App />
+    <RouterProvider router={router} />
   </React.StrictMode>
 );
