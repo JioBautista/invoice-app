@@ -1,6 +1,6 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
-import App, { fetchData as appLoader } from "./App.jsx";
+import App, { fetchData, fetchClientInfo } from "./App.jsx";
 import ClientList from "./components/ClientList.jsx";
 import ClientInfo from "./components/ClientInfo.jsx";
 import ErrorPage from "./components/ErrorPage.jsx";
@@ -15,11 +15,12 @@ const router = createBrowserRouter([
       {
         path: "clients",
         element: <ClientList />,
-        loader: appLoader,
+        loader: fetchData,
       },
       {
         path: "clients/:clientId",
         element: <ClientInfo />,
+        loader: fetchClientInfo,
       },
     ],
   },

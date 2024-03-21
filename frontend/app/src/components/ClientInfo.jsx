@@ -1,30 +1,32 @@
 import React from "react";
-import axios from "axios";
-import Container from "@mui/material/Container";
-import Box from "@mui/material/Box";
-import Paper from "@mui/material/Paper";
-import Button from "@mui/material/Button";
-import ButtonGroup from "@mui/material/ButtonGroup";
-import Typography from "@mui/material/Typography";
-import Stack from "@mui/material/Stack";
-import Grid from "@mui/material/Grid";
-import { Link } from "react-router-dom";
-import { useMediaQuery } from "@mui/material";
+import { Link, useLoaderData } from "react-router-dom";
+import {
+  useMediaQuery,
+  Container,
+  Box,
+  Paper,
+  Button,
+  ButtonGroup,
+  Typography,
+  Stack,
+  Grid,
+} from "@mui/material";
 
-function ClientInfo({ clientData }) {
+function ClientInfo() {
   const mobile = useMediaQuery("(max-width:600px)");
+  const { clientData } = useLoaderData();
 
   console.log(clientData);
   return (
     <Container maxWidth="md">
       {/* CLIENT INFO BUTTONS */}
-      <Link to="/" style={{ textDecoration: "none" }}>
+      <Link to="/clients" style={{ textDecoration: "none" }}>
         <Button variant="outlined" sx={{ mb: 3 }}>
           Go Back
         </Button>
       </Link>
 
-      <Paper elevation={3} sx={{ padding: mobile ? 2 : 5, mb: 6 }}>
+      <Paper elevation={3} sx={{ padding: mobile ? 2 : 5, mb: 2 }}>
         <Stack
           direction={{ xs: "column", sm: "row" }}
           alignItems={"center"}
@@ -132,20 +134,22 @@ function ClientInfo({ clientData }) {
               <Grid item xs={6}>
                 <Typography textAlign={"right"}>Total</Typography>
               </Grid>
-              {/* {clientItems.map((items) => (
-                <React.Fragment key={items.id}>
-                  <Grid item xs={6}>
-                    <Typography fontWeight={"bold"}></Typography>
-                    <Typography fontWeight={"bold"}>x</Typography>
-                  </Grid>
-                  <Grid item xs={6}>
-                    <Typography
-                      fontWeight={"bold"}
-                      textAlign={"right"}
-                    ></Typography>
-                  </Grid>
-                </React.Fragment>
-              ))} */}
+              {clientData &&
+                clientData.items.map((items) => (
+                  <React.Fragment key={items.id}>
+                    <Grid item xs={6}>
+                      <Typography fontWeight={"bold"}>{items.name}</Typography>
+                      <Typography fontWeight={"bold"}>
+                        {items.quantity} x {items.price}
+                      </Typography>
+                    </Grid>
+                    <Grid item xs={6}>
+                      <Typography fontWeight={"bold"} textAlign={"right"}>
+                        {items.price}
+                      </Typography>
+                    </Grid>
+                  </React.Fragment>
+                ))}
             </Grid>
           </Box>
           <Box
@@ -159,10 +163,13 @@ function ClientInfo({ clientData }) {
             <Stack
               direction={"row"}
               justifyContent={"space-between"}
+              alignItems={"center"}
               color={"white"}
             >
               <Typography variant="h4">Grand Total</Typography>
-              <Typography variant="h4"></Typography>
+              {clientData && (
+                <Typography variant="h5">{clientData.total}</Typography>
+              )}
             </Stack>
           </Box>
         </Box>
