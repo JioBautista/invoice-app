@@ -1,4 +1,5 @@
 import React from "react";
+import EditInfo from "./EditInfo";
 import { Link, useLoaderData } from "react-router-dom";
 import {
   useMediaQuery,
@@ -10,11 +11,17 @@ import {
   Typography,
   Stack,
   Grid,
+  Drawer,
 } from "@mui/material";
 
 function ClientInfo() {
+  const [isOpen, setIsOpen] = React.useState(false);
   const mobile = useMediaQuery("(max-width:600px)");
   const { clientData } = useLoaderData();
+
+  const toggleDrawer = (newOpen) => {
+    setIsOpen(newOpen);
+  };
 
   console.log(clientData);
   return (
@@ -49,7 +56,7 @@ function ClientInfo() {
             </Button>
           </Box>
           <ButtonGroup variant="contained">
-            <Button>Edit</Button>
+            <Button onClick={() => toggleDrawer(true)}>Edit</Button>
             <Button>Delete</Button>
             <Button>Mark as Paid</Button>
           </ButtonGroup>
@@ -166,14 +173,25 @@ function ClientInfo() {
               alignItems={"center"}
               color={"white"}
             >
-              <Typography variant="h4">Grand Total</Typography>
+              <Typography variant={mobile ? "h6" : "h5"}>
+                Grand Total
+              </Typography>
               {clientData && (
-                <Typography variant="h5">{clientData.total}</Typography>
+                <Typography variant={mobile ? "h6" : "h5"}>
+                  {clientData.total}
+                </Typography>
               )}
             </Stack>
           </Box>
         </Box>
       </Paper>
+
+      {/* DRAWER COMPONENT */}
+      <EditInfo
+        isOpen={isOpen}
+        toggleDrawer={toggleDrawer}
+        clientData={clientData}
+      />
     </Container>
   );
 }
