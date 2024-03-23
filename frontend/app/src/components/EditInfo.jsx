@@ -5,10 +5,12 @@ import {
   Grid,
   Typography,
   TextField,
-  Input,
-  Container,
   MenuItem,
+  Button,
+  useMediaQuery,
+  Stack,
 } from "@mui/material";
+import AddIcon from "@mui/icons-material/Add";
 import dayjs from "dayjs";
 import { DatePicker } from "@mui/x-date-pickers";
 
@@ -28,10 +30,11 @@ const paymentTermsValues = [
 ];
 
 function EditInfo({ isOpen, toggleDrawer, clientData }) {
+  const mobile = useMediaQuery("(max-width:500px)");
   return (
     <Drawer open={isOpen} onClose={() => toggleDrawer(false)}>
       {/* BILL FROM BOX */}
-      <Box sx={{ padding: 2 }} maxWidth={"500px"}>
+      <Box sx={{ padding: mobile ? 2 : 3 }} maxWidth={"500px"}>
         <Typography variant="h6">
           Edit #{clientData && clientData.invoice_num}
         </Typography>
@@ -88,7 +91,7 @@ function EditInfo({ isOpen, toggleDrawer, clientData }) {
       </Box>
 
       {/* BILL TO BOX */}
-      <Box sx={{ padding: 2 }} maxWidth={"500px"}>
+      <Box sx={{ padding: mobile ? 2 : 3 }} maxWidth={"500px"}>
         <Typography>Bill To</Typography>
         <Grid container spacing={1}>
           {/* GRID ITEM 1 */}
@@ -164,7 +167,7 @@ function EditInfo({ isOpen, toggleDrawer, clientData }) {
           </Grid>
 
           {/* GRID ITEM 7 */}
-          <Grid item xs={6}>
+          <Grid item xs={6} sm={6}>
             <DatePicker
               defaultValue={dayjs(clientData.payment_due)}
               label="Invoice Date"
@@ -172,7 +175,7 @@ function EditInfo({ isOpen, toggleDrawer, clientData }) {
           </Grid>
 
           {/* GRID ITEM 8 */}
-          <Grid item xs={6}>
+          <Grid item xs={6} sm={6}>
             <TextField select fullWidth label="Payment Terms">
               {paymentTermsValues.map((option) => (
                 <MenuItem key={option.value} value={option.value}>
@@ -181,7 +184,105 @@ function EditInfo({ isOpen, toggleDrawer, clientData }) {
               ))}
             </TextField>
           </Grid>
+
+          {/* GRID ITEM 9 */}
+          <Grid item xs={12}>
+            <TextField
+              variant="outlined"
+              label="Project Description"
+              defaultValue={clientData.description}
+              size="small"
+              margin="normal"
+              fullWidth
+            />
+          </Grid>
         </Grid>
+      </Box>
+
+      {/* ITEM LIST BOX */}
+      <Box sx={{ padding: mobile ? 2 : 3, mb: 3 }} maxWidth={"500px"}>
+        <Typography>Item List</Typography>
+        <Grid container spacing={1}>
+          {clientData &&
+            clientData.items.map((item) => (
+              <>
+                <Grid item xs={12}>
+                  <TextField
+                    variant="outlined"
+                    label="Item Name"
+                    defaultValue={item.name}
+                    size="small"
+                    margin="normal"
+                    fullWidth
+                  />
+                </Grid>
+
+                <Grid item xs={4}>
+                  <TextField
+                    variant="outlined"
+                    label="Qty"
+                    defaultValue={item.quantity}
+                    size="small"
+                    margin="normal"
+                    fullWidth
+                  />
+                </Grid>
+
+                <Grid item xs={4}>
+                  <TextField
+                    variant="outlined"
+                    label="Price"
+                    defaultValue={item.price}
+                    size="small"
+                    margin="normal"
+                    fullWidth
+                  />
+                </Grid>
+                <Grid item xs={4}>
+                  <TextField
+                    variant="outlined"
+                    label="Total"
+                    defaultValue={item.total}
+                    size="small"
+                    margin="normal"
+                    fullWidth
+                  />
+                </Grid>
+              </>
+            ))}
+        </Grid>
+      </Box>
+      <Button
+        variant="contained"
+        size="large"
+        sx={{
+          borderRadius: "1.25rem",
+          width: "90%",
+          margin: "auto",
+          mb: 2,
+        }}
+        startIcon={<AddIcon />}
+      >
+        Add New Item
+      </Button>
+      <Box sx={{ padding: 1, mb: 3 }}>
+        <Stack
+          direction={"row"}
+          justifyContent={"center"}
+          gap={1}
+          alignItems={"center"}
+        >
+          <Button
+            variant="outlined"
+            sx={{ borderRadius: "1.25rem" }}
+            onClick={() => toggleDrawer(false)}
+          >
+            Cancel
+          </Button>
+          <Button variant="contained" sx={{ borderRadius: "1.25rem" }}>
+            Save Changes
+          </Button>
+        </Stack>
       </Box>
     </Drawer>
   );
