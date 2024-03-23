@@ -8,6 +8,8 @@ import {
   Input,
   Container,
 } from "@mui/material";
+import dayjs from "dayjs";
+import { DatePicker } from "@mui/x-date-pickers";
 
 function EditInfo({ isOpen, toggleDrawer, clientData }) {
   return (
@@ -24,6 +26,7 @@ function EditInfo({ isOpen, toggleDrawer, clientData }) {
             <TextField
               variant="outlined"
               label="Street Address"
+              defaultValue={"19 Union Terrace"}
               size="small"
               margin="normal"
               fullWidth
@@ -35,6 +38,7 @@ function EditInfo({ isOpen, toggleDrawer, clientData }) {
             <TextField
               variant="outlined"
               label="City"
+              defaultValue={"London"}
               size="small"
               margin="normal"
               fullWidth
@@ -46,6 +50,7 @@ function EditInfo({ isOpen, toggleDrawer, clientData }) {
             <TextField
               variant="outlined"
               label="Post Code"
+              defaultValue={"E1 3EZ"}
               size="small"
               margin="normal"
               fullWidth
@@ -57,6 +62,7 @@ function EditInfo({ isOpen, toggleDrawer, clientData }) {
             <TextField
               variant="outlined"
               label="Country"
+              defaultValue={"United Kingdom"}
               size="small"
               margin="normal"
               fullWidth
@@ -74,6 +80,7 @@ function EditInfo({ isOpen, toggleDrawer, clientData }) {
             <TextField
               variant="outlined"
               label="Client's Name"
+              defaultValue={clientData.client_name}
               size="small"
               margin="normal"
               fullWidth
@@ -85,6 +92,7 @@ function EditInfo({ isOpen, toggleDrawer, clientData }) {
             <TextField
               variant="outlined"
               label="Client's Email"
+              defaultValue={clientData.client_email}
               size="small"
               margin="normal"
               fullWidth
@@ -96,6 +104,7 @@ function EditInfo({ isOpen, toggleDrawer, clientData }) {
             <TextField
               variant="outlined"
               label="Street Address"
+              defaultValue={clientData.client_address.street}
               size="small"
               margin="normal"
               fullWidth
@@ -107,6 +116,7 @@ function EditInfo({ isOpen, toggleDrawer, clientData }) {
             <TextField
               variant="outlined"
               label="City"
+              defaultValue={clientData.client_address.city}
               size="small"
               margin="normal"
               fullWidth
@@ -118,6 +128,7 @@ function EditInfo({ isOpen, toggleDrawer, clientData }) {
             <TextField
               variant="outlined"
               label="Post Code"
+              defaultValue={clientData.client_address.postCode}
               size="small"
               margin="normal"
               fullWidth
@@ -129,6 +140,7 @@ function EditInfo({ isOpen, toggleDrawer, clientData }) {
             <TextField
               variant="outlined"
               label="Country"
+              defaultValue={clientData.client_address.country}
               size="small"
               margin="normal"
               fullWidth
@@ -137,12 +149,17 @@ function EditInfo({ isOpen, toggleDrawer, clientData }) {
 
           {/* GRID ITEM 7 */}
           <Grid item xs={12}>
-            <TextField
+            {/* <TextField
               variant="outlined"
               size="small"
               margin="normal"
               fullWidth
               type="date"
+              label="Invoice Date"
+            /> */}
+            <DatePicker
+              defaultValue={dayjs(clientData.payment_due)}
+              label="Invoice Date"
             />
           </Grid>
         </Grid>

@@ -1,6 +1,8 @@
 import React from "react";
 import { Outlet } from "react-router-dom";
 import { Box } from "@mui/material";
+import { LocalizationProvider } from "@mui/x-date-pickers";
+import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import NavBar from "./navbar/NavBar";
 import axios from "axios";
 
@@ -27,10 +29,12 @@ export async function fetchClientInfo({ params }) {
 
 function App() {
   return (
-    <Box>
-      <NavBar />
-      <Outlet />
-    </Box>
+    <LocalizationProvider dateAdapter={AdapterDayjs}>
+      <Box>
+        <NavBar />
+        <Outlet />
+      </Box>
+    </LocalizationProvider>
   );
 }
 
