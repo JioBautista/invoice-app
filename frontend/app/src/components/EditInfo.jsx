@@ -7,9 +7,25 @@ import {
   TextField,
   Input,
   Container,
+  MenuItem,
 } from "@mui/material";
 import dayjs from "dayjs";
 import { DatePicker } from "@mui/x-date-pickers";
+
+const paymentTermsValues = [
+  {
+    value: "Net 1 Day",
+  },
+  {
+    value: "Net 7 Days",
+  },
+  {
+    value: "Net 14 Days",
+  },
+  {
+    value: "Net 30 Days",
+  },
+];
 
 function EditInfo({ isOpen, toggleDrawer, clientData }) {
   return (
@@ -148,19 +164,22 @@ function EditInfo({ isOpen, toggleDrawer, clientData }) {
           </Grid>
 
           {/* GRID ITEM 7 */}
-          <Grid item xs={12}>
-            {/* <TextField
-              variant="outlined"
-              size="small"
-              margin="normal"
-              fullWidth
-              type="date"
-              label="Invoice Date"
-            /> */}
+          <Grid item xs={6}>
             <DatePicker
               defaultValue={dayjs(clientData.payment_due)}
               label="Invoice Date"
             />
+          </Grid>
+
+          {/* GRID ITEM 8 */}
+          <Grid item xs={6}>
+            <TextField select fullWidth label="Payment Terms">
+              {paymentTermsValues.map((option) => (
+                <MenuItem key={option.value} value={option.value}>
+                  {option.value}
+                </MenuItem>
+              ))}
+            </TextField>
           </Grid>
         </Grid>
       </Box>
