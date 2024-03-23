@@ -1,5 +1,6 @@
 import React from "react";
 import Menu from "./Menu";
+import NewInvoice from "./NewInvoice";
 import { Container } from "@mui/material";
 import Stack from "@mui/material/Stack";
 import { Link, useLoaderData } from "react-router-dom";
@@ -10,10 +11,15 @@ import ArrowForwardIosIcon from "@mui/icons-material/ArrowForwardIos";
 
 function ClientList() {
   const { data } = useLoaderData();
+  const [isOpen, setIsOpen] = React.useState(false);
+
+  const toggleDrawer = (newOpen) => {
+    setIsOpen(newOpen);
+  };
   console.log(data);
   return (
     <Container maxWidth="md">
-      <Menu data={data} />
+      <Menu data={data} toggleDrawer={toggleDrawer} />
       {data ? (
         data.results.map((items) => (
           <React.Fragment key={items.id}>
@@ -78,6 +84,7 @@ function ClientList() {
           </Stack>
         </Container>
       )}
+      <NewInvoice isOpen={isOpen} toggleDrawer={toggleDrawer} />
     </Container>
   );
 }

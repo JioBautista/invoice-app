@@ -15,7 +15,7 @@ import "@fontsource/roboto/400.css";
 import "@fontsource/roboto/500.css";
 import "@fontsource/roboto/700.css";
 
-function Menu({ data }) {
+function Menu({ data, toggleDrawer }) {
   const mobile = useMediaQuery("(max-width:500px)");
   const [status, setStatus] = React.useState("");
 
@@ -71,6 +71,7 @@ function Menu({ data }) {
             variant="contained"
             startIcon={<AddCircleIcon />}
             sx={{ borderRadius: "1.25rem" }}
+            onClick={() => toggleDrawer(true)}
           >
             New Invoice
           </Button>
