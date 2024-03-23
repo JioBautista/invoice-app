@@ -9,8 +9,10 @@ import {
   Button,
   useMediaQuery,
   Stack,
+  IconButton,
 } from "@mui/material";
 import AddIcon from "@mui/icons-material/Add";
+import DeleteIcon from "@mui/icons-material/Delete";
 import dayjs from "dayjs";
 import { DatePicker } from "@mui/x-date-pickers";
 
@@ -34,7 +36,7 @@ function EditInfo({ isOpen, toggleDrawer, clientData }) {
   return (
     <Drawer open={isOpen} onClose={() => toggleDrawer(false)}>
       {/* BILL FROM BOX */}
-      <Box sx={{ padding: mobile ? 2 : 3 }} maxWidth={"500px"}>
+      <Box sx={{ padding: 2 }} maxWidth={"600px"}>
         <Typography variant="h6">
           Edit #{clientData && clientData.invoice_num}
         </Typography>
@@ -91,7 +93,7 @@ function EditInfo({ isOpen, toggleDrawer, clientData }) {
       </Box>
 
       {/* BILL TO BOX */}
-      <Box sx={{ padding: mobile ? 2 : 3 }} maxWidth={"500px"}>
+      <Box sx={{ padding: 2 }} maxWidth={"600px"}>
         <Typography>Bill To</Typography>
         <Grid container spacing={1}>
           {/* GRID ITEM 1 */}
@@ -200,13 +202,13 @@ function EditInfo({ isOpen, toggleDrawer, clientData }) {
       </Box>
 
       {/* ITEM LIST BOX */}
-      <Box sx={{ padding: mobile ? 2 : 3, mb: 3 }} maxWidth={"500px"}>
+      <Box sx={{ padding: 2, mb: 3 }} maxWidth={"600px"}>
         <Typography>Item List</Typography>
         <Grid container spacing={1}>
           {clientData &&
             clientData.items.map((item) => (
               <>
-                <Grid item xs={12}>
+                <Grid item xs={12} sm={3}>
                   <TextField
                     variant="outlined"
                     label="Item Name"
@@ -217,7 +219,7 @@ function EditInfo({ isOpen, toggleDrawer, clientData }) {
                   />
                 </Grid>
 
-                <Grid item xs={4}>
+                <Grid item xs={4} sm={3}>
                   <TextField
                     variant="outlined"
                     label="Qty"
@@ -228,7 +230,7 @@ function EditInfo({ isOpen, toggleDrawer, clientData }) {
                   />
                 </Grid>
 
-                <Grid item xs={4}>
+                <Grid item xs={4} sm={3}>
                   <TextField
                     variant="outlined"
                     label="Price"
@@ -238,15 +240,20 @@ function EditInfo({ isOpen, toggleDrawer, clientData }) {
                     fullWidth
                   />
                 </Grid>
-                <Grid item xs={4}>
-                  <TextField
-                    variant="outlined"
-                    label="Total"
-                    defaultValue={item.total}
-                    size="small"
-                    margin="normal"
-                    fullWidth
-                  />
+                <Grid item xs={4} sm={3}>
+                  <Box sx={{ display: "flex", alignItems: "center", gap: 1 }}>
+                    <TextField
+                      variant="outlined"
+                      label="Total"
+                      defaultValue={item.total}
+                      size="small"
+                      margin="normal"
+                      fullWidth
+                    />
+                    <IconButton>
+                      <DeleteIcon color="error" />
+                    </IconButton>
+                  </Box>
                 </Grid>
               </>
             ))}

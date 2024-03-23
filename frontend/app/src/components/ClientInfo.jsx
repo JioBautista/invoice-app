@@ -12,15 +12,25 @@ import {
   Stack,
   Grid,
   Drawer,
+  Dialog,
+  DialogTitle,
+  DialogContent,
+  DialogContentText,
+  DialogActions,
 } from "@mui/material";
 
 function ClientInfo() {
   const [isOpen, setIsOpen] = React.useState(false);
+  const [deleteModal, setDeleteModal] = React.useState(false);
   const mobile = useMediaQuery("(max-width:600px)");
   const { clientData } = useLoaderData();
 
   const toggleDrawer = (newOpen) => {
     setIsOpen(newOpen);
+  };
+
+  const toggleModal = (newOpen) => {
+    setDeleteModal(newOpen);
   };
 
   console.log(clientData);
@@ -57,7 +67,7 @@ function ClientInfo() {
           </Box>
           <ButtonGroup variant="contained">
             <Button onClick={() => toggleDrawer(true)}>Edit</Button>
-            <Button>Delete</Button>
+            <Button onClick={() => toggleModal(true)}>Delete</Button>
             <Button>Mark as Paid</Button>
           </ButtonGroup>
         </Stack>
@@ -192,6 +202,26 @@ function ClientInfo() {
         toggleDrawer={toggleDrawer}
         clientData={clientData}
       />
+      {/* DELETE MODAL BOX */}
+      <Dialog open={deleteModal} onClose={() => toggleModal(false)}>
+        <DialogTitle>{"Confirm Deletion"}</DialogTitle>
+        <DialogContent>
+          <DialogContentText>
+            Are you sure you want to delete this invoice? This action cannot be
+            undone.
+          </DialogContentText>
+          <DialogActions>
+            <Button onClick={() => toggleModal(false)}>Cancel</Button>
+            <Button
+              variant="contained"
+              color="error"
+              sx={{ borderRadius: "1.25rem" }}
+            >
+              Delete
+            </Button>
+          </DialogActions>
+        </DialogContent>
+      </Dialog>
     </Container>
   );
 }
