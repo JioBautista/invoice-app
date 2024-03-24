@@ -59,7 +59,7 @@ function ClientInfo() {
               color={
                 clientData.status === "pending" || clientData.status === "draft"
                   ? "error"
-                  : "info"
+                  : "success"
               }
             >
               {clientData.status}

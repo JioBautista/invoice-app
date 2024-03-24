@@ -202,13 +202,13 @@ function EditInfo({ isOpen, toggleDrawer, clientData }) {
       </Box>
 
       {/* ITEM LIST BOX */}
-      <Box sx={{ padding: 2, mb: 3 }} maxWidth={"600px"}>
+      <Box sx={{ padding: 2 }} maxWidth={"600px"}>
         <Typography>Item List</Typography>
         <Grid container spacing={1}>
           {clientData &&
             clientData.items.map((item) => (
               <>
-                <Grid item xs={12} sm={3}>
+                <Grid item xs={12} sm={6}>
                   <TextField
                     variant="outlined"
                     label="Item Name"
@@ -219,7 +219,7 @@ function EditInfo({ isOpen, toggleDrawer, clientData }) {
                   />
                 </Grid>
 
-                <Grid item xs={4} sm={3}>
+                <Grid item xs={2} sm={1}>
                   <TextField
                     variant="outlined"
                     label="Qty"
@@ -230,7 +230,7 @@ function EditInfo({ isOpen, toggleDrawer, clientData }) {
                   />
                 </Grid>
 
-                <Grid item xs={4} sm={3}>
+                <Grid item xs={4} sm={2}>
                   <TextField
                     variant="outlined"
                     label="Price"
@@ -240,7 +240,7 @@ function EditInfo({ isOpen, toggleDrawer, clientData }) {
                     fullWidth
                   />
                 </Grid>
-                <Grid item xs={4} sm={3}>
+                <Grid item xs={6} sm={3}>
                   <Box sx={{ display: "flex", alignItems: "center", gap: 1 }}>
                     <TextField
                       variant="outlined"
@@ -259,34 +259,38 @@ function EditInfo({ isOpen, toggleDrawer, clientData }) {
             ))}
         </Grid>
       </Box>
-      <Button
-        variant="contained"
-        size="large"
-        sx={{
-          borderRadius: "1.25rem",
-          width: "90%",
-          margin: "auto",
-          mb: 2,
-        }}
-        startIcon={<AddIcon />}
-      >
-        Add New Item
-      </Button>
-      <Box sx={{ padding: 1, mb: 3 }}>
+      <Box sx={{ padding: 2 }}>
+        <Button
+          variant="contained"
+          size="large"
+          fullWidth
+          sx={{
+            borderRadius: "1.25rem",
+            margin: "auto",
+            mb: 3,
+          }}
+          startIcon={<AddIcon />}
+        >
+          Add New Item
+        </Button>
         <Stack
           direction={"row"}
-          justifyContent={"center"}
-          gap={1}
+          justifyContent={"space-evenly"}
           alignItems={"center"}
         >
           <Button
             variant="outlined"
             sx={{ borderRadius: "1.25rem" }}
             onClick={() => toggleDrawer(false)}
+            size="large"
           >
             Cancel
           </Button>
-          <Button variant="contained" sx={{ borderRadius: "1.25rem" }}>
+          <Button
+            variant="contained"
+            sx={{ borderRadius: "1.25rem" }}
+            size="large"
+          >
             Save Changes
           </Button>
         </Stack>
