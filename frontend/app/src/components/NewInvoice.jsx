@@ -9,10 +9,11 @@ import {
   Button,
   Stack,
 } from "@mui/material";
-import { useForm } from "react-hook-form";
+import { useForm, useFieldArray } from "react-hook-form";
 import AddIcon from "@mui/icons-material/Add";
 import dayjs from "dayjs";
 import { DatePicker } from "@mui/x-date-pickers";
+import { DateField } from "@mui/x-date-pickers";
 
 const paymentTermsValues = [
   {
@@ -30,7 +31,11 @@ const paymentTermsValues = [
 ];
 
 function NewInvoice({ isOpen, toggleDrawer }) {
-  const { register, handleSubmit } = useForm();
+  const { register, handleSubmit, control } = useForm();
+  const { fields, append, remove } = useFieldArray({
+    control,
+    name: "Items",
+  });
   const onSubmit = (data) => console.log(data);
 
   return (
@@ -169,7 +174,11 @@ function NewInvoice({ isOpen, toggleDrawer }) {
 
             {/* GRID ITEM 7 */}
             <Grid item xs={6} sm={6}>
-              <DatePicker label="Invoice Date" {...register("created_at")} />
+              <DateField
+                label="Invoice Date"
+                // defaultValue={dayjs()}
+                {...register("created_at")}
+              />
             </Grid>
 
             {/* GRID ITEM 8 */}
