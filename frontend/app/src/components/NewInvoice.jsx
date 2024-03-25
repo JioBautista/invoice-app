@@ -55,6 +55,7 @@ function NewInvoice({ isOpen, toggleDrawer }) {
                 size="small"
                 margin="normal"
                 fullWidth
+                {...register("sender_address.street")}
               />
             </Grid>
 
@@ -67,6 +68,7 @@ function NewInvoice({ isOpen, toggleDrawer }) {
                 size="small"
                 margin="normal"
                 fullWidth
+                {...register("sender_address.city")}
               />
             </Grid>
 
@@ -79,6 +81,7 @@ function NewInvoice({ isOpen, toggleDrawer }) {
                 size="small"
                 margin="normal"
                 fullWidth
+                {...register("sender_address.postCode")}
               />
             </Grid>
 
@@ -91,6 +94,7 @@ function NewInvoice({ isOpen, toggleDrawer }) {
                 size="small"
                 margin="normal"
                 fullWidth
+                {...register("sender_address.country")}
               />
             </Grid>
           </Grid>
