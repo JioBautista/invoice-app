@@ -4,6 +4,7 @@ import { Box } from "@mui/material";
 import { LocalizationProvider } from "@mui/x-date-pickers";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import NavBar from "./navbar/NavBar";
+import ClientList from "./components/ClientList";
 import axios from "axios";
 
 export async function fetchData() {

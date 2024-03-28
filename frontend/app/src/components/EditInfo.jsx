@@ -5,34 +5,42 @@ import {
   Grid,
   Typography,
   TextField,
-  MenuItem,
   Button,
   useMediaQuery,
   Stack,
   IconButton,
+  MenuItem,
+  FormControl,
+  InputLabel,
+  Select,
 } from "@mui/material";
 import AddIcon from "@mui/icons-material/Add";
 import DeleteIcon from "@mui/icons-material/Delete";
 import dayjs from "dayjs";
 import { DatePicker } from "@mui/x-date-pickers";
 
-const paymentTermsValues = [
-  {
-    value: "Net 1 Day",
-  },
-  {
-    value: "Net 7 Days",
-  },
-  {
-    value: "Net 14 Days",
-  },
-  {
-    value: "Net 30 Days",
-  },
-];
-
 function EditInfo({ isOpen, toggleDrawer, clientData }) {
   const mobile = useMediaQuery("(max-width:500px)");
+
+  const paymentTermsValue = [
+    {
+      value: 1,
+      label: "Net 1 day",
+    },
+    {
+      value: 7,
+      label: "Net 7 days",
+    },
+    {
+      value: 14,
+      label: "Net 14 days",
+    },
+    {
+      value: 30,
+      label: "Net 30 days",
+    },
+  ];
+
   return (
     <Drawer open={isOpen} onClose={() => toggleDrawer(false)}>
       {/* BILL FROM BOX */}
@@ -178,10 +186,15 @@ function EditInfo({ isOpen, toggleDrawer, clientData }) {
 
           {/* GRID ITEM 8 */}
           <Grid item xs={6} sm={6}>
-            <TextField select fullWidth label="Payment Terms">
-              {paymentTermsValues.map((option) => (
-                <MenuItem key={option.value} value={option.value}>
-                  {option.value}
+            <TextField
+              select
+              label="Payment Terms"
+              defaultValue={clientData.payment_terms}
+              fullWidth
+            >
+              {paymentTermsValue.map((option) => (
+                <MenuItem value={option.value} key={option.value}>
+                  {option.label}
                 </MenuItem>
               ))}
             </TextField>
@@ -207,7 +220,7 @@ function EditInfo({ isOpen, toggleDrawer, clientData }) {
         <Grid container spacing={1}>
           {clientData &&
             clientData.items.map((item) => (
-              <>
+              <React.Fragment key={item.id}>
                 <Grid item xs={12} sm={6}>
                   <TextField
                     variant="outlined"
@@ -255,7 +268,7 @@ function EditInfo({ isOpen, toggleDrawer, clientData }) {
                     </IconButton>
                   </Box>
                 </Grid>
-              </>
+              </React.Fragment>
             ))}
         </Grid>
       </Box>

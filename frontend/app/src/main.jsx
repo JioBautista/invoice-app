@@ -11,14 +11,15 @@ const router = createBrowserRouter([
     path: "/",
     element: <App />,
     errorElement: <ErrorPage />,
+    loader: fetchData,
     children: [
       {
-        path: "clients",
+        path: "/",
         element: <ClientList />,
         loader: fetchData,
       },
       {
-        path: "clients/:clientId",
+        path: "/:clientId",
         element: <ClientInfo />,
         loader: fetchClientInfo,
       },
