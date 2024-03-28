@@ -63,7 +63,7 @@ function Menu({ data, toggleDrawer }) {
         </Box>
 
         {mobile ? (
-          <IconButton color="primary">
+          <IconButton color="primary" onClick={() => toggleDrawer(true)}>
             <AddCircleIcon fontSize="large" />
           </IconButton>
         ) : (

@@ -8,25 +8,32 @@ import {
   Typography,
   Button,
   Stack,
+  IconButton,
 } from "@mui/material";
-import { useForm, useFieldArray } from "react-hook-form";
+import { useForm, useFieldArray, Controller } from "react-hook-form";
 import AddIcon from "@mui/icons-material/Add";
+import DeleteIcon from "@mui/icons-material/Delete";
 import dayjs from "dayjs";
 import { DatePicker } from "@mui/x-date-pickers";
 import { DateField } from "@mui/x-date-pickers";
+import axios from "axios";
 
 const paymentTermsValues = [
   {
-    value: "Net 1 Day",
+    value: 1,
+    label: "Net 1 Day",
   },
   {
-    value: "Net 7 Days",
+    value: 7,
+    label: "Net 7 Days",
   },
   {
-    value: "Net 14 Days",
+    value: 14,
+    label: "Net 14 Days",
   },
   {
-    value: "Net 30 Days",
+    value: 30,
+    label: "Net 30 Days",
   },
 ];
 
@@ -34,9 +41,15 @@ function NewInvoice({ isOpen, toggleDrawer }) {
   const { register, handleSubmit, control } = useForm();
   const { fields, append, remove } = useFieldArray({
     control,
-    name: "Items",
+    name: "items",
   });
-  const onSubmit = (data) => console.log(data);
+  const onSubmit = (data) => {
+    axios
+      .post("http://127.0.0.1:8000/clients/", data)
+      .then((res) => console.log(res))
+      .catch((error) => console.log(error));
+    console.log(data);
+  };
 
   return (
     <Drawer open={isOpen} onClose={() => toggleDrawer(false)}>
@@ -187,14 +200,16 @@ function NewInvoice({ isOpen, toggleDrawer }) {
 
             {/* GRID ITEM 8 */}
             <Grid item xs={6} sm={6}>
-              <TextField select fullWidth label="Payment Terms">
+              <TextField
+                select
+                fullWidth
+                label="Payment Terms"
+                defaultValue={paymentTermsValues[0].value}
+                {...register("payment_terms")}
+              >
                 {paymentTermsValues.map((option) => (
-                  <MenuItem
-                    key={option.value}
-                    value={option.value}
-                    {...register("payment_terms")}
-                  >
-                    {option.value}
+                  <MenuItem key={option.value} value={option.value}>
+                    {option.label}
                   </MenuItem>
                 ))}
               </TextField>
@@ -214,6 +229,82 @@ function NewInvoice({ isOpen, toggleDrawer }) {
           </Grid>
         </Box>
 
+        {/* ITEM LIST BOX */}
+        <Box sx={{ padding: 2 }} maxWidth={"600px"}>
+          <Typography>Item List</Typography>
+          <Grid container spacing={1}>
+            {/* RENDER ITEMS */}
+            {fields.map((item, index) => (
+              <React.Fragment key={item.id}>
+                <Grid item xs={12} sm={5}>
+                  {/* <Controller
+                    render={({ field }) => (
+                      <TextField
+                        {...field}
+                        variant="outlined"
+                        label="Item Name"
+                        size="small"
+                        margin="normal"
+                        fullWidth
+                        // {...register(`items.${index}.name`)}
+                      />
+                    )}
+                    name={`items.${index}.name`}
+                    control={control}
+                  /> */}
+                  <TextField
+                    variant="outlined"
+                    label="Item Name"
+                    size="small"
+                    margin="normal"
+                    fullWidth
+                    {...register(`items.${index}.name`)}
+                  />
+                </Grid>
+
+                <Grid item xs={2} sm={2}>
+                  <TextField
+                    variant="outlined"
+                    label="Qty"
+                    size="small"
+                    margin="normal"
+                    fullWidth
+                    {...register(`items.${index}.quantity`)}
+                  />
+                </Grid>
+
+                <Grid item xs={4} sm={2}>
+                  <TextField
+                    variant="outlined"
+                    label="Price"
+                    size="small"
+                    margin="normal"
+                    fullWidth
+                    {...register(`items.${index}.price`)}
+                  />
+                </Grid>
+
+                <Grid item xs={6} sm={3}>
+                  <Box sx={{ display: "flex", alignItems: "center", gap: 1 }}>
+                    <TextField
+                      variant="outlined"
+                      label="Total"
+                      size="small"
+                      margin="normal"
+                      fullWidth
+                      {...register(`items.${index}.total`)}
+                    />
+                    <IconButton onClick={() => remove(index)}>
+                      <DeleteIcon color="error" />
+                    </IconButton>
+                  </Box>
+                </Grid>
+              </React.Fragment>
+            ))}
+          </Grid>
+        </Box>
+
+        {/* BUTTONS BOX */}
         <Box sx={{ padding: 2 }}>
           <Button
             variant="contained"
@@ -225,6 +316,7 @@ function NewInvoice({ isOpen, toggleDrawer }) {
               mb: 3,
             }}
             startIcon={<AddIcon />}
+            onClick={() => append()}
           >
             Add New Item
           </Button>
