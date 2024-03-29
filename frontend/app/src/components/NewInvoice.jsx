@@ -237,21 +237,6 @@ function NewInvoice({ isOpen, toggleDrawer }) {
             {fields.map((item, index) => (
               <React.Fragment key={item.id}>
                 <Grid item xs={12} sm={5}>
-                  {/* <Controller
-                    render={({ field }) => (
-                      <TextField
-                        {...field}
-                        variant="outlined"
-                        label="Item Name"
-                        size="small"
-                        margin="normal"
-                        fullWidth
-                        // {...register(`items.${index}.name`)}
-                      />
-                    )}
-                    name={`items.${index}.name`}
-                    control={control}
-                  /> */}
                   <TextField
                     variant="outlined"
                     label="Item Name"
