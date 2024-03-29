@@ -24,7 +24,11 @@ class ClientItems(models.Model):
 
 class ClientInfo(models.Model):
     owner = models.ForeignKey(
-        "auth.User", related_name="client", on_delete=models.CASCADE
+        "auth.User",
+        related_name="client",
+        on_delete=models.CASCADE,
+        blank=True,
+        null=True,
     )
     invoice_num = models.CharField(max_length=6, null=True, blank=True)
     created_at = models.DateField()
@@ -36,12 +40,14 @@ class ClientInfo(models.Model):
         max_length=200,
     )
     items = models.ManyToManyField(ClientItems, blank=True)
-    total = models.DecimalField(max_digits=10, decimal_places=2)
+    total = models.DecimalField(max_digits=10, decimal_places=2, blank=True, null=True)
     client_name = models.CharField(max_length=100)
     client_email = models.EmailField(unique=True)
     client_address = models.OneToOneField(
         ClientAddress,
         on_delete=models.CASCADE,
+        blank=True,
+        null=True,
     )
     sender_address = models.ForeignKey(
         SenderAddress, on_delete=models.CASCADE, null=True, blank=True

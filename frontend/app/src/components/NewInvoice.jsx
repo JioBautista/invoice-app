@@ -50,7 +50,6 @@ function NewInvoice({ isOpen, toggleDrawer }) {
       .catch((error) => console.log(error));
     console.log(data);
   };
-
   return (
     <Drawer open={isOpen} onClose={() => toggleDrawer(false)}>
       <form onSubmit={handleSubmit(onSubmit)}>
@@ -195,6 +194,7 @@ function NewInvoice({ isOpen, toggleDrawer }) {
                 label="Invoice Date"
                 // defaultValue={dayjs()}
                 {...register("created_at")}
+                format="YYYY-MM-DD"
               />
             </Grid>
 
@@ -346,6 +346,7 @@ function NewInvoice({ isOpen, toggleDrawer }) {
               sx={{ borderRadius: "1.25rem" }}
               size="large"
               type="submit"
+              {...register("status", { value: "paid" || "Paid" })}
             >
               Save & Send
             </Button>

@@ -253,6 +253,7 @@ function EditInfo({ isOpen, toggleDrawer, clientData }) {
                     fullWidth
                   />
                 </Grid>
+
                 <Grid item xs={6} sm={3}>
                   <Box sx={{ display: "flex", alignItems: "center", gap: 1 }}>
                     <TextField
