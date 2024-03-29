@@ -19,6 +19,14 @@ class ClientsSerializers(serializers.ModelSerializer):
         depth = 1
         owner = serializers.ReadOnlyField(source="owner.username")
 
+    def create(self, validated_data):
+        print(validated_data)
+        client_address_data = validated_data.pop("client_address")
+        client_info = ClientInfo.objects.create(**validated_data)
+        for client_address in client_address_data:
+            ClientAddress.objects.create(client=client_info, **client_address)
+        return client_info
+
 
 class UserSerializer(serializers.ModelSerializer):
 
