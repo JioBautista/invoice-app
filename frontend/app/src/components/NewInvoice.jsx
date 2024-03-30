@@ -44,16 +44,21 @@ const paymentTermsValues = [
 ];
 
 function NewInvoice({ isOpen, toggleDrawer }) {
+  // REACT-HOOK-FORM
   const {
     register,
     handleSubmit,
     control,
-    formState: { errors },
+    formState: { errors, isSubmitSuccessful },
+    reset,
   } = useForm();
+
   const { fields, append, remove } = useFieldArray({
     control,
     name: "items",
   });
+
+  // SUBMIT FORM ELEMENT
   const onSubmit = (data) => {
     axios
       .post("http://127.0.0.1:8000/clients/", data)
@@ -61,6 +66,14 @@ function NewInvoice({ isOpen, toggleDrawer }) {
       .catch((error) => console.log(error));
     console.log(data);
   };
+
+  // SAVE AND SEND BUTTON
+  const submitButton = () => {
+    setOpenModal(true);
+    toggleDrawer(false);
+  };
+
+  // MODAL STATE
   const [openModal, setOpenModal] = React.useState(false);
   return (
     <>
@@ -80,7 +93,7 @@ function NewInvoice({ isOpen, toggleDrawer }) {
                   size="small"
                   margin="normal"
                   fullWidth
-                  {...register("sender_address.street")}
+                  {...register("sender_address.street", { required: true })}
                 />
               </Grid>
 
@@ -93,7 +106,7 @@ function NewInvoice({ isOpen, toggleDrawer }) {
                   size="small"
                   margin="normal"
                   fullWidth
-                  {...register("sender_address.city")}
+                  {...register("sender_address.city", { required: true })}
                 />
               </Grid>
 
@@ -106,7 +119,7 @@ function NewInvoice({ isOpen, toggleDrawer }) {
                   size="small"
                   margin="normal"
                   fullWidth
-                  {...register("sender_address.postCode")}
+                  {...register("sender_address.postCode", { required: true })}
                 />
               </Grid>
 
@@ -119,7 +132,7 @@ function NewInvoice({ isOpen, toggleDrawer }) {
                   size="small"
                   margin="normal"
                   fullWidth
-                  {...register("sender_address.country")}
+                  {...register("sender_address.country", { required: true })}
                 />
               </Grid>
             </Grid>
@@ -137,9 +150,14 @@ function NewInvoice({ isOpen, toggleDrawer }) {
                   size="small"
                   margin="normal"
                   fullWidth
-                  {...register("client_name", { required: true })}
+                  {...register("client_name", {
+                    required: true,
+                    maxLength: 30,
+                  })}
                 />
-                {errors.client_name && <Typography>Name Required</Typography>}
+                {errors.client_name && (
+                  <Alert severity="error">Name Required</Alert>
+                )}
               </Grid>
 
               {/* EMAIL */}
@@ -150,8 +168,15 @@ function NewInvoice({ isOpen, toggleDrawer }) {
                   size="small"
                   margin="normal"
                   fullWidth
-                  {...register("client_email", { required: true })}
+                  {...register("client_email", {
+                    required: true,
+                    pattern:
+                      /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$/i,
+                  })}
                 />
+                {errors.client_email && (
+                  <Alert severity="error">Email Required</Alert>
+                )}
               </Grid>
 
               {/* STREET ADDRESS */}
@@ -162,8 +187,14 @@ function NewInvoice({ isOpen, toggleDrawer }) {
                   size="small"
                   margin="normal"
                   fullWidth
-                  {...register("client_address.street", { required: true })}
+                  {...register("client_address.street", {
+                    required: true,
+                    maxLength: 30,
+                  })}
                 />
+                {errors.client_address && errors.client_address.street && (
+                  <Alert severity="error">Street Address Required</Alert>
+                )}
               </Grid>
 
               {/* CITY */}
@@ -176,18 +207,24 @@ function NewInvoice({ isOpen, toggleDrawer }) {
                   fullWidth
                   {...register("client_address.city", { required: true })}
                 />
+                {errors.client_address && errors.client_address.city && (
+                  <Alert severity="error">City Required</Alert>
+                )}
               </Grid>
 
               {/* POST CODE */}
               <Grid item xs={6}>
                 <TextField
                   variant="outlined"
-                  label="Post Code"
+                  label="Postal Code"
                   size="small"
                   margin="normal"
                   fullWidth
                   {...register("client_address.postCode", { required: true })}
                 />
+                {errors.client_address && errors.client_address.postCode && (
+                  <Alert severity="error">Postal Code Required</Alert>
+                )}
               </Grid>
 
               {/* COUNTRY */}
@@ -200,45 +237,25 @@ function NewInvoice({ isOpen, toggleDrawer }) {
                   fullWidth
                   {...register("client_address.country", { required: true })}
                 />
+                {errors.client_address && errors.client_address.country && (
+                  <Alert severity="error">Country Required</Alert>
+                )}
               </Grid>
 
               {/* INVOICE NUMBER */}
-              <Grid item xs={12} sm={3}>
+              <Grid item xs={12}>
                 <TextField
                   variant="outlined"
                   label="Invoice Number"
                   size="medium"
                   fullWidth
-                  {...register("invoice_num", { required: true })}
+                  {...register("invoice_num", { required: true, maxLength: 6 })}
                 />
-              </Grid>
-
-              {/* CREATED AT */}
-              <Grid item xs={6} sm={3}>
-                <DatePicker
-                  label="Invoice Date"
-                  size="small"
-                  // defaultValue={dayjs()}
-                  {...register("created_at", { required: true })}
-                  format="YYYY-MM-DD"
-                  fullWidth
-                />
-              </Grid>
-
-              {/* PAYMENT DUE */}
-              <Grid item xs={6} sm={3}>
-                <DatePicker
-                  label="Invoice Due"
-                  size="medium"
-                  // defaultValue={dayjs()}
-                  {...register("payment_due", { required: true })}
-                  format="YYYY-MM-DD"
-                  fullWidth
-                />
+                {errors.invoice_num && <Alert severity="error">Required</Alert>}
               </Grid>
 
               {/* PAYMENT TERMS */}
-              <Grid item xs={6} sm={3}>
+              <Grid item xs={6} sm={4}>
                 <TextField
                   select
                   fullWidth
@@ -255,7 +272,29 @@ function NewInvoice({ isOpen, toggleDrawer }) {
                 </TextField>
               </Grid>
 
-              {/* GRID ITEM 10 */}
+              {/* CREATED AT */}
+              <Grid item xs={6} sm={4}>
+                <DatePicker
+                  label="Invoice Date"
+                  defaultValue={dayjs()}
+                  {...register("created_at", { required: true })}
+                  format="YYYY-MM-DD"
+                />
+                {errors.created_at && <Alert severity="error">Required</Alert>}
+              </Grid>
+
+              {/* PAYMENT DUE */}
+              <Grid item xs={6} sm={4}>
+                <DatePicker
+                  label="Invoice Due"
+                  defaultValue={dayjs()}
+                  {...register("payment_due", { required: true })}
+                  format="YYYY-MM-DD"
+                />
+                {errors.payment_due && <Alert severity="error">Required</Alert>}
+              </Grid>
+
+              {/* PROJECT DESCRIPTION */}
               <Grid item xs={12}>
                 <TextField
                   variant="outlined"
@@ -263,7 +302,7 @@ function NewInvoice({ isOpen, toggleDrawer }) {
                   size="small"
                   margin="normal"
                   fullWidth
-                  {...register("description", { required: true })}
+                  {...register("description")}
                 />
               </Grid>
             </Grid>
@@ -371,7 +410,7 @@ function NewInvoice({ isOpen, toggleDrawer }) {
                 sx={{ borderRadius: "1.25rem" }}
                 size="large"
                 type="submit"
-                onClick={() => setOpenModal(true)}
+                onClick={() => submitButton()}
                 {...register("status", { value: "pending" || "Pending" })}
               >
                 Save & Send
@@ -381,20 +420,33 @@ function NewInvoice({ isOpen, toggleDrawer }) {
         </form>
       </Drawer>
 
-      <Dialog open={openModal} onClose={openModal}>
-        <DialogTitle>
-          <Alert severity="success" variant="filled">
-            Success!
-          </Alert>
-        </DialogTitle>
-        <DialogContent>
-          <DialogContentText>New invoice created</DialogContentText>
-        </DialogContent>
+      {isSubmitSuccessful ? (
+        <Dialog open={openModal}>
+          <DialogTitle>
+            <Alert severity="success" variant="filled">
+              Success!
+            </Alert>
+          </DialogTitle>
+          <DialogContent>
+            <DialogContentText>New invoice created</DialogContentText>
+          </DialogContent>
 
-        <DialogActions>
-          <Button onClick={() => setOpenModal(false)}>Close</Button>
-        </DialogActions>
-      </Dialog>
+          <DialogActions>
+            <Button onClick={() => setOpenModal(false)}>Close</Button>
+          </DialogActions>
+        </Dialog>
+      ) : (
+        <Dialog open={openModal}>
+          <DialogTitle>Error</DialogTitle>
+          <DialogContent>
+            <DialogContentText>Check fields again</DialogContentText>
+          </DialogContent>
+
+          <DialogActions>
+            <Button onClick={() => setOpenModal(false)}>Close</Button>
+          </DialogActions>
+        </Dialog>
+      )}
     </>
   );
 }

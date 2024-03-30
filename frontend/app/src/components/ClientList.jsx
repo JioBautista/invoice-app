@@ -17,6 +17,8 @@ function ClientList() {
     setIsOpen(newOpen);
   };
   console.log(data);
+
+  React.useEffect(() => {}, [data]);
   return (
     <Container maxWidth="md">
       <Menu data={data} toggleDrawer={toggleDrawer} />

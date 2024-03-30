@@ -33,7 +33,7 @@ class ClientInfo(models.Model):
     invoice_num = models.CharField(max_length=6, null=True, blank=True)
     created_at = models.DateField()
     payment_due = models.DateField(blank=True, null=True)
-    description = models.CharField(max_length=200)
+    description = models.CharField(max_length=200, null=True, blank=True)
     payment_terms = models.IntegerField()
     status = models.CharField(
         choices=[("paid", "Paid"), ("pending", "Pending"), ("draft", "Draft")],
