@@ -215,12 +215,12 @@ function EditInfo({ isOpen, toggleDrawer, clientData }) {
       </Box>
 
       {/* ITEM LIST BOX */}
-      <Box sx={{ padding: 2 }} maxWidth={"600px"}>
-        <Typography>Item List</Typography>
-        <Grid container spacing={1}>
-          {clientData &&
-            clientData.items.map((item) => (
-              <React.Fragment key={item.id}>
+      {clientData &&
+        clientData.items.map((item) => (
+          <Box sx={{ padding: 2 }} maxWidth={"600px"}>
+            <Typography>Item List</Typography>
+            <Grid container spacing={1} key={item.id}>
+              <React.Fragment>
                 <Grid item xs={12} sm={6}>
                   <TextField
                     variant="outlined"
@@ -270,9 +270,9 @@ function EditInfo({ isOpen, toggleDrawer, clientData }) {
                   </Box>
                 </Grid>
               </React.Fragment>
-            ))}
-        </Grid>
-      </Box>
+            </Grid>
+          </Box>
+        ))}
       <Box sx={{ padding: 2 }}>
         <Button
           variant="contained"

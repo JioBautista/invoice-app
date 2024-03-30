@@ -17,21 +17,13 @@ function ClientList() {
     setIsOpen(newOpen);
   };
   console.log(data);
-
-  React.useEffect(() => {}, [data]);
   return (
     <Container maxWidth="md">
       <Menu data={data} toggleDrawer={toggleDrawer} />
       {data ? (
         data.results.map((items) => (
           <React.Fragment key={items.id}>
-            <Link
-              to={`/${items.id}`}
-              style={{ textDecoration: "none" }}
-              onClick={() => {
-                handleData(items.id);
-              }}
-            >
+            <Link to={`/${items.id}`} style={{ textDecoration: "none" }}>
               <Paper sx={{ mb: 3, padding: 3 }} elevation={3}>
                 <Grid
                   container

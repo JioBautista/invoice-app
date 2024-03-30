@@ -15,6 +15,7 @@ import {
   DialogContentText,
   DialogTitle,
   Alert,
+  useMediaQuery,
 } from "@mui/material";
 import { useForm, useFieldArray, Controller } from "react-hook-form";
 import AddIcon from "@mui/icons-material/Add";
@@ -75,6 +76,9 @@ function NewInvoice({ isOpen, toggleDrawer }) {
 
   // MODAL STATE
   const [openModal, setOpenModal] = React.useState(false);
+
+  // MEDIA QUERY
+  const mobile = useMediaQuery("(max-width:500px)");
   return (
     <>
       <Drawer open={isOpen} onClose={() => toggleDrawer(false)}>
@@ -248,6 +252,7 @@ function NewInvoice({ isOpen, toggleDrawer }) {
                   variant="outlined"
                   label="Invoice Number"
                   size="medium"
+                  margin="normal"
                   fullWidth
                   {...register("invoice_num", { required: true, maxLength: 6 })}
                 />
@@ -260,6 +265,7 @@ function NewInvoice({ isOpen, toggleDrawer }) {
                   select
                   fullWidth
                   label="Payment Terms"
+                  // margin="normal"
                   size="medium"
                   defaultValue={paymentTermsValues[0].value}
                   {...register("payment_terms", { required: true })}
@@ -393,14 +399,14 @@ function NewInvoice({ isOpen, toggleDrawer }) {
                 variant="outlined"
                 sx={{ borderRadius: "1.25rem" }}
                 onClick={() => toggleDrawer(false)}
-                size="large"
+                size={mobile ? "medium" : "large"}
               >
                 Discard
               </Button>
               <Button
                 variant="contained"
                 sx={{ borderRadius: "1.25rem" }}
-                size="large"
+                size={mobile ? "medium" : "large"}
                 color="warning"
               >
                 Save as Draft
@@ -408,7 +414,7 @@ function NewInvoice({ isOpen, toggleDrawer }) {
               <Button
                 variant="contained"
                 sx={{ borderRadius: "1.25rem" }}
-                size="large"
+                size={mobile ? "medium" : "large"}
                 type="submit"
                 onClick={() => submitButton()}
                 {...register("status", { value: "pending" || "Pending" })}

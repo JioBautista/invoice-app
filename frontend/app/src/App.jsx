@@ -27,7 +27,6 @@ export async function fetchClientInfo({ params }) {
     console.log(error);
   }
 }
-
 function App() {
   return (
     <LocalizationProvider dateAdapter={AdapterDayjs}>

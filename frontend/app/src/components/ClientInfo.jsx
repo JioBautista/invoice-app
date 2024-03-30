@@ -1,6 +1,7 @@
 import React from "react";
 import EditInfo from "./EditInfo";
 import { Link, useLoaderData } from "react-router-dom";
+import axios from "axios";
 import {
   useMediaQuery,
   Container,
@@ -20,17 +21,31 @@ import {
 } from "@mui/material";
 
 function ClientInfo() {
+  // STATES
   const [isOpen, setIsOpen] = React.useState(false);
   const [deleteModal, setDeleteModal] = React.useState(false);
   const mobile = useMediaQuery("(max-width:600px)");
   const { clientData } = useLoaderData();
 
+  // HANDLE FUNCTIONS
   const toggleDrawer = (newOpen) => {
     setIsOpen(newOpen);
   };
 
   const toggleModal = (newOpen) => {
     setDeleteModal(newOpen);
+  };
+
+  // DELETE RESOURCE
+  const deleteResource = () => {
+    axios
+      .delete(`http://127.0.0.1:8000/clients/${clientData.id}/`)
+      .then((res) => {
+        console.log(res);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   };
 
   console.log(clientData);
@@ -212,13 +227,16 @@ function ClientInfo() {
           </DialogContentText>
           <DialogActions>
             <Button onClick={() => toggleModal(false)}>Cancel</Button>
-            <Button
-              variant="contained"
-              color="error"
-              sx={{ borderRadius: "1.25rem" }}
-            >
-              Delete
-            </Button>
+            <Link to="/">
+              <Button
+                variant="contained"
+                color="error"
+                sx={{ borderRadius: "1.25rem" }}
+                onClick={() => deleteResource()}
+              >
+                Delete
+              </Button>
+            </Link>
           </DialogActions>
         </DialogContent>
       </Dialog>
