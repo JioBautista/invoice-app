@@ -42,7 +42,7 @@ class ClientInfo(models.Model):
     items = models.ManyToManyField(ClientItems, blank=True)
     total = models.DecimalField(max_digits=10, decimal_places=2, blank=True, null=True)
     client_name = models.CharField(max_length=100)
-    client_email = models.EmailField(unique=True)
+    client_email = models.EmailField()
     client_address = models.OneToOneField(
         ClientAddress,
         on_delete=models.CASCADE,
