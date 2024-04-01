@@ -22,7 +22,7 @@ import AddIcon from "@mui/icons-material/Add";
 import DeleteIcon from "@mui/icons-material/Delete";
 import dayjs from "dayjs";
 import { DatePicker } from "@mui/x-date-pickers";
-import { DateField } from "@mui/x-date-pickers";
+import { Link } from "react-router-dom";
 import axios from "axios";
 
 const paymentTermsValues = [
@@ -73,10 +73,14 @@ function NewInvoice({ isOpen, toggleDrawer }) {
     setOpenModal(true);
     toggleDrawer(false);
   };
+  // CLOSE BUTTON ON ERROR MODAL
+  const errorButton = () => {
+    setOpenModal(false);
+    toggleDrawer(true);
+  };
 
   // MODAL STATE
   const [openModal, setOpenModal] = React.useState(false);
-
   // MEDIA QUERY
   const mobile = useMediaQuery("(max-width:500px)");
   return (
@@ -159,9 +163,7 @@ function NewInvoice({ isOpen, toggleDrawer }) {
                     maxLength: 30,
                   })}
                 />
-                {errors.client_name && (
-                  <Alert severity="error">Name Required</Alert>
-                )}
+                {errors.client_name && <Alert severity="error">Required</Alert>}
               </Grid>
 
               {/* EMAIL */}
@@ -179,7 +181,7 @@ function NewInvoice({ isOpen, toggleDrawer }) {
                   })}
                 />
                 {errors.client_email && (
-                  <Alert severity="error">Email Required</Alert>
+                  <Alert severity="error">Required</Alert>
                 )}
               </Grid>
 
@@ -197,12 +199,12 @@ function NewInvoice({ isOpen, toggleDrawer }) {
                   })}
                 />
                 {errors.client_address && errors.client_address.street && (
-                  <Alert severity="error">Street Address Required</Alert>
+                  <Alert severity="error">Required</Alert>
                 )}
               </Grid>
 
               {/* CITY */}
-              <Grid item xs={6}>
+              <Grid item xs={12} sm={4}>
                 <TextField
                   variant="outlined"
                   label="City"
@@ -212,12 +214,12 @@ function NewInvoice({ isOpen, toggleDrawer }) {
                   {...register("client_address.city", { required: true })}
                 />
                 {errors.client_address && errors.client_address.city && (
-                  <Alert severity="error">City Required</Alert>
+                  <Alert severity="error">Required</Alert>
                 )}
               </Grid>
 
               {/* POST CODE */}
-              <Grid item xs={6}>
+              <Grid item xs={12} sm={4}>
                 <TextField
                   variant="outlined"
                   label="Postal Code"
@@ -227,12 +229,12 @@ function NewInvoice({ isOpen, toggleDrawer }) {
                   {...register("client_address.postCode", { required: true })}
                 />
                 {errors.client_address && errors.client_address.postCode && (
-                  <Alert severity="error">Postal Code Required</Alert>
+                  <Alert severity="error">Required</Alert>
                 )}
               </Grid>
 
               {/* COUNTRY */}
-              <Grid item xs={12}>
+              <Grid item xs={12} sm={4}>
                 <TextField
                   variant="outlined"
                   label="Country"
@@ -242,16 +244,16 @@ function NewInvoice({ isOpen, toggleDrawer }) {
                   {...register("client_address.country", { required: true })}
                 />
                 {errors.client_address && errors.client_address.country && (
-                  <Alert severity="error">Country Required</Alert>
+                  <Alert severity="error">Required</Alert>
                 )}
               </Grid>
 
               {/* INVOICE NUMBER */}
-              <Grid item xs={12}>
+              <Grid item xs={6} sm={6}>
                 <TextField
                   variant="outlined"
                   label="Invoice Number"
-                  size="medium"
+                  size="small"
                   margin="normal"
                   fullWidth
                   {...register("invoice_num", { required: true, maxLength: 6 })}
@@ -260,13 +262,13 @@ function NewInvoice({ isOpen, toggleDrawer }) {
               </Grid>
 
               {/* PAYMENT TERMS */}
-              <Grid item xs={6} sm={4}>
+              <Grid item xs={6} sm={6}>
                 <TextField
                   select
                   fullWidth
                   label="Payment Terms"
-                  // margin="normal"
-                  size="medium"
+                  margin="normal"
+                  size="small"
                   defaultValue={paymentTermsValues[0].value}
                   {...register("payment_terms", { required: true })}
                 >
@@ -301,7 +303,7 @@ function NewInvoice({ isOpen, toggleDrawer }) {
               </Grid>
 
               {/* PROJECT DESCRIPTION */}
-              <Grid item xs={12}>
+              <Grid item xs={9}>
                 <TextField
                   variant="outlined"
                   label="Project Description"
@@ -309,6 +311,18 @@ function NewInvoice({ isOpen, toggleDrawer }) {
                   margin="normal"
                   fullWidth
                   {...register("description")}
+                />
+              </Grid>
+
+              {/* ITEMS GRAND TOTAL */}
+              <Grid item xs={3}>
+                <TextField
+                  variant="outlined"
+                  label="Grand Total"
+                  size="small"
+                  margin="normal"
+                  fullWidth
+                  {...register("total")}
                 />
               </Grid>
             </Grid>
@@ -321,7 +335,7 @@ function NewInvoice({ isOpen, toggleDrawer }) {
               {/* RENDER ITEMS */}
               {fields.map((item, index) => (
                 <React.Fragment key={item.id}>
-                  <Grid item xs={12} sm={5}>
+                  <Grid item xs={12} sm={4}>
                     <TextField
                       variant="outlined"
                       label="Item Name"
@@ -343,7 +357,7 @@ function NewInvoice({ isOpen, toggleDrawer }) {
                     />
                   </Grid>
 
-                  <Grid item xs={4} sm={2}>
+                  <Grid item xs={4} sm={3}>
                     <TextField
                       variant="outlined"
                       label="Price"
@@ -399,14 +413,14 @@ function NewInvoice({ isOpen, toggleDrawer }) {
                 variant="outlined"
                 sx={{ borderRadius: "1.25rem" }}
                 onClick={() => toggleDrawer(false)}
-                size={mobile ? "medium" : "large"}
+                size={mobile ? "small" : "large"}
               >
                 Discard
               </Button>
               <Button
                 variant="contained"
                 sx={{ borderRadius: "1.25rem" }}
-                size={mobile ? "medium" : "large"}
+                size={mobile ? "small" : "large"}
                 color="warning"
               >
                 Save as Draft
@@ -414,7 +428,7 @@ function NewInvoice({ isOpen, toggleDrawer }) {
               <Button
                 variant="contained"
                 sx={{ borderRadius: "1.25rem" }}
-                size={mobile ? "medium" : "large"}
+                size={mobile ? "small" : "large"}
                 type="submit"
                 onClick={() => submitButton()}
                 {...register("status", { value: "pending" || "Pending" })}
@@ -428,17 +442,15 @@ function NewInvoice({ isOpen, toggleDrawer }) {
 
       {isSubmitSuccessful ? (
         <Dialog open={openModal}>
-          <DialogTitle>
-            <Alert severity="success" variant="filled">
-              Success!
-            </Alert>
-          </DialogTitle>
+          <DialogTitle>Success!</DialogTitle>
           <DialogContent>
             <DialogContentText>New invoice created</DialogContentText>
           </DialogContent>
 
           <DialogActions>
-            <Button onClick={() => setOpenModal(false)}>Close</Button>
+            <Link to={`/`}>
+              <Button onClick={() => setOpenModal(false)}>Close</Button>
+            </Link>
           </DialogActions>
         </Dialog>
       ) : (
@@ -449,7 +461,7 @@ function NewInvoice({ isOpen, toggleDrawer }) {
           </DialogContent>
 
           <DialogActions>
-            <Button onClick={() => setOpenModal(false)}>Close</Button>
+            <Button onClick={() => errorButton()}>Close</Button>
           </DialogActions>
         </Dialog>
       )}

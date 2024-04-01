@@ -24,6 +24,7 @@ function ClientInfo() {
   // STATES
   const [isOpen, setIsOpen] = React.useState(false);
   const [deleteModal, setDeleteModal] = React.useState(false);
+  const [paidModal, setPaidModal] = React.useState(false);
   const mobile = useMediaQuery("(max-width:600px)");
   const { clientData } = useLoaderData();
 
@@ -32,8 +33,12 @@ function ClientInfo() {
     setIsOpen(newOpen);
   };
 
-  const toggleModal = (newOpen) => {
+  const toggleDeleteModal = (newOpen) => {
     setDeleteModal(newOpen);
+  };
+
+  const togglePaidModal = (newOpen) => {
+    setPaidModal(newOpen);
   };
 
   // DELETE RESOURCE
@@ -82,8 +87,8 @@ function ClientInfo() {
           </Box>
           <ButtonGroup variant="contained">
             <Button onClick={() => toggleDrawer(true)}>Edit</Button>
-            <Button onClick={() => toggleModal(true)}>Delete</Button>
-            <Button>Mark as Paid</Button>
+            <Button onClick={() => toggleDeleteModal(true)}>Delete</Button>
+            <Button onClick={() => togglePaidModal(true)}>Mark as Paid</Button>
           </ButtonGroup>
         </Stack>
       </Paper>
@@ -226,7 +231,7 @@ function ClientInfo() {
             undone.
           </DialogContentText>
           <DialogActions>
-            <Button onClick={() => toggleModal(false)}>Cancel</Button>
+            <Button onClick={() => toggleDeleteModal(false)}>Cancel</Button>
             <Link to="/">
               <Button
                 variant="contained"
@@ -235,6 +240,26 @@ function ClientInfo() {
                 onClick={() => deleteResource()}
               >
                 Delete
+              </Button>
+            </Link>
+          </DialogActions>
+        </DialogContent>
+      </Dialog>
+
+      {/* MARKED AS PAID MODAL BOX */}
+      <Dialog open={paidModal} onClose={() => togglePaidModal(false)}>
+        <DialogTitle>Confirm Action</DialogTitle>
+        <DialogContent>
+          <DialogContentText>Mark this invoice as paid?</DialogContentText>
+          <DialogActions>
+            <Button onClick={() => togglePaidModal(false)}>Cancel</Button>
+            <Link to="/">
+              <Button
+                variant="contained"
+                color="success"
+                sx={{ borderRadius: "1.25rem" }}
+              >
+                Confirm
               </Button>
             </Link>
           </DialogActions>

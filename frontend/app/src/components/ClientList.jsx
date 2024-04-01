@@ -20,7 +20,7 @@ function ClientList() {
   return (
     <Container maxWidth="md">
       <Menu data={data} toggleDrawer={toggleDrawer} />
-      {data ? (
+      {data.count != 0 ? (
         data.results.map((items) => (
           <React.Fragment key={items.id}>
             <Link to={`/${items.id}`} style={{ textDecoration: "none" }}>
