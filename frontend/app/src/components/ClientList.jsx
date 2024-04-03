@@ -1,25 +1,107 @@
 import React from "react";
-import Menu from "./Menu";
-import NewInvoice from "./NewInvoice";
-import { Container } from "@mui/material";
-import Stack from "@mui/material/Stack";
+import InvoiceForm from "./InvoiceForm";
+import {
+  Container,
+  Box,
+  useMediaQuery,
+  FormControl,
+  InputLabel,
+  Select,
+  MenuItem,
+  Button,
+  Typography,
+  Grid,
+  Paper,
+  Stack,
+} from "@mui/material";
 import { Link, useLoaderData } from "react-router-dom";
-import Paper from "@mui/material/Paper";
-import Grid from "@mui/material/Grid";
-import Typography from "@mui/material/Typography";
 import ArrowForwardIosIcon from "@mui/icons-material/ArrowForwardIos";
+import AddCircleIcon from "@mui/icons-material/AddCircle";
 
 function ClientList() {
+  // DATA  FETCHED FROM APP COMPONENT
   const { data } = useLoaderData();
+
+  // MEDIA QUERY FOR MOBILE SIZE
+  const mobile = useMediaQuery("(max-width:500px)");
+
+  // DRAWER STATE
   const [isOpen, setIsOpen] = React.useState(false);
 
+  // FILTER DROPDOWN STATE
+  const [status, setStatus] = React.useState("");
+
+  // MODE STATE FOR INVOICE FORM COMPONENT
+  const [mode, setMode] = React.useState("");
+
+  // NEW INVOICE EVENT
+  const newInvoice = () => {
+    setIsOpen(true);
+    setMode("new");
+  };
+
+  // PASS DOWN THIS FUNCTION TO THE INVOICE FORM
   const toggleDrawer = (newOpen) => {
     setIsOpen(newOpen);
   };
-  console.log(data);
+
+  // FILTER DROPDOWN EVENT
+  const handleChange = (event) => {
+    setStatus(event.target.value);
+  };
+
+  console.log(mode);
   return (
     <Container maxWidth="md">
-      <Menu data={data} toggleDrawer={toggleDrawer} />
+      <Box sx={{ mb: 10 }}>
+        <Stack
+          direction="row"
+          alignItems={"center"}
+          justifyContent={"space-between"}
+          spacing={2}
+        >
+          <Box sx={{ flexGrow: 1 }}>
+            <Typography
+              variant={mobile ? "h6" : "h4"}
+              sx={{ fontWeight: "bold" }}
+            >
+              Invoices
+            </Typography>
+            {data ? (
+              <Typography>Total number of invoices: {data.count}</Typography>
+            ) : (
+              <Typography>No Invoices</Typography>
+            )}
+          </Box>
+
+          <Box sx={{ minWidth: 120 }}>
+            <FormControl fullWidth variant="standard" size="small">
+              <InputLabel>Filter</InputLabel>
+              <Select value={status} label="Filter" onChange={handleChange}>
+                <MenuItem value={"paid"}>Paid</MenuItem>
+                <MenuItem value={"pending"}>Pending</MenuItem>
+                <MenuItem value={"draft"}>Draft</MenuItem>
+              </Select>
+            </FormControl>
+          </Box>
+
+          {mobile ? (
+            <IconButton color="primary" onClick={() => newInvoice()}>
+              <AddCircleIcon fontSize="large" />
+            </IconButton>
+          ) : (
+            <Button
+              variant="contained"
+              startIcon={<AddCircleIcon />}
+              sx={{ borderRadius: "1.25rem" }}
+              onClick={() => newInvoice()}
+            >
+              New Invoice
+            </Button>
+          )}
+        </Stack>
+      </Box>
+
       {data.count != 0 ? (
         data.results.map((items) => (
           <React.Fragment key={items.id}>
@@ -78,7 +160,7 @@ function ClientList() {
           </Stack>
         </Container>
       )}
-      <NewInvoice isOpen={isOpen} toggleDrawer={toggleDrawer} />
+      <InvoiceForm isOpen={isOpen} toggleDrawer={toggleDrawer} mode={mode} />
     </Container>
   );
 }

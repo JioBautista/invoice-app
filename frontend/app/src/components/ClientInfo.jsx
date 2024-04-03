@@ -1,5 +1,6 @@
 import React from "react";
 import EditInfo from "./EditInfo";
+import InvoiceForm from "./InvoiceForm";
 import { Link, useLoaderData } from "react-router-dom";
 import axios from "axios";
 import {
@@ -21,26 +22,36 @@ import {
 } from "@mui/material";
 
 function ClientInfo() {
-  // STATES
+  // DRAWER COMPONENT STATE
   const [isOpen, setIsOpen] = React.useState(false);
+  // DELETE BUTTON MODAL COMPONENT STATE
   const [deleteModal, setDeleteModal] = React.useState(false);
+  // MARK AS PAID BUTTON MODAL COMPONENT STATE
   const [paidModal, setPaidModal] = React.useState(false);
+  // MEDIA QUERY FOR MOBILE
   const mobile = useMediaQuery("(max-width:600px)");
+  // FETCHED DATA FROM APP COMPONENT
   const { clientData } = useLoaderData();
+  // MODE STATE FOR INVOICE FORM COMPONENT
+  const [mode, setMode] = React.useState("");
 
-  // HANDLE FUNCTIONS
+  // TOGGLE DRAWER FUNCTION PASSED DOWN TO INVOICE FORM COMPONENT
   const toggleDrawer = (newOpen) => {
     setIsOpen(newOpen);
   };
-
+  // EDIT BUTTON EVENT
+  const editInvoice = () => {
+    setIsOpen(true);
+    setMode("edit");
+  };
+  // DELETE MODAL EVENT
   const toggleDeleteModal = (newOpen) => {
     setDeleteModal(newOpen);
   };
-
+  // PAID MODAL EVENT
   const togglePaidModal = (newOpen) => {
     setPaidModal(newOpen);
   };
-
   // DELETE RESOURCE
   const deleteResource = () => {
     axios
@@ -53,7 +64,6 @@ function ClientInfo() {
       });
   };
 
-  console.log(clientData);
   return (
     <Container maxWidth="md">
       {/* CLIENT INFO BUTTONS */}
@@ -86,7 +96,7 @@ function ClientInfo() {
             </Button>
           </Box>
           <ButtonGroup variant="contained">
-            <Button onClick={() => toggleDrawer(true)}>Edit</Button>
+            <Button onClick={() => editInvoice()}>Edit</Button>
             <Button onClick={() => toggleDeleteModal(true)}>Delete</Button>
             <Button onClick={() => togglePaidModal(true)}>Mark as Paid</Button>
           </ButtonGroup>
@@ -217,10 +227,11 @@ function ClientInfo() {
       </Paper>
 
       {/* DRAWER COMPONENT */}
-      <EditInfo
+      <InvoiceForm
         isOpen={isOpen}
         toggleDrawer={toggleDrawer}
         clientData={clientData}
+        mode={mode}
       />
       {/* DELETE MODAL BOX */}
       <Dialog open={deleteModal} onClose={() => toggleModal(false)}>

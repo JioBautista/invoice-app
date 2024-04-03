@@ -44,7 +44,7 @@ const paymentTermsValues = [
   },
 ];
 
-function NewInvoice({ isOpen, toggleDrawer }) {
+function InvoiceForm({ isOpen, toggleDrawer, mode, clientData }) {
   // REACT-HOOK-FORM
   const {
     register,
@@ -78,21 +78,23 @@ function NewInvoice({ isOpen, toggleDrawer }) {
     setOpenModal(false);
     toggleDrawer(true);
   };
-
   // MODAL STATE
   const [openModal, setOpenModal] = React.useState(false);
-  // MEDIA QUERY
+  // MEDIA QUERY FOR MOBILE
   const mobile = useMediaQuery("(max-width:500px)");
+
+  console.log(clientData);
+  console.log(fields);
   return (
     <>
       <Drawer open={isOpen} onClose={() => toggleDrawer(false)}>
-        <form onSubmit={handleSubmit(onSubmit)}>
+        <form onSubmit={handleSubmit(mode === "new" ? onSubmit : null)}>
           {/* BILL FROM BOX */}
           <Box sx={{ padding: 2 }} maxWidth={"600px"}>
             <Typography variant="h6">New Invoice</Typography>
             <Typography>Bill From</Typography>
             <Grid container spacing={1}>
-              {/* GRID ITEM 1 */}
+              {/* BILL FROM STREET ADDRESS */}
               <Grid item xs={12}>
                 <TextField
                   variant="outlined"
@@ -105,7 +107,7 @@ function NewInvoice({ isOpen, toggleDrawer }) {
                 />
               </Grid>
 
-              {/* GRID ITEM 2 */}
+              {/* BILL FROM CITY */}
               <Grid item xs={6}>
                 <TextField
                   variant="outlined"
@@ -118,7 +120,7 @@ function NewInvoice({ isOpen, toggleDrawer }) {
                 />
               </Grid>
 
-              {/* GRID ITEM 3 */}
+              {/* BILL FROM POST CODE */}
               <Grid item xs={6}>
                 <TextField
                   variant="outlined"
@@ -131,7 +133,7 @@ function NewInvoice({ isOpen, toggleDrawer }) {
                 />
               </Grid>
 
-              {/* GRID ITEM 4 */}
+              {/* BILL FROM COUNTRY */}
               <Grid item xs={12}>
                 <TextField
                   variant="outlined"
@@ -157,6 +159,11 @@ function NewInvoice({ isOpen, toggleDrawer }) {
                   label="Client's Name"
                   size="small"
                   margin="normal"
+                  defaultValue={
+                    clientData && clientData.client_name
+                      ? clientData.client_name
+                      : null
+                  }
                   fullWidth
                   {...register("client_name", {
                     required: true,
@@ -174,6 +181,11 @@ function NewInvoice({ isOpen, toggleDrawer }) {
                   size="small"
                   margin="normal"
                   fullWidth
+                  defaultValue={
+                    clientData && clientData.client_email
+                      ? clientData.client_email
+                      : null
+                  }
                   {...register("client_email", {
                     required: true,
                     pattern:
@@ -192,6 +204,11 @@ function NewInvoice({ isOpen, toggleDrawer }) {
                   label="Street Address"
                   size="small"
                   margin="normal"
+                  defaultValue={
+                    clientData && clientData.client_address
+                      ? clientData.client_address.street
+                      : null
+                  }
                   fullWidth
                   {...register("client_address.street", {
                     required: true,
@@ -210,6 +227,11 @@ function NewInvoice({ isOpen, toggleDrawer }) {
                   label="City"
                   size="small"
                   margin="normal"
+                  defaultValue={
+                    clientData && clientData.client_address
+                      ? clientData.client_address.city
+                      : null
+                  }
                   fullWidth
                   {...register("client_address.city", { required: true })}
                 />
@@ -226,6 +248,11 @@ function NewInvoice({ isOpen, toggleDrawer }) {
                   size="small"
                   margin="normal"
                   fullWidth
+                  defaultValue={
+                    clientData && clientData.client_address
+                      ? clientData.client_address.postCode
+                      : null
+                  }
                   {...register("client_address.postCode", { required: true })}
                 />
                 {errors.client_address && errors.client_address.postCode && (
@@ -241,6 +268,11 @@ function NewInvoice({ isOpen, toggleDrawer }) {
                   size="small"
                   margin="normal"
                   fullWidth
+                  defaultValue={
+                    clientData && clientData.client_address
+                      ? clientData.client_address.country
+                      : null
+                  }
                   {...register("client_address.country", { required: true })}
                 />
                 {errors.client_address && errors.client_address.country && (
@@ -255,6 +287,11 @@ function NewInvoice({ isOpen, toggleDrawer }) {
                   label="Invoice Number"
                   size="small"
                   margin="normal"
+                  defaultValue={
+                    clientData && clientData.invoice_num
+                      ? clientData.invoice_num
+                      : null
+                  }
                   fullWidth
                   {...register("invoice_num", { required: true, maxLength: 6 })}
                 />
@@ -269,7 +306,11 @@ function NewInvoice({ isOpen, toggleDrawer }) {
                   label="Payment Terms"
                   margin="normal"
                   size="small"
-                  defaultValue={paymentTermsValues[0].value}
+                  defaultValue={
+                    clientData && clientData.payment_terms
+                      ? clientData.payment_terms
+                      : paymentTermsValues[0].value
+                  }
                   {...register("payment_terms", { required: true })}
                 >
                   {paymentTermsValues.map((option) => (
@@ -309,6 +350,11 @@ function NewInvoice({ isOpen, toggleDrawer }) {
                   label="Project Description"
                   size="small"
                   margin="normal"
+                  defaultValue={
+                    clientData && clientData.description
+                      ? clientData.description
+                      : null
+                  }
                   fullWidth
                   {...register("description")}
                 />
@@ -321,6 +367,9 @@ function NewInvoice({ isOpen, toggleDrawer }) {
                   label="Grand Total"
                   size="small"
                   margin="normal"
+                  defaultValue={
+                    clientData && clientData.total ? clientData.total : null
+                  }
                   fullWidth
                   {...register("total")}
                 />
@@ -390,6 +439,7 @@ function NewInvoice({ isOpen, toggleDrawer }) {
 
           {/* BUTTONS BOX */}
           <Box sx={{ padding: 2 }}>
+            {/* ADD NEW ITEM BUTTON */}
             <Button
               variant="contained"
               size="large"
@@ -404,37 +454,60 @@ function NewInvoice({ isOpen, toggleDrawer }) {
             >
               Add New Item
             </Button>
+
             <Stack
               direction={"row"}
               justifyContent={"space-evenly"}
               alignItems={"center"}
             >
-              <Button
-                variant="outlined"
-                sx={{ borderRadius: "1.25rem" }}
-                onClick={() => toggleDrawer(false)}
-                size={mobile ? "small" : "large"}
-              >
-                Discard
-              </Button>
-              <Button
-                variant="contained"
-                sx={{ borderRadius: "1.25rem" }}
-                size={mobile ? "small" : "large"}
-                color="warning"
-              >
-                Save as Draft
-              </Button>
-              <Button
-                variant="contained"
-                sx={{ borderRadius: "1.25rem" }}
-                size={mobile ? "small" : "large"}
-                type="submit"
-                onClick={() => submitButton()}
-                {...register("status", { value: "pending" || "Pending" })}
-              >
-                Save & Send
-              </Button>
+              {mode === "edit" ? (
+                <>
+                  <Button
+                    variant="outlined"
+                    sx={{ borderRadius: "1.25rem" }}
+                    onClick={() => toggleDrawer(false)}
+                    size="large"
+                  >
+                    Cancel
+                  </Button>
+                  <Button
+                    variant="contained"
+                    sx={{ borderRadius: "1.25rem" }}
+                    size="large"
+                  >
+                    Save Changes
+                  </Button>
+                </>
+              ) : (
+                <>
+                  <Button
+                    variant="outlined"
+                    sx={{ borderRadius: "1.25rem" }}
+                    onClick={() => toggleDrawer(false)}
+                    size={mobile ? "small" : "large"}
+                  >
+                    Discard
+                  </Button>
+                  <Button
+                    variant="contained"
+                    sx={{ borderRadius: "1.25rem" }}
+                    size={mobile ? "small" : "large"}
+                    color="warning"
+                  >
+                    Save as Draft
+                  </Button>
+                  <Button
+                    variant="contained"
+                    sx={{ borderRadius: "1.25rem" }}
+                    size={mobile ? "small" : "large"}
+                    type="submit"
+                    onClick={() => submitButton()}
+                    {...register("status", { value: "pending" || "Pending" })}
+                  >
+                    Save & Send
+                  </Button>
+                </>
+              )}
             </Stack>
           </Box>
         </form>
@@ -469,4 +542,4 @@ function NewInvoice({ isOpen, toggleDrawer }) {
   );
 }
 
-export default NewInvoice;
+export default InvoiceForm;
