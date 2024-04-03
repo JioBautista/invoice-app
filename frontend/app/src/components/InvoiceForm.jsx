@@ -59,12 +59,22 @@ function InvoiceForm({ isOpen, toggleDrawer, mode, clientData }) {
     name: "items",
   });
 
-  // SUBMIT FORM ELEMENT
+  // SUBMIT FORM ELEMENT POST REQUEST
   const onSubmit = (data) => {
     axios
       .post("http://127.0.0.1:8000/clients/", data)
       .then((res) => console.log(res))
       .catch((error) => console.log(error));
+    console.log(data);
+  };
+
+  // SUBMIT FORM ELEMENT PUT REQUEST
+  const editResource = (data) => {
+    axios
+      .put(`http://127.0.0.1:8000/clients/${clientData && clientData.id}`, data)
+      .then((res) => console.log(res))
+      .catch((error) => console.log(error));
+
     console.log(data);
   };
 
@@ -86,7 +96,7 @@ function InvoiceForm({ isOpen, toggleDrawer, mode, clientData }) {
   return (
     <>
       <Drawer open={isOpen} onClose={() => toggleDrawer(false)}>
-        <form onSubmit={handleSubmit(mode === "new" ? onSubmit : null)}>
+        <form onSubmit={handleSubmit(mode === "new" ? onSubmit : editResource)}>
           {/* BILL FROM BOX */}
           <Box sx={{ padding: 2 }} maxWidth={"600px"}>
             <Typography variant="h6">New Invoice</Typography>
@@ -472,6 +482,7 @@ function InvoiceForm({ isOpen, toggleDrawer, mode, clientData }) {
                     variant="contained"
                     sx={{ borderRadius: "1.25rem" }}
                     size="large"
+                    type="submit"
                   >
                     Save Changes
                   </Button>

@@ -74,6 +74,14 @@ class ClientsSerializers(serializers.ModelSerializer):
             client.items.add(item)
         return client
 
+    def update(self, instance, validated_data):
+        instance.client_name = validated_data.get("client_name", instance.client_name)
+        instance.client_email = validated_data.get(
+            "client-email", instance.client_email
+        )
+        instance.save()
+        return instance
+
 
 class UserSerializer(serializers.ModelSerializer):
 
