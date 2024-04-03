@@ -83,8 +83,6 @@ function InvoiceForm({ isOpen, toggleDrawer, mode, clientData }) {
   // MEDIA QUERY FOR MOBILE
   const mobile = useMediaQuery("(max-width:500px)");
 
-  console.log(clientData);
-  console.log(fields);
   return (
     <>
       <Drawer open={isOpen} onClose={() => toggleDrawer(false)}>
