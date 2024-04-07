@@ -84,10 +84,13 @@ class ClientsSerializers(serializers.ModelSerializer):
         client_address.country = address_data.get("country", client_address.country)
         client_address.save()
 
-        items_data = validated_data.pop("items")
-        items = instance.items
-        print(items)
-        print(items_data)
+        instance.client_name = validated_data.get("client_name", instance.client_name)
+        instance.client_email = validated_data.get(
+            "client_email", instance.client_email
+        )
+        instance.status = validated_data.get("status", instance.status)
+        instance.save()
+
         return instance
 
 
