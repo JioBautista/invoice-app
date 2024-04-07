@@ -71,7 +71,7 @@ function InvoiceForm({ isOpen, toggleDrawer, mode, clientData }) {
   // SUBMIT FORM ELEMENT PUT REQUEST
   const editResource = (data) => {
     axios
-      .patch(`http://127.0.0.1:8000/clients/${clientData.id}/`, data)
+      .put(`http://127.0.0.1:8000/clients/${clientData.id}/`, data)
       .then((res) => console.log(res))
       .catch((error) => console.log(error));
 
