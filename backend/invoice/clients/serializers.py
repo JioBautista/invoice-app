@@ -89,6 +89,16 @@ class ClientsSerializers(serializers.ModelSerializer):
             "client_email", instance.client_email
         )
         instance.status = validated_data.get("status", instance.status)
+        instance.total = validated_data.get("total", instance.total)
+
+        items_data = validated_data.pop("items")
+
+        for data in items_data:
+            new_items = ClientItems.objects.create(**data)
+            instance.items.add(new_items)
+            print(instance.items)
+            print(data)
+
         instance.save()
 
         return instance
