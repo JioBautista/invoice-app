@@ -25,9 +25,9 @@ class ClientItemsSerializers(serializers.ModelSerializer):
 
 
 class ClientsSerializers(serializers.ModelSerializer):
-    client_address = ClientAddressSerializers()
-    sender_address = SenderAddressSerializers()
-    items = ClientItemsSerializers(many=True)
+    client_address = ClientAddressSerializers(read_only=True)
+    sender_address = SenderAddressSerializers(read_only=True)
+    items = ClientItemsSerializers(many=True, read_only=True)
 
     class Meta:
         model = ClientInfo
@@ -73,14 +73,6 @@ class ClientsSerializers(serializers.ModelSerializer):
             item = ClientItems.objects.create(**data)
             client.items.add(item)
         return client
-
-    def update(self, instance, validated_data):
-        instance.client_name = validated_data.get("client_name", instance.client_name)
-        instance.client_email = validated_data.get(
-            "client-email", instance.client_email
-        )
-        instance.save()
-        return instance
 
 
 class UserSerializer(serializers.ModelSerializer):
