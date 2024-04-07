@@ -25,9 +25,9 @@ class ClientItemsSerializers(serializers.ModelSerializer):
 
 
 class ClientsSerializers(serializers.ModelSerializer):
-    client_address = ClientAddressSerializers(read_only=True)
-    sender_address = SenderAddressSerializers(read_only=True)
-    items = ClientItemsSerializers(many=True, read_only=True)
+    client_address = ClientAddressSerializers()
+    sender_address = SenderAddressSerializers()
+    items = ClientItemsSerializers(many=True)
 
     class Meta:
         model = ClientInfo
@@ -73,6 +73,22 @@ class ClientsSerializers(serializers.ModelSerializer):
             item = ClientItems.objects.create(**data)
             client.items.add(item)
         return client
+
+    def update(self, instance, validated_data):
+        address_data = validated_data.pop("client_address")
+        client_address = instance.client_address
+
+        client_address.street = address_data.get("street", client_address.street)
+        client_address.city = address_data.get("city", client_address.city)
+        client_address.postCode = address_data.get("postCode", client_address.postCode)
+        client_address.country = address_data.get("country", client_address.country)
+        client_address.save()
+
+        items_data = validated_data.pop("items")
+        items = instance.items
+        print(items)
+        print(items_data)
+        return instance
 
 
 class UserSerializer(serializers.ModelSerializer):
