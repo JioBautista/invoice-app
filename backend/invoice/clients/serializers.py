@@ -21,7 +21,7 @@ class ClientItemsSerializers(serializers.ModelSerializer):
 
     class Meta:
         model = ClientItems
-        fields = ["name", "price", "total", "quantity"]
+        fields = ["id", "name", "price", "total", "quantity"]
 
 
 class ClientsSerializers(serializers.ModelSerializer):

@@ -5,6 +5,7 @@ from clients import views
 
 router = DefaultRouter()
 router.register(r"clients", views.ClientViewSet, basename="client")
+router.register(r"items", views.ItemViewSet, basename="items")
 router.register(r"users", views.UserViewSet, basename="user")
 
 urlpatterns = [path("", include(router.urls))]

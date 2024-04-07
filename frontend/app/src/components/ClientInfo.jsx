@@ -1,5 +1,4 @@
 import React from "react";
-import EditInfo from "./EditInfo";
 import InvoiceForm from "./InvoiceForm";
 import { Link, useLoaderData } from "react-router-dom";
 import axios from "axios";
@@ -14,12 +13,14 @@ import {
   Stack,
   Grid,
   Drawer,
+  IconButton,
   Dialog,
   DialogTitle,
   DialogContent,
   DialogContentText,
   DialogActions,
 } from "@mui/material";
+import DeleteIcon from "@mui/icons-material/Delete";
 
 function ClientInfo() {
   // DRAWER COMPONENT STATE
@@ -56,6 +57,18 @@ function ClientInfo() {
   const deleteResource = () => {
     axios
       .delete(`http://127.0.0.1:8000/clients/${clientData.id}/`)
+      .then((res) => {
+        console.log(res);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+
+  // DELETE ITEM RESOURCE
+  const deleteItemResource = (id) => {
+    axios
+      .delete(`http://127.0.0.1:8000/items/${id}/`)
       .then((res) => {
         console.log(res);
       })
@@ -106,7 +119,7 @@ function ClientInfo() {
       {/* CLIENT DETAILS */}
       <Paper elevation={3} sx={{ padding: mobile ? 2 : 5 }}>
         <Grid container spacing={3} sx={{ mb: 10 }}>
-          {/* GRID ITEM 1 */}
+          {/* INVOICE NUMBER */}
           <Grid item xs={12} sm={6}>
             <Typography variant="h6">#{clientData.invoice_num}</Typography>
             <Typography variant="subtitle1">
@@ -114,7 +127,7 @@ function ClientInfo() {
             </Typography>
           </Grid>
 
-          {/* GRID ITEM 2 */}
+          {/* SENDER ADRESS */}
           <Grid item xs={12} sm={6} textAlign={mobile ? "left" : "right"}>
             {clientData && clientData.sender_address ? (
               <>
@@ -126,13 +139,13 @@ function ClientInfo() {
             ) : null}
           </Grid>
 
-          {/* GRID ITEM 3 */}
+          {/* CREATED AT */}
           <Grid item xs={6} sm={2}>
             <Typography>Invoice Date</Typography>
             <Typography fontWeight={"bold"}>{clientData.created_at}</Typography>
           </Grid>
 
-          {/* GRID ITEM 4 */}
+          {/* PAYMENT DUE */}
           <Grid item xs={6} sm={3}>
             <Typography>Payment Due</Typography>
             <Typography fontWeight={"bold"}>
@@ -140,7 +153,7 @@ function ClientInfo() {
             </Typography>
           </Grid>
 
-          {/* GRID ITEM 5 */}
+          {/* CLIENT ADDRESS */}
           <Grid item xs={12} sm={3}>
             <Typography>Bill To</Typography>
             <Typography fontWeight={"bold"}>
@@ -156,7 +169,7 @@ function ClientInfo() {
             ) : null}
           </Grid>
 
-          {/* GRID ITEM 6 */}
+          {/* CLIENT EMAIL */}
           <Grid item xs={12} sm={4}>
             <Typography>Sent to</Typography>
             <Typography fontWeight={"bold"}>
@@ -165,6 +178,7 @@ function ClientInfo() {
           </Grid>
         </Grid>
 
+        {/* ITEMS */}
         <Box>
           <Box
             bgcolor={"#F9FAFE"}
@@ -175,25 +189,30 @@ function ClientInfo() {
             }}
           >
             <Grid container spacing={3} alignItems={"center"}>
-              <Grid item xs={6}>
+              <Grid item xs={7}>
                 <Typography>Item Name</Typography>
               </Grid>
-              <Grid item xs={6}>
-                <Typography textAlign={"right"}>Total</Typography>
+              <Grid item xs={5}>
+                <Typography>Total</Typography>
               </Grid>
               {clientData &&
                 clientData.items.map((items) => (
                   <React.Fragment key={items.id}>
-                    <Grid item xs={6}>
+                    <Grid item xs={4}>
                       <Typography fontWeight={"bold"}>{items.name}</Typography>
                       <Typography fontWeight={"bold"}>
                         {items.quantity} x {items.price}
                       </Typography>
                     </Grid>
-                    <Grid item xs={6}>
+                    <Grid item xs={4}>
                       <Typography fontWeight={"bold"} textAlign={"right"}>
                         {items.price}
                       </Typography>
+                    </Grid>
+                    <Grid item xs={4}>
+                      <IconButton onClick={() => deleteItemResource(items.id)}>
+                        <DeleteIcon color="error" />
+                      </IconButton>
                     </Grid>
                   </React.Fragment>
                 ))}

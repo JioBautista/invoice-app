@@ -501,14 +501,6 @@ function InvoiceForm({ isOpen, toggleDrawer, mode, clientData }) {
                     variant="contained"
                     sx={{ borderRadius: "1.25rem" }}
                     size={mobile ? "small" : "large"}
-                    color="warning"
-                  >
-                    Save as Draft
-                  </Button>
-                  <Button
-                    variant="contained"
-                    sx={{ borderRadius: "1.25rem" }}
-                    size={mobile ? "small" : "large"}
                     type="submit"
                     onClick={() => submitButton()}
                     {...register("status", { value: "pending" || "Pending" })}
