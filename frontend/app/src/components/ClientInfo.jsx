@@ -2,6 +2,7 @@ import React from "react";
 import InvoiceForm from "./InvoiceForm";
 import { Link, useLoaderData } from "react-router-dom";
 import axios from "axios";
+import { useStore } from "../store/useStore";
 import {
   useMediaQuery,
   Container,
@@ -12,7 +13,6 @@ import {
   Typography,
   Stack,
   Grid,
-  Drawer,
   IconButton,
   Dialog,
   DialogTitle,
@@ -23,38 +23,13 @@ import {
 import DeleteIcon from "@mui/icons-material/Delete";
 
 function ClientInfo() {
-  // DRAWER COMPONENT STATE
-  const [isOpen, setIsOpen] = React.useState(false);
-  // DELETE BUTTON MODAL COMPONENT STATE
-  const [deleteModal, setDeleteModal] = React.useState(false);
-  // MARK AS PAID BUTTON MODAL COMPONENT STATE
-  const [paidModal, setPaidModal] = React.useState(false);
   // MEDIA QUERY FOR MOBILE
   const mobile = useMediaQuery("(max-width:600px)");
   // FETCHED DATA FROM APP COMPONENT
   const { clientData } = useLoaderData();
-  // MODE STATE FOR INVOICE FORM COMPONENT
-  const [mode, setMode] = React.useState("");
 
-  // TOGGLE DRAWER FUNCTION PASSED DOWN TO INVOICE FORM COMPONENT
-  const toggleDrawer = (newOpen) => {
-    setIsOpen(newOpen);
-  };
-  // EDIT BUTTON EVENT
-  const editInvoice = () => {
-    setIsOpen(true);
-    setMode("edit");
-  };
-  // DELETE MODAL EVENT
-  const toggleDeleteModal = (newOpen) => {
-    setDeleteModal(newOpen);
-  };
-  // PAID MODAL EVENT
-  const togglePaidModal = (newOpen) => {
-    setPaidModal(newOpen);
-  };
   // DELETE RESOURCE
-  const deleteResource = () => {
+  const deleteResource = (value) => {
     axios
       .delete(`http://127.0.0.1:8000/clients/${clientData.id}/`)
       .then((res) => {
@@ -77,6 +52,16 @@ function ClientInfo() {
       });
   };
 
+  // STATE MANAGEMENT
+  const { deleteModal, toggleDelete, paidModal, togglePaid, toggleDrawer } =
+    useStore((state) => ({
+      deleteModal: state.deleteModal,
+      toggleDelete: state.toggleDelete,
+      paidModal: state.paidModal,
+      togglePaid: state.togglePaid,
+      toggleDrawer: state.toggleDrawer,
+      toggleMode: state.toggleMode,
+    }));
   return (
     <Container maxWidth="md">
       {/* CLIENT INFO BUTTONS */}
@@ -109,9 +94,9 @@ function ClientInfo() {
             </Button>
           </Box>
           <ButtonGroup variant="contained">
-            <Button onClick={() => editInvoice()}>Edit</Button>
-            <Button onClick={() => toggleDeleteModal(true)}>Delete</Button>
-            <Button onClick={() => togglePaidModal(true)}>Mark as Paid</Button>
+            <Button onClick={() => toggleDrawer("edit")}>Edit</Button>
+            <Button onClick={() => toggleDelete(true)}>Delete</Button>
+            <Button onClick={togglePaid}>Mark as Paid</Button>
           </ButtonGroup>
         </Stack>
       </Paper>
@@ -246,14 +231,9 @@ function ClientInfo() {
       </Paper>
 
       {/* DRAWER COMPONENT */}
-      <InvoiceForm
-        isOpen={isOpen}
-        toggleDrawer={toggleDrawer}
-        clientData={clientData}
-        mode={mode}
-      />
+      <InvoiceForm clientData={clientData} />
       {/* DELETE MODAL BOX */}
-      <Dialog open={deleteModal} onClose={() => toggleModal(false)}>
+      <Dialog open={deleteModal}>
         <DialogTitle>{"Confirm Deletion"}</DialogTitle>
         <DialogContent>
           <DialogContentText>
@@ -261,7 +241,7 @@ function ClientInfo() {
             undone.
           </DialogContentText>
           <DialogActions>
-            <Button onClick={() => toggleDeleteModal(false)}>Cancel</Button>
+            <Button onClick={() => toggleDelete(false)}>Cancel</Button>
             <Link to="/">
               <Button
                 variant="contained"
@@ -277,12 +257,12 @@ function ClientInfo() {
       </Dialog>
 
       {/* MARKED AS PAID MODAL BOX */}
-      <Dialog open={paidModal} onClose={() => togglePaidModal(false)}>
+      <Dialog open={paidModal} onClose={togglePaid}>
         <DialogTitle>Confirm Action</DialogTitle>
         <DialogContent>
           <DialogContentText>Mark this invoice as paid?</DialogContentText>
           <DialogActions>
-            <Button onClick={() => togglePaidModal(false)}>Cancel</Button>
+            <Button onClick={togglePaid}>Cancel</Button>
             <Link to="/">
               <Button
                 variant="contained"

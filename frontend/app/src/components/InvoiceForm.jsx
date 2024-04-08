@@ -1,4 +1,5 @@
 import React from "react";
+import { useStore } from "../store/useStore";
 import {
   Drawer,
   Grid,
@@ -44,7 +45,7 @@ const paymentTermsValues = [
   },
 ];
 
-function InvoiceForm({ isOpen, toggleDrawer, mode, clientData }) {
+function InvoiceForm({ clientData }) {
   // REACT-HOOK-FORM
   const {
     register,
@@ -77,25 +78,22 @@ function InvoiceForm({ isOpen, toggleDrawer, mode, clientData }) {
 
     console.log(data);
   };
-
-  // SAVE AND SEND BUTTON
-  const submitButton = () => {
-    setOpenModal(true);
-    toggleDrawer(false);
-  };
-  // CLOSE BUTTON ON ERROR MODAL
-  const errorButton = () => {
-    setOpenModal(false);
-    toggleDrawer(true);
-  };
-  // MODAL STATE
-  const [openModal, setOpenModal] = React.useState(false);
   // MEDIA QUERY FOR MOBILE
   const mobile = useMediaQuery("(max-width:500px)");
 
+  // STATE MANAGEMENT
+  const { drawer, toggleDrawer, mode, formModal, toggleForm } = useStore(
+    (state) => ({
+      drawer: state.drawer,
+      toggleDrawer: state.toggleDrawer,
+      mode: state.mode,
+      formModal: state.formModal,
+      toggleForm: state.toggleForm,
+    })
+  );
   return (
     <>
-      <Drawer open={isOpen} onClose={() => toggleDrawer(false)}>
+      <Drawer open={drawer} onClose={toggleDrawer}>
         <form onSubmit={handleSubmit(mode === "new" ? onSubmit : editResource)}>
           {/* BILL FROM BOX */}
           <Box sx={{ padding: 2 }} maxWidth={"600px"}>
@@ -473,7 +471,7 @@ function InvoiceForm({ isOpen, toggleDrawer, mode, clientData }) {
                   <Button
                     variant="outlined"
                     sx={{ borderRadius: "1.25rem" }}
-                    onClick={() => toggleDrawer(false)}
+                    onClick={toggleDrawer}
                     size="large"
                   >
                     Cancel
@@ -482,6 +480,7 @@ function InvoiceForm({ isOpen, toggleDrawer, mode, clientData }) {
                     variant="contained"
                     sx={{ borderRadius: "1.25rem" }}
                     size="large"
+                    onClick={toggleForm}
                     type="submit"
                   >
                     Save Changes
@@ -492,7 +491,7 @@ function InvoiceForm({ isOpen, toggleDrawer, mode, clientData }) {
                   <Button
                     variant="outlined"
                     sx={{ borderRadius: "1.25rem" }}
-                    onClick={() => toggleDrawer(false)}
+                    onClick={toggleDrawer}
                     size={mobile ? "small" : "large"}
                   >
                     Discard
@@ -502,7 +501,7 @@ function InvoiceForm({ isOpen, toggleDrawer, mode, clientData }) {
                     sx={{ borderRadius: "1.25rem" }}
                     size={mobile ? "small" : "large"}
                     type="submit"
-                    onClick={() => submitButton()}
+                    onClick={toggleForm}
                     {...register("status", { value: "pending" || "Pending" })}
                   >
                     Save & Send
@@ -515,7 +514,7 @@ function InvoiceForm({ isOpen, toggleDrawer, mode, clientData }) {
       </Drawer>
 
       {isSubmitSuccessful ? (
-        <Dialog open={openModal}>
+        <Dialog open={formModal}>
           <DialogTitle>Success!</DialogTitle>
           <DialogContent>
             <DialogContentText>New invoice created</DialogContentText>
@@ -523,19 +522,19 @@ function InvoiceForm({ isOpen, toggleDrawer, mode, clientData }) {
 
           <DialogActions>
             <Link to={`/`}>
-              <Button onClick={() => setOpenModal(false)}>Close</Button>
+              <Button onClick={toggleForm}>Close</Button>
             </Link>
           </DialogActions>
         </Dialog>
       ) : (
-        <Dialog open={openModal}>
+        <Dialog open={formModal}>
           <DialogTitle>Error</DialogTitle>
           <DialogContent>
             <DialogContentText>Check fields again</DialogContentText>
           </DialogContent>
 
           <DialogActions>
-            <Button onClick={() => errorButton()}>Close</Button>
+            <Button onClick={toggleForm}>Close</Button>
           </DialogActions>
         </Dialog>
       )}

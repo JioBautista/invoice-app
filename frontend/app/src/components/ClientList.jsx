@@ -1,5 +1,6 @@
 import React from "react";
 import InvoiceForm from "./InvoiceForm";
+import { useStore } from "../store/useStore";
 import {
   Container,
   Box,
@@ -25,32 +26,18 @@ function ClientList() {
   // MEDIA QUERY FOR MOBILE SIZE
   const mobile = useMediaQuery("(max-width:500px)");
 
-  // DRAWER STATE
-  const [isOpen, setIsOpen] = React.useState(false);
-
   // FILTER DROPDOWN STATE
   const [status, setStatus] = React.useState("");
-
-  // MODE STATE FOR INVOICE FORM COMPONENT
-  const [mode, setMode] = React.useState("");
-
-  // NEW INVOICE EVENT
-  const newInvoice = () => {
-    setIsOpen(true);
-    setMode("new");
-  };
-
-  // PASS DOWN THIS FUNCTION TO THE INVOICE FORM
-  const toggleDrawer = (newOpen) => {
-    setIsOpen(newOpen);
-  };
 
   // FILTER DROPDOWN EVENT
   const handleChange = (event) => {
     setStatus(event.target.value);
   };
 
-  console.log(mode);
+  // STATE MANAGEMENT
+  const { toggleDrawer } = useStore((state) => ({
+    toggleDrawer: state.toggleDrawer,
+  }));
   return (
     <Container maxWidth="md">
       <Box sx={{ mb: 10 }}>
@@ -87,7 +74,7 @@ function ClientList() {
           </Box>
 
           {mobile ? (
-            <IconButton color="primary" onClick={() => newInvoice()}>
+            <IconButton color="primary" onClick={() => toggleDrawer("new")}>
               <AddCircleIcon fontSize="large" />
             </IconButton>
           ) : (
@@ -95,7 +82,7 @@ function ClientList() {
               variant="contained"
               startIcon={<AddCircleIcon />}
               sx={{ borderRadius: "1.25rem" }}
-              onClick={() => newInvoice()}
+              onClick={() => toggleDrawer("new")}
             >
               New Invoice
             </Button>
@@ -161,7 +148,7 @@ function ClientList() {
           </Stack>
         </Container>
       )}
-      <InvoiceForm isOpen={isOpen} toggleDrawer={toggleDrawer} mode={mode} />
+      <InvoiceForm />
     </Container>
   );
 }
