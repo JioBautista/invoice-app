@@ -90,6 +90,7 @@ class ClientsSerializers(serializers.ModelSerializer):
         )
         instance.status = validated_data.get("status", instance.status)
         instance.total = validated_data.get("total", instance.total)
+        instance.invoice_num = validated_data.get("invoice_num", instance.invoice_num)
 
         items_data = validated_data.pop("items")
 

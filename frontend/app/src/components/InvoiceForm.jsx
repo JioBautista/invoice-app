@@ -1,4 +1,6 @@
 import React from "react";
+import SuccessDialog from "./SuccessDialog";
+import ErrorDialog from "./ErrorDialog";
 import { useStore } from "../store/useStore";
 import {
   Drawer,
@@ -72,7 +74,7 @@ function InvoiceForm({ clientData }) {
   // SUBMIT FORM ELEMENT PUT REQUEST
   const editResource = (data) => {
     axios
-      .patch(`http://127.0.0.1:8000/clients/${clientData.id}/`, data)
+      .put(`http://127.0.0.1:8000/clients/${clientData.id}/`, data)
       .then((res) => console.log(res))
       .catch((error) => console.log(error));
 
@@ -82,15 +84,13 @@ function InvoiceForm({ clientData }) {
   const mobile = useMediaQuery("(max-width:500px)");
 
   // STATE MANAGEMENT
-  const { drawer, toggleDrawer, mode, formModal, toggleForm } = useStore(
-    (state) => ({
-      drawer: state.drawer,
-      toggleDrawer: state.toggleDrawer,
-      mode: state.mode,
-      formModal: state.formModal,
-      toggleForm: state.toggleForm,
-    })
-  );
+  const { drawer, toggleDrawer, mode, toggleForm } = useStore((state) => ({
+    drawer: state.drawer,
+    toggleDrawer: state.toggleDrawer,
+    mode: state.mode,
+    formModal: state.formModal,
+    toggleForm: state.toggleForm,
+  }));
   return (
     <>
       <Drawer open={drawer} onClose={toggleDrawer}>
@@ -504,7 +504,7 @@ function InvoiceForm({ clientData }) {
                     onClick={toggleForm}
                     {...register("status", { value: "pending" || "Pending" })}
                   >
-                    Save & Send
+                    Create
                   </Button>
                 </>
               )}
@@ -513,31 +513,7 @@ function InvoiceForm({ clientData }) {
         </form>
       </Drawer>
 
-      {isSubmitSuccessful ? (
-        <Dialog open={formModal}>
-          <DialogTitle>Success!</DialogTitle>
-          <DialogContent>
-            <DialogContentText>New invoice created</DialogContentText>
-          </DialogContent>
-
-          <DialogActions>
-            <Link to={`/`}>
-              <Button onClick={toggleForm}>Close</Button>
-            </Link>
-          </DialogActions>
-        </Dialog>
-      ) : (
-        <Dialog open={formModal}>
-          <DialogTitle>Error</DialogTitle>
-          <DialogContent>
-            <DialogContentText>Check fields again</DialogContentText>
-          </DialogContent>
-
-          <DialogActions>
-            <Button onClick={toggleForm}>Close</Button>
-          </DialogActions>
-        </Dialog>
-      )}
+      {isSubmitSuccessful ? <SuccessDialog /> : <ErrorDialog />}
     </>
   );
 }

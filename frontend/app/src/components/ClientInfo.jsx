@@ -234,7 +234,7 @@ function ClientInfo() {
       {/* DRAWER COMPONENT */}
       <InvoiceForm clientData={clientData} />
       {/* DELETE MODAL BOX */}
-      <Dialog open={deleteModal}>
+      <Dialog open={deleteModal} onClose={toggleDelete}>
         <DialogTitle>{"Confirm Deletion"}</DialogTitle>
         <DialogContent>
           <DialogContentText>
