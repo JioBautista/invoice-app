@@ -6,7 +6,7 @@ export const useStore = create((set) => ({
   paidModal: false,
   drawer: false,
   formModal: false,
-  toggleDelete: (value) => set((state) => ({ deleteModal: value })),
+  toggleDelete: () => set((state) => ({ deleteModal: !state.deleteModal })),
   togglePaid: () => set((state) => ({ paidModal: !state.paidModal })),
   toggleDrawer: (whichMode) =>
     set((state) => ({ drawer: !state.drawer, mode: whichMode })),

@@ -29,7 +29,7 @@ function ClientInfo() {
   const { clientData } = useLoaderData();
 
   // DELETE RESOURCE
-  const deleteResource = (value) => {
+  const deleteResource = () => {
     axios
       .delete(`http://127.0.0.1:8000/clients/${clientData.id}/`)
       .then((res) => {
@@ -38,6 +38,7 @@ function ClientInfo() {
       .catch((err) => {
         console.log(err);
       });
+    toggleDelete();
   };
 
   // DELETE ITEM RESOURCE
@@ -95,7 +96,7 @@ function ClientInfo() {
           </Box>
           <ButtonGroup variant="contained">
             <Button onClick={() => toggleDrawer("edit")}>Edit</Button>
-            <Button onClick={() => toggleDelete(true)}>Delete</Button>
+            <Button onClick={toggleDelete}>Delete</Button>
             <Button onClick={togglePaid}>Mark as Paid</Button>
           </ButtonGroup>
         </Stack>
@@ -241,7 +242,7 @@ function ClientInfo() {
             undone.
           </DialogContentText>
           <DialogActions>
-            <Button onClick={() => toggleDelete(false)}>Cancel</Button>
+            <Button onClick={toggleDelete}>Cancel</Button>
             <Link to="/">
               <Button
                 variant="contained"
