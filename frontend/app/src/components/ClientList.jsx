@@ -74,6 +74,7 @@ function ClientList() {
             )}
           </Box>
 
+          {/* FILTER DROPDOWN */}
           <Box sx={{ minWidth: 120 }}>
             <FormControl fullWidth variant="standard" size="small">
               <InputLabel>Filter</InputLabel>
