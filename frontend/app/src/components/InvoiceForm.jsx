@@ -59,18 +59,6 @@ function InvoiceForm({ clientData }) {
     name: "items",
   });
 
-  // INVOICE NUMBER INPUT FIELD VALIDATION
-  const validateInvoiceNum = (value) => {
-    if (value.length > 6) {
-      setError("invoice_num", {
-        type: "maxLength",
-        message: "Characters can't be more than 6",
-      });
-    } else {
-      clearErrors("invoice_num");
-    }
-  };
-
   // SUBMIT FORM ELEMENT POST REQUEST
   const onSubmit = (data) => {
     axios
@@ -315,13 +303,8 @@ function InvoiceForm({ clientData }) {
                   {...register("invoice_num", {
                     required: true,
                     maxLength: 6,
-                    onChange: validateInvoiceNum,
                   })}
                 />
-                {/* {errors.invoice_num && <Alert severity="error">Required</Alert>} */}
-                {errors.invoice_num && (
-                  <Alert severity="error">{errors.invoice_num.message}</Alert>
-                )}
               </Grid>
 
               {/* PAYMENT TERMS */}
