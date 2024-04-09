@@ -15,7 +15,6 @@ function NavBar() {
             Invoice
           </Typography>
           <Switch color="default" />
-          <Avatar>JP</Avatar>
         </Toolbar>
       </AppBar>
       <Toolbar sx={{ mb: 3 }} />
