@@ -14,6 +14,7 @@ import {
   Grid,
   Paper,
   Stack,
+  IconButton,
 } from "@mui/material";
 import { Link, useLoaderData } from "react-router-dom";
 import ArrowForwardIosIcon from "@mui/icons-material/ArrowForwardIos";
@@ -66,9 +67,9 @@ function ClientList() {
             <FormControl fullWidth variant="standard" size="small">
               <InputLabel>Filter</InputLabel>
               <Select value={status} label="Filter" onChange={handleChange}>
+                <MenuItem value={"all"}>All</MenuItem>
                 <MenuItem value={"paid"}>Paid</MenuItem>
                 <MenuItem value={"pending"}>Pending</MenuItem>
-                <MenuItem value={"draft"}>Draft</MenuItem>
               </Select>
             </FormControl>
           </Box>

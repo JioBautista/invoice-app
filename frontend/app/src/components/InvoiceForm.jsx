@@ -12,11 +12,6 @@ import {
   Button,
   Stack,
   IconButton,
-  Dialog,
-  DialogActions,
-  DialogContent,
-  DialogContentText,
-  DialogTitle,
   Alert,
   useMediaQuery,
 } from "@mui/material";
@@ -97,7 +92,11 @@ function InvoiceForm({ clientData }) {
         <form onSubmit={handleSubmit(mode === "new" ? onSubmit : editResource)}>
           {/* BILL FROM BOX */}
           <Box sx={{ padding: 2 }} maxWidth={"600px"}>
-            <Typography variant="h6">New Invoice</Typography>
+            {mode === "new" ? (
+              <Typography variant="h6">New Invoice</Typography>
+            ) : (
+              <Typography>Edit Invoice</Typography>
+            )}
             <Typography>Bill From</Typography>
             <Grid container spacing={1}>
               {/* BILL FROM STREET ADDRESS */}
@@ -484,6 +483,17 @@ function InvoiceForm({ clientData }) {
                     type="submit"
                   >
                     Save Changes
+                  </Button>
+                  <Button
+                    variant="contained"
+                    sx={{ borderRadius: "1.25rem" }}
+                    size="large"
+                    onClick={toggleForm}
+                    type="submit"
+                    value={"paid"}
+                    {...register("status")}
+                  >
+                    Mark as paid
                   </Button>
                 </>
               ) : (

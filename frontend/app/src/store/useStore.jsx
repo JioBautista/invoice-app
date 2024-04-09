@@ -6,9 +6,6 @@ export const useStore = create((set) => ({
   // DELETE MODAL STATE AND HANDLER
   deleteModal: false,
   toggleDelete: () => set((state) => ({ deleteModal: !state.deleteModal })),
-  // MARK AS PAID MODAL STATE AND HANDLER
-  paidModal: false,
-  togglePaid: () => set((state) => ({ paidModal: !state.paidModal })),
   // DRAWER COMPONENT STATE AND HANDLER
   drawer: false,
   toggleDrawer: (whichMode) =>

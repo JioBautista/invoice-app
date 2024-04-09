@@ -1,7 +1,7 @@
 import React from "react";
+import axios from "axios";
 import InvoiceForm from "./InvoiceForm";
 import { Link, useLoaderData } from "react-router-dom";
-import axios from "axios";
 import { useStore } from "../store/useStore";
 import {
   useMediaQuery,
@@ -52,17 +52,12 @@ function ClientInfo() {
         console.log(err);
       });
   };
-
   // STATE MANAGEMENT
-  const { deleteModal, toggleDelete, paidModal, togglePaid, toggleDrawer } =
-    useStore((state) => ({
-      deleteModal: state.deleteModal,
-      toggleDelete: state.toggleDelete,
-      paidModal: state.paidModal,
-      togglePaid: state.togglePaid,
-      toggleDrawer: state.toggleDrawer,
-      toggleMode: state.toggleMode,
-    }));
+  const { deleteModal, toggleDelete, toggleDrawer } = useStore((state) => ({
+    deleteModal: state.deleteModal,
+    toggleDelete: state.toggleDelete,
+    toggleDrawer: state.toggleDrawer,
+  }));
   return (
     <Container maxWidth="md">
       {/* CLIENT INFO BUTTONS */}
@@ -85,11 +80,7 @@ function ClientInfo() {
             </Typography>
             <Button
               variant="contained"
-              color={
-                clientData.status === "pending" || clientData.status === "draft"
-                  ? "error"
-                  : "success"
-              }
+              color={clientData.status === "pending" ? "error" : "success"}
             >
               {clientData.status}
             </Button>
@@ -97,7 +88,6 @@ function ClientInfo() {
           <ButtonGroup variant="contained">
             <Button onClick={() => toggleDrawer("edit")}>Edit</Button>
             <Button onClick={toggleDelete}>Delete</Button>
-            <Button onClick={togglePaid}>Mark as Paid</Button>
           </ButtonGroup>
         </Stack>
       </Paper>
@@ -108,7 +98,7 @@ function ClientInfo() {
           {/* INVOICE NUMBER */}
           <Grid item xs={12} sm={6}>
             <Typography variant="h6">#{clientData.invoice_num}</Typography>
-            <Typography variant="subtitle1">
+            <Typography variant="subtitle1" fontWeight={600}>
               {clientData.description}
             </Typography>
           </Grid>
@@ -174,7 +164,7 @@ function ClientInfo() {
               borderTopRightRadius: "0.5rem",
             }}
           >
-            <Grid container spacing={3} alignItems={"center"}>
+            <Grid container spacing={mobile ? 1 : 2} alignItems={"center"}>
               <Grid item xs={7}>
                 <Typography>Item Name</Typography>
               </Grid>
@@ -184,18 +174,18 @@ function ClientInfo() {
               {clientData &&
                 clientData.items.map((items) => (
                   <React.Fragment key={items.id}>
-                    <Grid item xs={4}>
+                    <Grid item xs={6} sm={4}>
                       <Typography fontWeight={"bold"}>{items.name}</Typography>
                       <Typography fontWeight={"bold"}>
                         {items.quantity} x {items.price}
                       </Typography>
                     </Grid>
-                    <Grid item xs={4}>
+                    <Grid item xs={3} sm={4}>
                       <Typography fontWeight={"bold"} textAlign={"right"}>
                         {items.price}
                       </Typography>
                     </Grid>
-                    <Grid item xs={4}>
+                    <Grid item xs={3} sm={4}>
                       <IconButton onClick={() => deleteItemResource(items.id)}>
                         <DeleteIcon color="error" />
                       </IconButton>
@@ -221,11 +211,9 @@ function ClientInfo() {
               <Typography variant={mobile ? "h6" : "h5"}>
                 Grand Total
               </Typography>
-              {clientData && (
-                <Typography variant={mobile ? "h6" : "h5"}>
-                  {clientData.total}
-                </Typography>
-              )}
+              <Typography variant={mobile ? "h6" : "h5"}>
+                {clientData.total}
+              </Typography>
             </Stack>
           </Box>
         </Box>
@@ -252,26 +240,6 @@ function ClientInfo() {
                 onClick={() => deleteResource()}
               >
                 Delete
-              </Button>
-            </Link>
-          </DialogActions>
-        </DialogContent>
-      </Dialog>
-
-      {/* MARKED AS PAID MODAL BOX */}
-      <Dialog open={paidModal} onClose={togglePaid}>
-        <DialogTitle>Confirm Action</DialogTitle>
-        <DialogContent>
-          <DialogContentText>Mark this invoice as paid?</DialogContentText>
-          <DialogActions>
-            <Button onClick={togglePaid}>Cancel</Button>
-            <Link to="/">
-              <Button
-                variant="contained"
-                color="success"
-                sx={{ borderRadius: "1.25rem" }}
-              >
-                Confirm
               </Button>
             </Link>
           </DialogActions>
