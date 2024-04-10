@@ -17,4 +17,8 @@ export const useStore = create((set) => ({
       formModal: !state.formModal,
       drawer: value,
     })),
+  // DELETE ITEM MODAL STATE AND HANDLER
+  deleteItemModal: false,
+  toggleDeleteItem: () =>
+    set((state) => ({ deleteItemModal: !state.deleteItemModal })),
 }));

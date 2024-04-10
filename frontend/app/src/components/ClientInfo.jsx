@@ -1,6 +1,7 @@
 import React from "react";
 import axios from "axios";
 import InvoiceForm from "./InvoiceForm";
+import DeleteItemsDialog from "./DeleteItemsDialog";
 import { Link, useLoaderData } from "react-router-dom";
 import { useStore } from "../store/useStore";
 import {
@@ -51,13 +52,16 @@ function ClientInfo() {
       .catch((err) => {
         console.log(err);
       });
+    toggleDeleteItem();
   };
   // STATE MANAGEMENT
-  const { deleteModal, toggleDelete, toggleDrawer } = useStore((state) => ({
-    deleteModal: state.deleteModal,
-    toggleDelete: state.toggleDelete,
-    toggleDrawer: state.toggleDrawer,
-  }));
+  const { deleteModal, toggleDelete, toggleDrawer, toggleDeleteItem } =
+    useStore((state) => ({
+      deleteModal: state.deleteModal,
+      toggleDelete: state.toggleDelete,
+      toggleDrawer: state.toggleDrawer,
+      toggleDeleteItem: state.toggleDeleteItem,
+    }));
   return (
     <Container maxWidth="md">
       {/* CLIENT INFO BUTTONS */}
@@ -164,6 +168,7 @@ function ClientInfo() {
               borderTopRightRadius: "0.5rem",
             }}
           >
+            {/* ITEMS GRID */}
             <Grid container spacing={mobile ? 1 : 2} alignItems={"center"}>
               <Grid item xs={7}>
                 <Typography>Item Name</Typography>
@@ -222,7 +227,10 @@ function ClientInfo() {
       {/* DRAWER COMPONENT */}
       <InvoiceForm clientData={clientData} />
 
-      {/* DELETE MODAL BOX */}
+      {/* DELETE ITEMS DIALOG */}
+      <DeleteItemsDialog />
+
+      {/* DELETE INVOICE DIALOG */}
       <Dialog open={deleteModal} onClose={toggleDelete}>
         <DialogTitle>{"Confirm Deletion"}</DialogTitle>
         <DialogContent>
