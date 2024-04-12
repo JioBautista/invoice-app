@@ -10,7 +10,7 @@ import {
   Button,
 } from "@mui/material";
 
-function SuccessDialog() {
+function SuccessDialog({ clientData }) {
   const { formModal, toggleForm, mode } = useStore((state) => ({
     formModal: state.formModal,
     toggleForm: state.toggleForm,
@@ -29,7 +29,7 @@ function SuccessDialog() {
         </DialogContent>
 
         <DialogActions>
-          <Link to={`/`}>
+          <Link to="/">
             <Button onClick={() => toggleForm(false)}>Close</Button>
           </Link>
         </DialogActions>

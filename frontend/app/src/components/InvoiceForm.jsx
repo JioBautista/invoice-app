@@ -526,7 +526,11 @@ function InvoiceForm({ clientData }) {
         </form>
       </Drawer>
 
-      {isSubmitSuccessful ? <SuccessDialog /> : <ErrorDialog />}
+      {isSubmitSuccessful ? (
+        <SuccessDialog clientData={clientData} />
+      ) : (
+        <ErrorDialog />
+      )}
     </>
   );
 }

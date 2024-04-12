@@ -55,13 +55,20 @@ function ClientInfo() {
     toggleDeleteItem();
   };
   // STATE MANAGEMENT
-  const { deleteModal, toggleDelete, toggleDrawer, toggleDeleteItem } =
-    useStore((state) => ({
-      deleteModal: state.deleteModal,
-      toggleDelete: state.toggleDelete,
-      toggleDrawer: state.toggleDrawer,
-      toggleDeleteItem: state.toggleDeleteItem,
-    }));
+  const {
+    deleteModal,
+    toggleDelete,
+    toggleDrawer,
+    deleteItemModal,
+    toggleDeleteItem,
+  } = useStore((state) => ({
+    deleteModal: state.deleteModal,
+    toggleDelete: state.toggleDelete,
+    toggleDrawer: state.toggleDrawer,
+    deleteItemModal: state.deleteItemModal,
+    toggleDeleteItem: state.toggleDeleteItem,
+  }));
+
   return (
     <Container maxWidth="md">
       {/* CLIENT INFO BUTTONS */}
@@ -191,9 +198,13 @@ function ClientInfo() {
                       </Typography>
                     </Grid>
                     <Grid item xs={3} sm={4}>
-                      <IconButton onClick={() => deleteItemResource(items.id)}>
-                        <DeleteIcon color="error" />
-                      </IconButton>
+                      <Link to={`/${clientData.id}/`}>
+                        <IconButton
+                          onClick={() => deleteItemResource(items.id)}
+                        >
+                          <DeleteIcon color="error" />
+                        </IconButton>
+                      </Link>
                     </Grid>
                   </React.Fragment>
                 ))}
