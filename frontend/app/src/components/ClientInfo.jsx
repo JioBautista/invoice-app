@@ -167,10 +167,8 @@ function ClientInfo() {
         </Grid>
 
         {/* ITEMS */}
-        <Box>
-          <Paper
-            elevation={0}
-            // bgcolor={"#F9FAFE"}
+        <Paper elevation={0}>
+          <Box
             sx={{
               padding: mobile ? 2 : 4,
               borderTopLeftRadius: "0.5rem",
@@ -211,7 +209,7 @@ function ClientInfo() {
                   </React.Fragment>
                 ))}
             </Grid>
-          </Paper>
+          </Box>
           <Box
             bgcolor={"#373B53"}
             sx={{
@@ -234,7 +232,7 @@ function ClientInfo() {
               </Typography>
             </Stack>
           </Box>
-        </Box>
+        </Paper>
       </Paper>
 
       {/* DRAWER COMPONENT */}
