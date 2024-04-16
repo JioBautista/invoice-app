@@ -1,6 +1,7 @@
 import React from "react";
 import SuccessDialog from "./SuccessDialog";
 import ErrorDialog from "./ErrorDialog";
+import { Link } from "react-router-dom";
 import { useStore } from "../store/useStore";
 import {
   Drawer,
@@ -438,11 +439,11 @@ function InvoiceForm({ clientData }) {
                 {errors.payment_due && <Alert severity="error">Required</Alert>}
               </Grid>
 
-              {/* PROJECT DESCRIPTION */}
+              {/* DESCRIPTION */}
               <Grid item xs={6}>
                 <TextField
                   variant="outlined"
-                  label="Project Description"
+                  label="Description"
                   size="small"
                   margin="normal"
                   defaultValue={

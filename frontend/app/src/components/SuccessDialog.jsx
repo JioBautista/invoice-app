@@ -29,7 +29,7 @@ function SuccessDialog({ clientData }) {
         </DialogContent>
 
         <DialogActions>
-          <Link to="/">
+          <Link to={mode === "new" ? "/" : `/${clientData.id}/`}>
             <Button onClick={() => toggleForm(false)}>Close</Button>
           </Link>
         </DialogActions>
