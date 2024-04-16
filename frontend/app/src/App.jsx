@@ -1,6 +1,6 @@
 import React from "react";
 import { Outlet } from "react-router-dom";
-import { Box } from "@mui/material";
+import { Box, Paper } from "@mui/material";
 import { ThemeProvider, createTheme } from "@mui/material/styles";
 import { LocalizationProvider } from "@mui/x-date-pickers";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
@@ -35,14 +35,14 @@ const darkTheme = createTheme({
 });
 function App() {
   return (
-    <ThemeProvider theme={darkTheme}>
-      <LocalizationProvider dateAdapter={AdapterDayjs}>
-        <Box>
-          <NavBar />
-          <Outlet />
-        </Box>
-      </LocalizationProvider>
-    </ThemeProvider>
+    // <ThemeProvider theme={darkTheme}>
+    <LocalizationProvider dateAdapter={AdapterDayjs}>
+      <Box>
+        <NavBar />
+        <Outlet />
+      </Box>
+    </LocalizationProvider>
+    // </ThemeProvider>
   );
 }
 

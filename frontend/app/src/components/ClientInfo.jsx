@@ -168,8 +168,9 @@ function ClientInfo() {
 
         {/* ITEMS */}
         <Box>
-          <Box
-            bgcolor={"#F9FAFE"}
+          <Paper
+            elevation={0}
+            // bgcolor={"#F9FAFE"}
             sx={{
               padding: mobile ? 2 : 4,
               borderTopLeftRadius: "0.5rem",
@@ -210,7 +211,7 @@ function ClientInfo() {
                   </React.Fragment>
                 ))}
             </Grid>
-          </Box>
+          </Paper>
           <Box
             bgcolor={"#373B53"}
             sx={{

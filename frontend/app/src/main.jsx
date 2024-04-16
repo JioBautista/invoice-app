@@ -5,6 +5,8 @@ import ClientList from "./components/ClientList.jsx";
 import ClientInfo from "./components/ClientInfo.jsx";
 import ErrorPage from "./components/ErrorPage.jsx";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
+import { ThemeProvider, createTheme } from "@mui/material/styles";
+import { CssBaseline } from "@mui/material";
 
 const router = createBrowserRouter([
   {
@@ -27,8 +29,26 @@ const router = createBrowserRouter([
   },
 ]);
 
+const darkTheme = createTheme({
+  palette: {
+    mode: "dark",
+    background: {
+      default: "black",
+      paper: "#0C0E16",
+    },
+  },
+});
+const lightTheme = createTheme({
+  palette: {
+    mode: "light",
+  },
+});
+
 ReactDOM.createRoot(document.getElementById("root")).render(
   <React.StrictMode>
-    <RouterProvider router={router} />
+    <ThemeProvider theme={darkTheme}>
+      <CssBaseline />
+      <RouterProvider router={router} />
+    </ThemeProvider>
   </React.StrictMode>
 );
