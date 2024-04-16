@@ -20,6 +20,7 @@ import {
   DialogContent,
   DialogContentText,
   DialogActions,
+  Chip,
 } from "@mui/material";
 import DeleteIcon from "@mui/icons-material/Delete";
 
@@ -73,7 +74,7 @@ function ClientInfo() {
     <Container maxWidth="md">
       {/* CLIENT INFO BUTTONS */}
       <Link to="/" style={{ textDecoration: "none" }}>
-        <Button variant="outlined" sx={{ mb: 3 }}>
+        <Button variant="contained" sx={{ mb: 3 }}>
           Go Back
         </Button>
       </Link>
@@ -87,14 +88,14 @@ function ClientInfo() {
         >
           <Box display={"flex"} alignItems={"center"}>
             <Typography variant="subtitle1" sx={{ mr: 1 }}>
-              Status
+              STATUS:
             </Typography>
-            <Button
-              variant="contained"
+            <Chip
+              variant={clientData.status === "paid" ? "filled" : "outlined"}
               color={clientData.status === "pending" ? "error" : "success"}
-            >
-              {clientData.status}
-            </Button>
+              label={clientData.status.toUpperCase()}
+              size="medium"
+            />
           </Box>
           <ButtonGroup variant="contained">
             <Button onClick={() => toggleDrawer("edit")}>Edit</Button>

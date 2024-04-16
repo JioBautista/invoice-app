@@ -1,4 +1,5 @@
 from django.db import models
+from django.utils.translation import gettext_lazy as _
 
 
 class SenderAddress(models.Model):
@@ -35,8 +36,13 @@ class ClientInfo(models.Model):
     payment_due = models.DateField(blank=True, null=True)
     description = models.CharField(max_length=200, null=True, blank=True)
     payment_terms = models.IntegerField()
+
+    class StatusChoices(models.TextChoices):
+        PAID = "paid", _("Paid")
+        PENDING = "pending", _("Pending")
+
     status = models.CharField(
-        choices=[("paid", "Paid"), ("pending", "Pending"), ("draft", "Draft")],
+        choices=StatusChoices.choices,
         max_length=200,
     )
     items = models.ManyToManyField(ClientItems, blank=True)

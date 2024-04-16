@@ -101,6 +101,8 @@ class ClientsSerializers(serializers.ModelSerializer):
         instance.client_email = validated_data.get(
             "client_email", instance.client_email
         )
+        instance.created_at = validated_data.get("created_at", instance.created_at)
+        instance.payment_due = validated_data.get("payment_due", instance.payment_due)
         instance.status = validated_data.get("status", instance.status)
         instance.total = validated_data.get("total", instance.total)
         instance.invoice_num = validated_data.get("invoice_num", instance.invoice_num)

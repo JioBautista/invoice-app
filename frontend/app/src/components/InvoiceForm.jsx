@@ -20,6 +20,7 @@ import AddIcon from "@mui/icons-material/Add";
 import DeleteIcon from "@mui/icons-material/Delete";
 import dayjs from "dayjs";
 import { DatePicker } from "@mui/x-date-pickers";
+import { DateField } from "@mui/x-date-pickers";
 import axios from "axios";
 
 const paymentTermsValues = [
@@ -38,6 +39,17 @@ const paymentTermsValues = [
   {
     value: 30,
     label: "Net 30 Days",
+  },
+];
+
+const statusChoices = [
+  {
+    value: "paid",
+    label: "Paid",
+  },
+  {
+    value: "pending",
+    label: "Pending",
   },
 ];
 
@@ -92,7 +104,7 @@ function InvoiceForm({ clientData }) {
       <Drawer open={drawer} onClose={toggleDrawer}>
         <form onSubmit={handleSubmit(mode === "new" ? onSubmit : editResource)}>
           {/* BILL FROM BOX */}
-          <Box sx={{ padding: 2 }} maxWidth={"600px"}>
+          <Box sx={{ padding: 2 }} maxWidth={"500px"}>
             {mode === "new" ? (
               <Typography variant="h6">New Invoice</Typography>
             ) : (
@@ -105,12 +117,19 @@ function InvoiceForm({ clientData }) {
                 <TextField
                   variant="outlined"
                   label="Street Address"
-                  defaultValue={"19 Union Terrace"}
+                  defaultValue={
+                    clientData && clientData.sender_address
+                      ? clientData.sender_address.street
+                      : null
+                  }
                   size="small"
                   margin="normal"
                   fullWidth
                   {...register("sender_address.street", { required: true })}
                 />
+                {errors.sender_address && errors.sender_address.street && (
+                  <Alert severity="error">Required</Alert>
+                )}
               </Grid>
 
               {/* BILL FROM CITY */}
@@ -118,12 +137,19 @@ function InvoiceForm({ clientData }) {
                 <TextField
                   variant="outlined"
                   label="City"
-                  defaultValue={"London"}
+                  defaultValue={
+                    clientData && clientData.sender_address
+                      ? clientData.sender_address.city
+                      : null
+                  }
                   size="small"
                   margin="normal"
                   fullWidth
                   {...register("sender_address.city", { required: true })}
                 />
+                {errors.sender_address && errors.sender_address.city && (
+                  <Alert severity="error">Required</Alert>
+                )}
               </Grid>
 
               {/* BILL FROM POST CODE */}
@@ -131,12 +157,19 @@ function InvoiceForm({ clientData }) {
                 <TextField
                   variant="outlined"
                   label="Post Code"
-                  defaultValue={"E1 3EZ"}
+                  defaultValue={
+                    clientData && clientData.sender_address
+                      ? clientData.sender_address.postCode
+                      : null
+                  }
                   size="small"
                   margin="normal"
                   fullWidth
                   {...register("sender_address.postCode", { required: true })}
                 />
+                {errors.sender_address && errors.sender_address.postCode && (
+                  <Alert severity="error">Required</Alert>
+                )}
               </Grid>
 
               {/* BILL FROM COUNTRY */}
@@ -144,18 +177,25 @@ function InvoiceForm({ clientData }) {
                 <TextField
                   variant="outlined"
                   label="Country"
-                  defaultValue={"United Kingdom"}
+                  defaultValue={
+                    clientData && clientData.sender_address
+                      ? clientData.sender_address.country
+                      : null
+                  }
                   size="small"
                   margin="normal"
                   fullWidth
                   {...register("sender_address.country", { required: true })}
                 />
+                {errors.sender_address && errors.sender_address.country && (
+                  <Alert severity="error">Required</Alert>
+                )}
               </Grid>
             </Grid>
           </Box>
 
           {/* BILL TO BOX */}
-          <Box sx={{ padding: 2 }} maxWidth={"600px"}>
+          <Box sx={{ padding: 2 }} maxWidth={"500px"}>
             <Typography>Bill To</Typography>
             <Grid container spacing={1}>
               {/* NAME */}
@@ -227,7 +267,7 @@ function InvoiceForm({ clientData }) {
               </Grid>
 
               {/* CITY */}
-              <Grid item xs={12} sm={4}>
+              <Grid item xs={12} sm={6}>
                 <TextField
                   variant="outlined"
                   label="City"
@@ -247,7 +287,7 @@ function InvoiceForm({ clientData }) {
               </Grid>
 
               {/* POST CODE */}
-              <Grid item xs={12} sm={4}>
+              <Grid item xs={12} sm={6}>
                 <TextField
                   variant="outlined"
                   label="Postal Code"
@@ -267,7 +307,7 @@ function InvoiceForm({ clientData }) {
               </Grid>
 
               {/* COUNTRY */}
-              <Grid item xs={12} sm={4}>
+              <Grid item xs={12}>
                 <TextField
                   variant="outlined"
                   label="Country"
@@ -287,7 +327,8 @@ function InvoiceForm({ clientData }) {
               </Grid>
 
               {/* INVOICE NUMBER */}
-              <Grid item xs={6} sm={6}>
+
+              <Grid item xs={12}>
                 <TextField
                   variant="outlined"
                   label="Invoice Number"
@@ -301,13 +342,24 @@ function InvoiceForm({ clientData }) {
                   fullWidth
                   {...register("invoice_num", {
                     required: true,
-                    maxLength: 6,
+                    maxLength: {
+                      value: 6,
+                      message:
+                        "Invoice number cannot be more than 6 characters",
+                    },
                   })}
                 />
+                {errors.invoice_num && (
+                  <Alert severity="error">
+                    {errors.invoice_num.message
+                      ? errors.invoice_num.message
+                      : "Required"}
+                  </Alert>
+                )}
               </Grid>
 
               {/* PAYMENT TERMS */}
-              <Grid item xs={6} sm={6}>
+              <Grid item xs={6}>
                 <TextField
                   select
                   fullWidth
@@ -329,30 +381,65 @@ function InvoiceForm({ clientData }) {
                 </TextField>
               </Grid>
 
+              {/* PAYMENT STATUS */}
+              <Grid item xs={6}>
+                <TextField
+                  select
+                  fullWidth
+                  label="Status"
+                  margin="normal"
+                  size="small"
+                  defaultValue={
+                    clientData && clientData.status
+                      ? clientData.status
+                      : statusChoices[0].value
+                  }
+                  {...register("status", { required: true })}
+                >
+                  {statusChoices.map((option) => (
+                    <MenuItem key={option.value} value={option.value}>
+                      {option.label}
+                    </MenuItem>
+                  ))}
+                </TextField>
+              </Grid>
+
               {/* CREATED AT */}
-              <Grid item xs={6} sm={4}>
-                <DatePicker
+              <Grid item xs={6}>
+                <DateField
+                  name="createdAt"
                   label="Invoice Date"
-                  defaultValue={dayjs()}
-                  {...register("created_at", { required: true })}
                   format="YYYY-MM-DD"
+                  size="small"
+                  margin="normal"
+                  defaultValue={
+                    clientData ? dayjs(clientData.created_at) : null
+                  }
+                  {...register("created_at", { required: true })}
+                  fullWidth
                 />
                 {errors.created_at && <Alert severity="error">Required</Alert>}
               </Grid>
 
               {/* PAYMENT DUE */}
-              <Grid item xs={6} sm={4}>
-                <DatePicker
+              <Grid item xs={6}>
+                <DateField
+                  name="paymentDue"
                   label="Invoice Due"
-                  defaultValue={dayjs()}
-                  {...register("payment_due", { required: true })}
                   format="YYYY-MM-DD"
+                  size="small"
+                  margin="normal"
+                  defaultValue={
+                    clientData ? dayjs(clientData.payment_due) : null
+                  }
+                  {...register("payment_due", { required: true })}
+                  fullWidth
                 />
                 {errors.payment_due && <Alert severity="error">Required</Alert>}
               </Grid>
 
               {/* PROJECT DESCRIPTION */}
-              <Grid item xs={9}>
+              <Grid item xs={6}>
                 <TextField
                   variant="outlined"
                   label="Project Description"
@@ -364,12 +451,13 @@ function InvoiceForm({ clientData }) {
                       : null
                   }
                   fullWidth
-                  {...register("description")}
+                  {...register("description", { required: true })}
                 />
+                {errors.description && <Alert severity="error">Required</Alert>}
               </Grid>
 
               {/* ITEMS GRAND TOTAL */}
-              <Grid item xs={3}>
+              <Grid item xs={6}>
                 <TextField
                   variant="outlined"
                   label="Grand Total"
@@ -379,14 +467,15 @@ function InvoiceForm({ clientData }) {
                     clientData && clientData.total ? clientData.total : null
                   }
                   fullWidth
-                  {...register("total")}
+                  {...register("total", { required: true })}
                 />
+                {errors.total && <Alert severity="error">Required</Alert>}
               </Grid>
             </Grid>
           </Box>
 
           {/* ITEM LIST BOX */}
-          <Box sx={{ padding: 2 }} maxWidth={"600px"}>
+          <Box sx={{ padding: 2 }} maxWidth={"500px"}>
             <Typography>Item List</Typography>
             <Grid container spacing={1}>
               {/* RENDER ITEMS */}
@@ -487,17 +576,6 @@ function InvoiceForm({ clientData }) {
                   >
                     Save Changes
                   </Button>
-                  <Button
-                    variant="contained"
-                    sx={{ borderRadius: "1.25rem" }}
-                    size="large"
-                    onClick={toggleForm}
-                    type="submit"
-                    value={"paid"}
-                    {...register("status")}
-                  >
-                    Mark as paid
-                  </Button>
                 </>
               ) : (
                 <>
@@ -515,7 +593,6 @@ function InvoiceForm({ clientData }) {
                     size={mobile ? "small" : "large"}
                     type="submit"
                     onClick={toggleForm}
-                    {...register("status", { value: "pending" || "Pending" })}
                   >
                     Create
                   </Button>
