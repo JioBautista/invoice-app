@@ -1,10 +1,8 @@
 import React from "react";
 import AppBar from "@mui/material/AppBar";
 import { Toolbar } from "@mui/material";
-import Avatar from "@mui/material/Avatar";
 import Switch from "@mui/material/Switch";
 import Typography from "@mui/material/Typography";
-import { Link } from "react-router-dom";
 
 function NavBar() {
   return (
