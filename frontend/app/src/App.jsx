@@ -30,6 +30,7 @@ export async function fetchClientInfo({ params }) {
   }
 }
 export const ThemeContext = React.createContext();
+
 const darkTheme = createTheme({
   palette: {
     mode: "dark",
