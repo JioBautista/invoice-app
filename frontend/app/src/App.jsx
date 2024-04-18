@@ -7,6 +7,7 @@ import { LocalizationProvider } from "@mui/x-date-pickers";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import NavBar from "./navbar/NavBar";
 import axios from "axios";
+import { light } from "@mui/material/styles/createPalette";
 
 export async function fetchData() {
   try {
@@ -28,6 +29,7 @@ export async function fetchClientInfo({ params }) {
     console.log(error);
   }
 }
+export const ThemeContext = React.createContext();
 const darkTheme = createTheme({
   palette: {
     mode: "dark",
@@ -37,17 +39,26 @@ const darkTheme = createTheme({
     },
   },
 });
+
+const lightTheme = createTheme({
+  palette: {
+    mode: "light",
+  },
+});
 function App() {
+  const [theme, toggleTheme] = React.useState(false);
   return (
-    <ThemeProvider theme={darkTheme}>
-      <CssBaseline />
-      <LocalizationProvider dateAdapter={AdapterDayjs}>
-        <Box>
-          <NavBar />
-          <Outlet />
-        </Box>
-      </LocalizationProvider>
-    </ThemeProvider>
+    <ThemeContext.Provider value={[theme, toggleTheme]}>
+      <ThemeProvider theme={theme ? darkTheme : lightTheme}>
+        <CssBaseline />
+        <LocalizationProvider dateAdapter={AdapterDayjs}>
+          <Box>
+            <NavBar />
+            <Outlet />
+          </Box>
+        </LocalizationProvider>
+      </ThemeProvider>
+    </ThemeContext.Provider>
   );
 }
 

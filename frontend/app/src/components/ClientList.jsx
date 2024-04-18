@@ -27,14 +27,6 @@ function ClientList() {
   // MEDIA QUERY FOR MOBILE SIZE
   const mobile = useMediaQuery("(max-width:500px)");
 
-  // FILTER DROPDOWN STATE
-  const [status, setStatus] = React.useState("");
-
-  // FILTER DROPDOWN EVENT
-  const handleChange = (event) => {
-    setStatus(event.target.value);
-  };
-
   // STATE MANAGEMENT
   const { toggleDrawer } = useStore((state) => ({
     toggleDrawer: state.toggleDrawer,
@@ -60,18 +52,6 @@ function ClientList() {
             ) : (
               <Typography>No Invoices</Typography>
             )}
-          </Box>
-
-          {/* FILTER DROPDOWN */}
-          <Box sx={{ minWidth: 120 }}>
-            <FormControl fullWidth variant="standard" size="small">
-              <InputLabel>Filter</InputLabel>
-              <Select value={status} label="Filter" onChange={handleChange}>
-                <MenuItem value={"all"}>All</MenuItem>
-                <MenuItem value={"paid"}>Paid</MenuItem>
-                <MenuItem value={"pending"}>Pending</MenuItem>
-              </Select>
-            </FormControl>
           </Box>
 
           {mobile ? (
