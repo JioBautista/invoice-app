@@ -24,7 +24,7 @@ export async function fetchData() {
 export async function fetchClientInfo({ params }) {
   try {
     const response = await axios.get(
-      `http://127.0.0.1:8000/clients/${params.clientId}`
+      `https://clownfish-app-egma9.ondigitalocean.app/clients/${params.clientId}`
     );
     const clientData = response.data;
     return { clientData };
