@@ -11,7 +11,7 @@ import { light } from "@mui/material/styles/createPalette";
 
 export async function fetchData() {
   try {
-    const response = await axios.get("http://127.0.0.1:8000/clients");
+    const response = await axios.get("http://127.0.0.1:8000/clients/");
     // const response = await axios.get(
     //   "https://clownfish-app-egma9.ondigitalocean.app/clients"
     // );
