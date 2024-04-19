@@ -33,7 +33,9 @@ function ClientInfo() {
   // DELETE RESOURCE
   const deleteResource = () => {
     axios
-      .delete(`http://127.0.0.1:8000/clients/${clientData.id}/`)
+      .delete(
+        `https://clownfish-app-egma9.ondigitalocean.app/clients/${clientData.id}/`
+      )
       .then((res) => {
         console.log(res);
       })
@@ -46,7 +48,7 @@ function ClientInfo() {
   // DELETE ITEM RESOURCE
   const deleteItemResource = (id) => {
     axios
-      .delete(`http://127.0.0.1:8000/items/${id}/`)
+      .delete(`https://clownfish-app-egma9.ondigitalocean.app/items/${id}/`)
       .then((res) => {
         console.log(res);
       })
