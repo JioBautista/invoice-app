@@ -58,8 +58,8 @@ MIDDLEWARE = [
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
 ]
-# CORS_ALLOWED_ORIGINS = ["http://localhost:5173"]
-CORS_ORIGIN_ALLOW_ALL = True
+CORS_ALLOWED_ORIGINS = ["http://localhost:5173", "https://invoice-app-jio.vercel.app/"]
+# CORS_ORIGIN_ALLOW_ALL = True
 
 ROOT_URLCONF = "invoice.urls"
 
