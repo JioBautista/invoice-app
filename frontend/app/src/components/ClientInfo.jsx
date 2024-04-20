@@ -58,19 +58,14 @@ function ClientInfo() {
     toggleDeleteItem();
   };
   // STATE MANAGEMENT
-  const {
-    deleteModal,
-    toggleDelete,
-    toggleDrawer,
-    deleteItemModal,
-    toggleDeleteItem,
-  } = useStore((state) => ({
-    deleteModal: state.deleteModal,
-    toggleDelete: state.toggleDelete,
-    toggleDrawer: state.toggleDrawer,
-    deleteItemModal: state.deleteItemModal,
-    toggleDeleteItem: state.toggleDeleteItem,
-  }));
+  const { deleteModal, toggleDelete, toggleDrawer, toggleDeleteItem } =
+    useStore((state) => ({
+      deleteModal: state.deleteModal,
+      toggleDelete: state.toggleDelete,
+      toggleDrawer: state.toggleDrawer,
+      deleteItemModal: state.deleteItemModal,
+      toggleDeleteItem: state.toggleDeleteItem,
+    }));
 
   return (
     <Container maxWidth="md">
@@ -253,16 +248,14 @@ function ClientInfo() {
           </DialogContentText>
           <DialogActions>
             <Button onClick={toggleDelete}>Cancel</Button>
-            <Link to="/">
-              <Button
-                variant="contained"
-                color="error"
-                sx={{ borderRadius: "1.25rem" }}
-                onClick={() => deleteResource()}
-              >
-                Delete
-              </Button>
-            </Link>
+            <Button
+              variant="contained"
+              color="error"
+              sx={{ borderRadius: "1.25rem" }}
+              onClick={() => deleteResource()}
+            >
+              Delete
+            </Button>
           </DialogActions>
         </DialogContent>
       </Dialog>
