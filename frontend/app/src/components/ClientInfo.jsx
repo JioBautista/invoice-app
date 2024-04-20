@@ -195,7 +195,10 @@ function ClientInfo() {
                       </Typography>
                     </Grid>
                     <Grid item xs={3} sm={4}>
-                      <Link to={`/${clientData.id}/`}>
+                      <Link
+                        to={`/${clientData.id}/`}
+                        style={{ textDecoration: "none" }}
+                      >
                         <IconButton
                           onClick={() => deleteItemResource(items.id)}
                         >

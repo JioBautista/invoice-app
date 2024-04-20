@@ -24,7 +24,7 @@ function DeleteItemsDialog({ clientData }) {
         </DialogContent>
 
         <DialogActions>
-          <Link to={`/${clientData.id}/`}>
+          <Link to={`/${clientData.id}/`} style={{ textDecoration: "none" }}>
             <Button onClick={toggleDeleteItem}>Close</Button>
           </Link>
         </DialogActions>

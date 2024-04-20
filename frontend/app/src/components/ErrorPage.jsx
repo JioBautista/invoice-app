@@ -11,7 +11,7 @@ function ErrorPage() {
       <Typography fontWeight={"bold"} sx={{ mb: 5 }}>
         WRONG!
       </Typography>
-      <Link to={"/"}>
+      <Link to={"/"} style={{ textDecoration: "none" }}>
         <Button variant="contained" sx={{ borderRadius: "1.25rem" }}>
           Back to Homepage
         </Button>
