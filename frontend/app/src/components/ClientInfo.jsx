@@ -236,7 +236,7 @@ function ClientInfo() {
       <InvoiceForm clientData={clientData} />
 
       {/* DELETE ITEMS DIALOG */}
-      <DeleteItemsDialog />
+      <DeleteItemsDialog clientData={clientData} />
 
       {/* DELETE INVOICE DIALOG */}
       <Dialog open={deleteModal} onClose={toggleDelete}>

@@ -10,7 +10,7 @@ import {
   Button,
 } from "@mui/material";
 
-function DeleteItemsDialog() {
+function DeleteItemsDialog({ clientData }) {
   const { deleteItemModal, toggleDeleteItem } = useStore((state) => ({
     deleteItemModal: state.deleteItemModal,
     toggleDeleteItem: state.toggleDeleteItem,
@@ -24,7 +24,9 @@ function DeleteItemsDialog() {
         </DialogContent>
 
         <DialogActions>
-          <Button onClick={toggleDeleteItem}>Close</Button>
+          <Link to={`/${clientData.id}/`}>
+            <Button onClick={toggleDeleteItem}>Close</Button>
+          </Link>
         </DialogActions>
       </Dialog>
     </>
