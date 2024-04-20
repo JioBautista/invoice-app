@@ -483,7 +483,7 @@ function InvoiceForm({ clientData }) {
               {/* RENDER ITEMS */}
               {fields.map((item, index) => (
                 <React.Fragment key={item.id}>
-                  <Grid item xs={12} sm={4}>
+                  <Grid item xs={4} sm={4}>
                     <TextField
                       variant="outlined"
                       label="Item Name"
@@ -505,7 +505,7 @@ function InvoiceForm({ clientData }) {
                     />
                   </Grid>
 
-                  <Grid item xs={4} sm={3}>
+                  <Grid item xs={2} sm={3}>
                     <TextField
                       variant="outlined"
                       label="Price"
@@ -516,7 +516,7 @@ function InvoiceForm({ clientData }) {
                     />
                   </Grid>
 
-                  <Grid item xs={6} sm={3}>
+                  <Grid item xs={4} sm={3}>
                     <Box sx={{ display: "flex", alignItems: "center", gap: 1 }}>
                       <TextField
                         variant="outlined"
