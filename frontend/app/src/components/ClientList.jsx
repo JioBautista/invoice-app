@@ -23,7 +23,6 @@ import AddCircleIcon from "@mui/icons-material/AddCircle";
 function ClientList() {
   // DATA  FETCHED FROM APP COMPONENT
   const { data } = useLoaderData();
-  debugger;
 
   // MEDIA QUERY FOR MOBILE SIZE
   const mobile = useMediaQuery("(max-width:500px)");
