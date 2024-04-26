@@ -26,5 +26,5 @@ urlpatterns = [
     path("", include("users.urls")),
 ]
 urlpatterns += [
-    path("api-token-auth/", views.obtain_auth_token),
+    path("api-token/", views.obtain_auth_token),
 ]
