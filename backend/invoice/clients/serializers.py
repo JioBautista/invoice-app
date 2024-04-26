@@ -1,6 +1,5 @@
 from rest_framework import serializers
 from clients.models import ClientInfo, ClientAddress, SenderAddress, ClientItems
-from django.contrib.auth.models import User
 
 
 class ClientAddressSerializers(serializers.ModelSerializer):
@@ -122,10 +121,3 @@ class ClientsSerializers(serializers.ModelSerializer):
         instance.save()
 
         return instance
-
-
-class UserSerializer(serializers.ModelSerializer):
-
-    class Meta:
-        model = User
-        fields = "__all__"

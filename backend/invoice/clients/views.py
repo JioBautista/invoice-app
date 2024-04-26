@@ -1,24 +1,27 @@
 from clients.models import ClientInfo, ClientItems
 from clients.serializers import (
     ClientsSerializers,
-    UserSerializer,
     ClientItemsSerializers,
 )
-from clients.permissions import IsOwnerOrReadOnly
-from rest_framework import permissions, viewsets
-from django.contrib.auth.models import User
+from rest_framework import generics
+from rest_framework.permissions import IsAuthenticated
 
 
-class ClientViewSet(viewsets.ModelViewSet):
+class ClientsList(generics.ListCreateAPIView):
     queryset = ClientInfo.objects.all()
     serializer_class = ClientsSerializers
 
 
-class UserViewSet(viewsets.ReadOnlyModelViewSet):
-    queryset = User.objects.all()
-    serializer_class = UserSerializer
+class ClientDetails(generics.RetrieveUpdateDestroyAPIView):
+    queryset = ClientInfo.objects.all()
+    serializer_class = ClientsSerializers
 
 
-class ItemViewSet(viewsets.ModelViewSet):
+class ItemList(generics.ListCreateAPIView):
+    queryset = ClientItems.objects.all()
+    serializer_class = ClientItemsSerializers
+
+
+class ItemDetails(generics.RetrieveUpdateDestroyAPIView):
     queryset = ClientItems.objects.all()
     serializer_class = ClientItemsSerializers
