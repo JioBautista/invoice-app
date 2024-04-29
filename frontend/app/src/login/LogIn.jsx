@@ -7,6 +7,7 @@ import {
   Button,
   Avatar,
 } from "@mui/material";
+import { Link, redirect } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { useStore } from "../store/useStore";
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";

@@ -7,6 +7,7 @@ import { LocalizationProvider } from "@mui/x-date-pickers";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import NavBar from "./navbar/NavBar";
 import axios from "axios";
+import { useStore } from "./store/useStore";
 
 export async function fetchData() {
   try {
@@ -62,6 +63,7 @@ const lightTheme = createTheme({
     mode: "light",
   },
 });
+
 function App() {
   const [theme, toggleTheme] = React.useState(false);
   return (
