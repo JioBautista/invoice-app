@@ -1,5 +1,5 @@
 import React from "react";
-import { Outlet } from "react-router-dom";
+import { Outlet, redirect } from "react-router-dom";
 import { Box, Paper } from "@mui/material";
 import { ThemeProvider, createTheme, useTheme } from "@mui/material/styles";
 import CssBaseline from "@mui/material/CssBaseline";
@@ -24,10 +24,25 @@ export async function fetchClientInfo({ params }) {
     const response = await axios.get(
       `https://clownfish-app-egma9.ondigitalocean.app/clients/${params.clientId}`
     );
+    console.log(response);
     const clientData = response.data;
     return { clientData };
   } catch (error) {
     console.log(error);
+  }
+}
+
+export async function fetchUsers() {
+  try {
+    const response = await axios.post(
+      "https://clownfish-app-egma9.ondigitalocean.app/api-token/"
+    );
+    const userToken = response.data;
+    console.log(userToken);
+    return { userToken };
+  } catch (error) {
+    console.log(error.response);
+    return redirect("/login");
   }
 }
 export const ThemeContext = React.createContext();
