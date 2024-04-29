@@ -8,6 +8,7 @@ import {
   Avatar,
 } from "@mui/material";
 import { useForm } from "react-hook-form";
+import { useStore } from "../store/useStore";
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import axios from "axios";
 
@@ -18,17 +19,23 @@ function LogIn() {
     formState: { errors },
   } = useForm();
 
+  const { receiveToken, userToken } = useStore((state) => ({
+    receiveToken: state.receiveToken,
+    userToken: state.userToken,
+  }));
+
   const onSubmit = (data) => {
     axios
       .post("https://clownfish-app-egma9.ondigitalocean.app/api-token/", data)
       .then(function (response) {
-        console.log(response);
+        receiveToken(response.data.token);
       })
       .catch(function (error) {
         console.log(error.response);
       });
   };
 
+  console.log(userToken);
   return (
     <Container maxWidth="xs">
       <Box

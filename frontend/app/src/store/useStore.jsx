@@ -21,4 +21,7 @@ export const useStore = create((set) => ({
   deleteItemModal: false,
   toggleDeleteItem: () =>
     set((state) => ({ deleteItemModal: !state.deleteItemModal })),
+  // TOKEN
+  userToken: null,
+  receiveToken: (value) => set(() => ({ userToken: value })),
 }));

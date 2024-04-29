@@ -34,12 +34,12 @@ export async function fetchClientInfo({ params }) {
 
 export async function fetchUsers() {
   try {
-    const response = await axios.post(
-      "https://clownfish-app-egma9.ondigitalocean.app/api-token/"
+    const response = await axios.get(
+      "https://clownfish-app-egma9.ondigitalocean.app/users/"
     );
-    const userToken = response.data;
-    console.log(userToken);
-    return { userToken };
+    const currentUser = response.data;
+    console.log(currentUser);
+    return { currentUser };
   } catch (error) {
     console.log(error.response);
     return redirect("/login");
