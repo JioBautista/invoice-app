@@ -7,7 +7,6 @@ import { LocalizationProvider } from "@mui/x-date-pickers";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import NavBar from "./navbar/NavBar";
 import axios from "axios";
-import { light } from "@mui/material/styles/createPalette";
 
 export async function fetchData() {
   try {
