@@ -12,7 +12,7 @@ const router = createBrowserRouter([
     path: "/",
     element: <App />,
     errorElement: <ErrorPage />,
-    loader: fetchUsers,
+    // loader: fetchUsers,
     children: [
       {
         path: "/",
