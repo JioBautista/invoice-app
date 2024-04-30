@@ -1,11 +1,10 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
-import App, { fetchData, fetchClientInfo, fetchUsers } from "./App.jsx";
+import App, { fetchData, fetchClientInfo } from "./App.jsx";
 import ClientList from "./components/ClientList.jsx";
 import ClientInfo from "./components/ClientInfo.jsx";
 import ErrorPage from "./components/ErrorPage.jsx";
 import LogIn from "./login/LogIn.jsx";
-import { onSubmit } from "./login/LogIn.jsx";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 
 const router = createBrowserRouter([
@@ -13,15 +12,14 @@ const router = createBrowserRouter([
     path: "/",
     element: <App />,
     errorElement: <ErrorPage />,
-    loader: fetchUsers,
     children: [
       {
-        path: "/clients",
+        path: "/",
         element: <ClientList />,
         loader: fetchData,
       },
       {
-        path: "clients/:clientId",
+        path: "/:clientId",
         element: <ClientInfo />,
         loader: fetchClientInfo,
       },
@@ -30,7 +28,6 @@ const router = createBrowserRouter([
   {
     path: "/login",
     element: <LogIn />,
-    action: onSubmit,
   },
 ]);
 

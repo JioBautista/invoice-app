@@ -3,21 +3,19 @@ from users.serializers import UserSerializers
 from rest_framework import generics
 from rest_framework.permissions import (
     IsAuthenticated,
-    AllowAny,
-    DjangoModelPermissions,
-    IsAdminUser,
 )
 from .customauth import CustomTokenAuth
 
 
 class UserList(generics.ListCreateAPIView):
+    permission_classes = [IsAuthenticated]
+    authentication_classes = [CustomTokenAuth]
     queryset = User.objects.all()
     serializer_class = UserSerializers
-    permission_classes = [IsAdminUser]
-    authentication_classes = [CustomTokenAuth]
 
 
 class UserDetail(generics.RetrieveUpdateDestroyAPIView):
     permission_classes = [IsAuthenticated]
+    authentication_classes = [CustomTokenAuth]
     queryset = User.objects.all()
     serializer_class = UserSerializers

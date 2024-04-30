@@ -4,7 +4,7 @@ from clients.serializers import (
     ClientItemsSerializers,
 )
 from rest_framework import generics
-from rest_framework.permissions import IsAuthenticated, IsAdminUser
+from rest_framework.permissions import IsAuthenticated
 from users.customauth import CustomTokenAuth
 
 
@@ -23,10 +23,14 @@ class ClientDetails(generics.RetrieveUpdateDestroyAPIView):
 
 
 class ItemList(generics.ListCreateAPIView):
+    permission_classes = [IsAuthenticated]
+    authentication_classes = [CustomTokenAuth]
     queryset = ClientItems.objects.all()
     serializer_class = ClientItemsSerializers
 
 
 class ItemDetails(generics.RetrieveUpdateDestroyAPIView):
+    permission_classes = [IsAuthenticated]
+    authentication_classes = [CustomTokenAuth]
     queryset = ClientItems.objects.all()
     serializer_class = ClientItemsSerializers
