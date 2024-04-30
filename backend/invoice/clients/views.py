@@ -4,10 +4,11 @@ from clients.serializers import (
     ClientItemsSerializers,
 )
 from rest_framework import generics
-from rest_framework.permissions import IsAuthenticated
+from rest_framework.permissions import IsAuthenticated, IsAdminUser
 
 
 class ClientsList(generics.ListCreateAPIView):
+    permission_classes = [IsAuthenticated]
     queryset = ClientInfo.objects.all()
     serializer_class = ClientsSerializers
 
