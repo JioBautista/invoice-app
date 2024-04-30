@@ -8,22 +8,37 @@ import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import NavBar from "./navbar/NavBar";
 import axios from "axios";
 import { useStore } from "./store/useStore";
+import { red } from "@mui/material/colors";
 
+const getToken = sessionStorage.getItem("token");
 export async function fetchData() {
   try {
     const response = await axios.get(
-      "https://clownfish-app-egma9.ondigitalocean.app/clients/"
+      // "https://clownfish-app-egma9.ondigitalocean.app/clients/"
+      "http://127.0.0.1:8000/clients/",
+      {
+        headers: {
+          Authorization: `Bearer ${getToken}`,
+        },
+      }
     );
     const data = response.data;
     return { data };
   } catch (error) {
+    redirect("/login");
     console.error("Error Fetching data", error);
   }
 }
 export async function fetchClientInfo({ params }) {
   try {
     const response = await axios.get(
-      `https://clownfish-app-egma9.ondigitalocean.app/clients/${params.clientId}`
+      // `https://clownfish-app-egma9.ondigitalocean.app/clients/${params.clientId}`
+      `http://127.0.0.1:8000/clients/${params.clientId}`,
+      {
+        headers: {
+          Authorization: `Bearer ${getToken}`,
+        },
+      }
     );
     console.log(response);
     const clientData = response.data;
@@ -32,14 +47,17 @@ export async function fetchClientInfo({ params }) {
     console.log(error);
   }
 }
-const getToken = sessionStorage.getItem("token");
-console.log(getToken);
 
 export async function fetchUsers() {
   try {
     const response = await axios.get(
-      "https://clownfish-app-egma9.ondigitalocean.app/users/",
-      { headers: { Authorization: `Token ${getToken}` } }
+      // "https://clownfish-app-egma9.ondigitalocean.app/users/",
+      "http://127.0.0.1:8000/users/",
+      {
+        headers: {
+          Authorization: `Bearer ${getToken}`,
+        },
+      }
     );
     const currentUser = response.data;
     console.log(currentUser);

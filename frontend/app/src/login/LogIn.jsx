@@ -27,7 +27,7 @@ function LogIn() {
 
   const onSubmit = (data) => {
     axios
-      .post("https://clownfish-app-egma9.ondigitalocean.app/api-token/", data)
+      .post("http://127.0.0.1:8000/api-token/", data)
       .then(function (response) {
         sessionStorage.setItem("token", response.data.token);
       })
