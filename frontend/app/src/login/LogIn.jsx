@@ -29,7 +29,7 @@ function LogIn() {
     axios
       .post("https://clownfish-app-egma9.ondigitalocean.app/api-token/", data)
       .then(function (response) {
-        receiveToken(response.data.token);
+        sessionStorage.setItem("token", response.data.token);
       })
       .catch(function (error) {
         console.log(error.response);

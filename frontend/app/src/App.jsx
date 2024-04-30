@@ -32,20 +32,24 @@ export async function fetchClientInfo({ params }) {
     console.log(error);
   }
 }
+const getToken = sessionStorage.getItem("token");
+console.log(getToken);
 
 export async function fetchUsers() {
   try {
     const response = await axios.get(
-      "https://clownfish-app-egma9.ondigitalocean.app/users/"
+      "https://clownfish-app-egma9.ondigitalocean.app/users/",
+      { headers: { Authorization: `Token ${getToken}` } }
     );
     const currentUser = response.data;
     console.log(currentUser);
     return { currentUser };
   } catch (error) {
-    console.log(error.response);
+    console.log(error);
     return redirect("/login");
   }
 }
+
 export const ThemeContext = React.createContext();
 
 const darkTheme = createTheme({
