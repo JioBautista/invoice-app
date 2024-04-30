@@ -9,9 +9,19 @@ import {
 } from "@mui/material";
 import { Link, redirect } from "react-router-dom";
 import { useForm } from "react-hook-form";
-import { useStore } from "../store/useStore";
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import axios from "axios";
+
+export async function onSubmit(data) {
+  try {
+    const response = await axios.post("http://127.0.0.1:8000/api-token/", data);
+    const token = response.data.token;
+    sessionStorage.setItem("token", token);
+    console.log(token);
+  } catch (error) {
+    console.log(error);
+  }
+}
 
 function LogIn() {
   const {
@@ -20,23 +30,6 @@ function LogIn() {
     formState: { errors },
   } = useForm();
 
-  const { receiveToken, userToken } = useStore((state) => ({
-    receiveToken: state.receiveToken,
-    userToken: state.userToken,
-  }));
-
-  const onSubmit = (data) => {
-    axios
-      .post("http://127.0.0.1:8000/api-token/", data)
-      .then(function (response) {
-        sessionStorage.setItem("token", response.data.token);
-      })
-      .catch(function (error) {
-        console.log(error.response);
-      });
-  };
-
-  console.log(userToken);
   return (
     <Container maxWidth="xs">
       <Box

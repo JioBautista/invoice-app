@@ -5,6 +5,7 @@ import ClientList from "./components/ClientList.jsx";
 import ClientInfo from "./components/ClientInfo.jsx";
 import ErrorPage from "./components/ErrorPage.jsx";
 import LogIn from "./login/LogIn.jsx";
+import { onSubmit } from "./login/LogIn.jsx";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 
 const router = createBrowserRouter([
@@ -15,12 +16,12 @@ const router = createBrowserRouter([
     loader: fetchUsers,
     children: [
       {
-        path: "/",
+        path: "/clients",
         element: <ClientList />,
         loader: fetchData,
       },
       {
-        path: "/:clientId",
+        path: "clients/:clientId",
         element: <ClientInfo />,
         loader: fetchClientInfo,
       },
@@ -29,6 +30,7 @@ const router = createBrowserRouter([
   {
     path: "/login",
     element: <LogIn />,
+    action: onSubmit,
   },
 ]);
 
