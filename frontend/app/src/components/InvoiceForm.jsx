@@ -103,7 +103,11 @@ function InvoiceForm({ clientData }) {
   }));
   return (
     <>
-      <Drawer open={drawer} onClose={toggleDrawer}>
+      <Drawer
+        open={drawer}
+        onClose={toggleDrawer}
+        sx={{ zIndex: (theme) => theme.zIndex.drawer + 1 }}
+      >
         <form onSubmit={handleSubmit(mode === "new" ? onSubmit : editResource)}>
           {/* BILL FROM BOX */}
           <Box sx={{ padding: 2 }} maxWidth={"500px"}>

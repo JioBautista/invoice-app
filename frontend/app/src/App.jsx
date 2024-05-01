@@ -1,14 +1,13 @@
 import React from "react";
 import { Outlet, redirect } from "react-router-dom";
-import { Box, Paper } from "@mui/material";
+import { Box } from "@mui/material";
 import { ThemeProvider, createTheme, useTheme } from "@mui/material/styles";
 import CssBaseline from "@mui/material/CssBaseline";
 import { LocalizationProvider } from "@mui/x-date-pickers";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import NavBar from "./navbar/NavBar";
+import Sidebar from "./sidebar/Sidebar";
 import axios from "axios";
-import { useStore } from "./store/useStore";
-import { red } from "@mui/material/colors";
 
 export async function fetchData() {
   try {
@@ -74,8 +73,9 @@ function App() {
       <ThemeProvider theme={theme ? darkTheme : lightTheme}>
         <CssBaseline />
         <LocalizationProvider dateAdapter={AdapterDayjs}>
-          <Box>
+          <Box sx={{ display: "flex" }}>
             <NavBar />
+            <Sidebar />
             <Outlet />
           </Box>
         </LocalizationProvider>

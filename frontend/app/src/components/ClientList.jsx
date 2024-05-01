@@ -15,6 +15,7 @@ import {
   Paper,
   Stack,
   IconButton,
+  Toolbar,
 } from "@mui/material";
 import { Link, useLoaderData } from "react-router-dom";
 import ArrowForwardIosIcon from "@mui/icons-material/ArrowForwardIos";
@@ -32,8 +33,8 @@ function ClientList() {
     toggleDrawer: state.toggleDrawer,
   }));
   return (
-    <Container maxWidth="md">
-      <Box sx={{ mb: 10 }}>
+    <Container sx={{ paddingBlock: 12 }}>
+      <Box sx={{ mb: 5 }}>
         <Stack
           direction="row"
           alignItems={"center"}

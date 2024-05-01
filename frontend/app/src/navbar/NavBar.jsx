@@ -1,19 +1,27 @@
 import React from "react";
-import AppBar from "@mui/material/AppBar";
-import { Toolbar } from "@mui/material";
-import Switch from "@mui/material/Switch";
-import Typography from "@mui/material/Typography";
+import { Toolbar, Switch, Typography, AppBar, IconButton } from "@mui/material";
 import { ThemeContext } from "../App";
+import MenuIcon from "@mui/icons-material/Menu";
+import { useStore } from "../store/useStore";
 
 function NavBar() {
   const [theme, toggleTheme] = React.useContext(ThemeContext);
+  const toggleMobileMenu = useStore((state) => state.toggleMobileMenu);
 
   return (
     <>
-      <AppBar>
+      <AppBar sx={{ zIndex: (theme) => theme.zIndex.drawer + 1 }}>
         <Toolbar>
+          <IconButton
+            edge="start"
+            color="inherit"
+            sx={{ mr: 2, display: { sm: "none" } }}
+            onClick={toggleMobileMenu}
+          >
+            <MenuIcon />
+          </IconButton>
           <Typography variant="h6" component={"div"} sx={{ flexGrow: 1 }}>
-            Invoice
+            Manager
           </Typography>
           <Switch
             color="default"
@@ -22,7 +30,6 @@ function NavBar() {
           />
         </Toolbar>
       </AppBar>
-      <Toolbar sx={{ mb: 3 }} />
     </>
   );
 }
