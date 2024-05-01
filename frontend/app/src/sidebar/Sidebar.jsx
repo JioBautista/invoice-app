@@ -20,13 +20,15 @@ function Sidebar() {
     <Box>
       <Toolbar />
       <List>
-        {["Task Manager", "Employee Editor", "Invoice Logs"].map((text) => (
-          <ListItem>
-            <ListItemButton>
-              <ListItemText primary={text} />
-            </ListItemButton>
-          </ListItem>
-        ))}
+        {["Task Manager", "Employee Editor", "Invoice Logs"].map(
+          (text, index) => (
+            <ListItem>
+              <ListItemButton>
+                <ListItemText primary={text} />
+              </ListItemButton>
+            </ListItem>
+          )
+        )}
       </List>
       <Divider />
       <List>
