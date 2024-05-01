@@ -68,7 +68,7 @@ function ClientInfo() {
     }));
 
   return (
-    <Container maxWidth="md">
+    <Container sx={{ paddingInline: 3, paddingBlock: 12 }}>
       {/* CLIENT INFO BUTTONS */}
       <Link to="/" style={{ textDecoration: "none" }}>
         <Button variant="contained" sx={{ mb: 3 }}>

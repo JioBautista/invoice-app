@@ -12,6 +12,11 @@ import {
   Divider,
   Button,
 } from "@mui/material";
+import AddTaskIcon from "@mui/icons-material/AddTask";
+import PeopleIcon from "@mui/icons-material/People";
+import DescriptionIcon from "@mui/icons-material/Description";
+import SettingsIcon from "@mui/icons-material/Settings";
+import LogoutIcon from "@mui/icons-material/Logout";
 
 const drawerWidth = 240;
 
@@ -20,22 +25,31 @@ function Sidebar() {
     <Box>
       <Toolbar />
       <List>
-        {["Task Manager", "Employee Editor", "Invoice Logs"].map(
-          (text, index) => (
-            <ListItem>
-              <ListItemButton>
-                <ListItemText primary={text} />
-              </ListItemButton>
-            </ListItem>
-          )
-        )}
-      </List>
-      <Divider />
-      <List>
-        {["Settings", "Logout"].map((text) => (
+        {[
+          { name: "Task Manager", icon: <AddTaskIcon /> },
+          { name: "Employee Editor", icon: <PeopleIcon /> },
+          { name: "Invoice Log", icon: <DescriptionIcon /> },
+        ].map((items, index) => (
           <ListItem>
             <ListItemButton>
-              <ListItemText primary={text} />
+              <ListItemIcon>{items.icon}</ListItemIcon>
+              <ListItemText primary={items.name} />
+            </ListItemButton>
+          </ListItem>
+        ))}
+      </List>
+
+      <Divider />
+
+      <List>
+        {[
+          { name: "Settings", icon: <SettingsIcon /> },
+          { name: "Logout", icon: <LogoutIcon /> },
+        ].map((items) => (
+          <ListItem>
+            <ListItemButton>
+              <ListItemIcon>{items.icon}</ListItemIcon>
+              <ListItemText primary={items.name} />
             </ListItemButton>
           </ListItem>
         ))}
@@ -43,13 +57,11 @@ function Sidebar() {
     </Box>
   );
   return (
-    <Box sx={{ width: { sm: drawerWidth } }}>
+    <Box sx={{ width: { sm: drawerWidth }, flexShrink: { sm: 0 } }}>
       <Drawer
         variant="permanent"
         sx={{
           display: { xs: "none", sm: "block" },
-          "& .MuiDrawer-paper": { boxSizing: "border-box", width: drawerWidth },
-          flexShrink: 0,
         }}
         open
       >

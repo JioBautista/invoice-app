@@ -33,8 +33,8 @@ function ClientList() {
     toggleDrawer: state.toggleDrawer,
   }));
   return (
-    <Box sx={{ flexGrow: 1, p: 3 }}>
-      <Box sx={{ mb: 10 }}>
+    <Container sx={{ paddingBlock: 12 }} maxWidth="xl">
+      <Box sx={{ mb: 5 }}>
         <Stack
           direction="row"
           alignItems={"center"}
@@ -131,7 +131,7 @@ function ClientList() {
         </Container>
       )}
       <InvoiceForm />
-    </Box>
+    </Container>
   );
 }
 
