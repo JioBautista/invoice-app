@@ -15,6 +15,7 @@ import {
   Paper,
   Stack,
   IconButton,
+  Toolbar,
 } from "@mui/material";
 import { Link, useLoaderData } from "react-router-dom";
 import ArrowForwardIosIcon from "@mui/icons-material/ArrowForwardIos";
@@ -32,7 +33,7 @@ function ClientList() {
     toggleDrawer: state.toggleDrawer,
   }));
   return (
-    <Container maxWidth="md">
+    <Box sx={{ flexGrow: 1, p: 3 }}>
       <Box sx={{ mb: 10 }}>
         <Stack
           direction="row"
@@ -130,7 +131,7 @@ function ClientList() {
         </Container>
       )}
       <InvoiceForm />
-    </Container>
+    </Box>
   );
 }
 

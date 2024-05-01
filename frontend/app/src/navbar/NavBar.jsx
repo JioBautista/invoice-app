@@ -10,7 +10,10 @@ function NavBar() {
 
   return (
     <>
-      <AppBar>
+      <AppBar
+        sx={{ zIndex: (theme) => theme.zIndex.drawer + 1 }}
+        position="fixed"
+      >
         <Toolbar>
           <Typography variant="h6" component={"div"} sx={{ flexGrow: 1 }}>
             Invoice
