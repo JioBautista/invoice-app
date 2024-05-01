@@ -1,4 +1,5 @@
 import React from "react";
+import { useStore } from "../store/useStore";
 import {
   Drawer,
   Toolbar,
@@ -21,6 +22,10 @@ import LogoutIcon from "@mui/icons-material/Logout";
 const drawerWidth = 240;
 
 function Sidebar() {
+  const { mobileMenu, toggleMobileMenu } = useStore((state) => ({
+    mobileMenu: state.mobileMenu,
+    toggleMobileMenu: state.toggleMobileMenu,
+  }));
   const drawer = (
     <Box>
       <Toolbar />
@@ -58,6 +63,16 @@ function Sidebar() {
   );
   return (
     <Box sx={{ width: { sm: drawerWidth }, flexShrink: { sm: 0 } }}>
+      <Drawer
+        variant="temporary"
+        open={mobileMenu}
+        onClose={toggleMobileMenu}
+        sx={{
+          display: { xs: "block", sm: "none" },
+        }}
+      >
+        {drawer}
+      </Drawer>
       <Drawer
         variant="permanent"
         sx={{
