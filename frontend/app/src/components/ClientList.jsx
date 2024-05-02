@@ -33,7 +33,7 @@ function ClientList() {
     toggleDrawer: state.toggleDrawer,
   }));
   return (
-    <Container sx={{ paddingBlock: 12 }}>
+    <Container sx={{ paddingBlock: 14 }} maxWidth="md">
       <Box sx={{ mb: 5 }}>
         <Stack
           direction="row"
