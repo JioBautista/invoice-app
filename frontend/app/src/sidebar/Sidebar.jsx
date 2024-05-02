@@ -29,7 +29,7 @@ function Sidebar() {
   const drawer = (
     <Box>
       <Toolbar />
-      <List>
+      <List sx={{ paddingBlockStart: 3 }}>
         {[
           { name: "Task Manager", icon: <AddTaskIcon /> },
           { name: "Employee Editor", icon: <PeopleIcon /> },
