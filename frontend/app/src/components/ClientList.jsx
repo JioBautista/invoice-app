@@ -33,7 +33,7 @@ function ClientList() {
     toggleDrawer: state.toggleDrawer,
   }));
   return (
-    <Container sx={{ paddingBlock: 14 }} maxWidth="md">
+    <Container sx={{ paddingBlock: 12 }} maxWidth="md">
       <Box sx={{ mb: 5 }}>
         <Stack
           direction="row"
@@ -75,7 +75,10 @@ function ClientList() {
       {data.count != 0 ? (
         data.results.map((items) => (
           <React.Fragment key={items.id}>
-            <Link to={`/${items.id}`} style={{ textDecoration: "none" }}>
+            <Link
+              to={`/clients/${items.id}`}
+              style={{ textDecoration: "none" }}
+            >
               <Paper sx={{ mb: 3, padding: 3 }} elevation={3}>
                 <Grid
                   container
