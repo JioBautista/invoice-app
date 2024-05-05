@@ -12,6 +12,7 @@ import {
   List,
   ListItem,
   ListItemText,
+  Divider,
 } from "@mui/material";
 
 function Overview() {
@@ -21,7 +22,7 @@ function Overview() {
   return (
     <Container sx={{ paddingBlock: 12 }}>
       <Typography variant="subtitle1">May 04 2024</Typography>
-      <Typography variant="h6" fontWeight={"bold"} sx={{ mb: 3 }}>
+      <Typography variant="h3" fontWeight={"bold"} sx={{ mb: 3 }}>
         Welcome Back jiopacho!
       </Typography>
       <Typography {...h5Style}>Overview</Typography>
@@ -90,6 +91,8 @@ function Overview() {
               />
             </ListItem>
 
+            <Divider />
+
             <ListItem>
               <ListItemText
                 primary="EDIT"
@@ -101,6 +104,8 @@ function Overview() {
                 }
               />
             </ListItem>
+
+            <Divider />
 
             <ListItem>
               <ListItemText
