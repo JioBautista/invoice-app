@@ -4,6 +4,7 @@ import App, { fetchData, fetchClientInfo } from "./App.jsx";
 import ClientList from "./components/ClientList.jsx";
 import ClientInfo from "./components/ClientInfo.jsx";
 import Overview from "./overview/Overview.jsx";
+import Task from "./task/Task.jsx";
 import ErrorPage from "./components/ErrorPage.jsx";
 import LogIn from "./login/LogIn.jsx";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
@@ -17,6 +18,10 @@ const router = createBrowserRouter([
       {
         path: "/",
         element: <Overview />,
+      },
+      {
+        path: "/tasks",
+        element: <Task />,
       },
       {
         path: "/clients",
