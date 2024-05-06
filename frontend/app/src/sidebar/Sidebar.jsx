@@ -1,5 +1,6 @@
 import React from "react";
 import { useStore } from "../store/useStore";
+import { Link } from "react-router-dom";
 import {
   Drawer,
   Toolbar,
@@ -31,16 +32,21 @@ function Sidebar() {
       <Toolbar />
       <List sx={{ paddingBlockStart: 3 }}>
         {[
-          { name: "Task Manager", icon: <AddTaskIcon /> },
-          { name: "Employee Editor", icon: <PeopleIcon /> },
-          { name: "Invoice Log", icon: <DescriptionIcon /> },
+          { name: "Task Manager", icon: <AddTaskIcon />, link: "/tasks" },
+          { name: "Employee Editor", icon: <PeopleIcon />, link: "/" },
+          { name: "Invoice Log", icon: <DescriptionIcon />, link: "/clients" },
         ].map((items, index) => (
-          <ListItem>
-            <ListItemButton>
-              <ListItemIcon>{items.icon}</ListItemIcon>
-              <ListItemText primary={items.name} />
-            </ListItemButton>
-          </ListItem>
+          <Link
+            style={{ textDecoration: "none", color: "inherit" }}
+            to={`${items.link}`}
+          >
+            <ListItem>
+              <ListItemButton>
+                <ListItemIcon>{items.icon}</ListItemIcon>
+                <ListItemText primary={items.name} />
+              </ListItemButton>
+            </ListItem>
+          </Link>
         ))}
       </List>
 
