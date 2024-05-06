@@ -28,8 +28,8 @@ function Task() {
       <Typography variant="h3" fontWeight={"bold"} sx={{ mb: 3 }}>
         Task Manager
       </Typography>
-      <Stack direction={"row"} alignItems={"center"} gap={1}>
-        <TextField variant="outlined" label="New Task" size="small" fullWidth />
+      <Stack direction={"row"} alignItems={"center"} gap={1} mb={3}>
+        <TextField variant="outlined" label="New Task" size="small" />
         <Button variant="contained">Add</Button>
       </Stack>
       <Box>
@@ -43,6 +43,11 @@ function Task() {
         <TabPanel index={0} value={panelValue}>
           Active
         </TabPanel>
+
+        <TabPanel index={0} value={panelValue}>
+          Schedule Appointment
+        </TabPanel>
+
         <TabPanel index={1} value={panelValue}>
           Completed
         </TabPanel>
