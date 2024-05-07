@@ -48,6 +48,7 @@ INSTALLED_APPS = [
     "corsheaders",
     "clients",
     "users",
+    "tasks",
     "rest_framework",
     "rest_framework.authtoken",
 ]
