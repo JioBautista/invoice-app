@@ -13,11 +13,11 @@ import DeleteIcon from "@mui/icons-material/Delete";
 import CheckCircleIcon from "@mui/icons-material/CheckCircle";
 
 function TabPanel(props) {
-  const { children, value, index } = props;
+  const { children, value, index, id } = props;
   return (
     <div hidden={value !== index}>
       {value === index && (
-        <Box sx={{ p: 2 }}>
+        <Box sx={{ p: 2 }} key={id}>
           <List>
             <ListItem>
               <ListItemText primary={`${children}`} />

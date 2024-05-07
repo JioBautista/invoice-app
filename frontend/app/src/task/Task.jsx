@@ -10,13 +10,13 @@ import {
   Box,
 } from "@mui/material";
 import TabPanel from "./TabPanel";
-import { useStore2 } from "../store/useStore2";
+import axios from "axios";
+import { act } from "react";
 
 function Task() {
-  const active = useStore2((state) => state.active);
-  const addTask = useStore2((state) => state.addTask);
   const [panelValue, setPanelValue] = React.useState(0);
   const [inputValue, setInputValue] = React.useState("");
+  const [activeData, setActiveData] = React.useState();
 
   const handleTabs = (event, newValue) => {
     setPanelValue(newValue);
@@ -27,8 +27,41 @@ function Task() {
       id: `${index}`,
     };
   }
-  console.log(active);
-  console.log(inputValue);
+
+  // async function getActiveAPI() {
+  //   try {
+  //     const response = await axios.get(
+  //       "https://clownfish-app-egma9.ondigitalocean.app/active/"
+  //     );
+  //     setActiveData(response.data);
+  //     console.log(response);
+  //   } catch (error) {
+  //     console.log(error);
+  //   }
+  // }
+
+  // axios
+  //   .get("https://clownfish-app-egma9.ondigitalocean.app/active/")
+  //   .then(function (res) {
+  //     setActiveData(res.data);
+  //   })
+  //   .catch(function (err) {
+  //     console.log(err);
+  //   });
+
+  const postActiveAPI = () => {
+    axios
+      .post("https://clownfish-app-egma9.ondigitalocean.app/active/", {
+        is_active: inputValue,
+      })
+      .then(function (res) {
+        setActiveData(res.data);
+      })
+      .catch(function (err) {
+        console.log(err);
+      });
+  };
+  React.useEffect(() => {}, [activeData]);
   return (
     <Container sx={{ paddingBlock: 12 }} maxWidth="md">
       <Typography variant="h3" fontWeight={"bold"} sx={{ mb: 3 }}>
@@ -43,7 +76,7 @@ function Task() {
             setInputValue(ev.target.value);
           }}
         />
-        <Button variant="contained" onClick={() => addTask(inputValue)}>
+        <Button variant="contained" onClick={postActiveAPI}>
           Add
         </Button>
       </Stack>
@@ -52,22 +85,18 @@ function Task() {
           <Tabs variant="fullWidth" value={panelValue} onChange={handleTabs}>
             <Tab label="Active" {...tabValue(0)} />
             <Tab label="Completed" {...tabValue(1)} />
-            <Tab label="Deleted" {...tabValue(2)} />
           </Tabs>
         </Box>
-        {active.length > 0
-          ? active.map((items) => (
-              <TabPanel index={0} value={panelValue}>
-                {items}
+        {activeData && activeData.count > 0
+          ? activeData.results.map((items) => (
+              <TabPanel index={0} value={panelValue} id={items.id}>
+                {items.is_active}
               </TabPanel>
             ))
           : null}
 
         <TabPanel index={1} value={panelValue}>
           Completed
-        </TabPanel>
-        <TabPanel index={2} value={panelValue}>
-          Deleted
         </TabPanel>
       </Box>
     </Container>
