@@ -11,12 +11,12 @@ import {
 } from "@mui/material";
 import TabPanel from "./TabPanel";
 import axios from "axios";
-import { act } from "react";
 
 function Task() {
   const [panelValue, setPanelValue] = React.useState(0);
   const [inputValue, setInputValue] = React.useState("");
   const [activeData, setActiveData] = React.useState();
+  const [isDataFetched, setIsDataFetched] = React.useState(false);
 
   const handleTabs = (event, newValue) => {
     setPanelValue(newValue);
@@ -28,26 +28,17 @@ function Task() {
     };
   }
 
-  // async function getActiveAPI() {
-  //   try {
-  //     const response = await axios.get(
-  //       "https://clownfish-app-egma9.ondigitalocean.app/active/"
-  //     );
-  //     setActiveData(response.data);
-  //     console.log(response);
-  //   } catch (error) {
-  //     console.log(error);
-  //   }
-  // }
-
-  // axios
-  //   .get("https://clownfish-app-egma9.ondigitalocean.app/active/")
-  //   .then(function (res) {
-  //     setActiveData(res.data);
-  //   })
-  //   .catch(function (err) {
-  //     console.log(err);
-  //   });
+  async function getActiveAPI() {
+    try {
+      const response = await axios.get(
+        "https://clownfish-app-egma9.ondigitalocean.app/active/"
+      );
+      setActiveData(response.data);
+      console.log(response);
+    } catch (error) {
+      console.log(error);
+    }
+  }
 
   const postActiveAPI = () => {
     axios
@@ -56,12 +47,16 @@ function Task() {
       })
       .then(function (res) {
         setActiveData(res.data);
+        setIsDataFetched(!isDataFetched);
       })
       .catch(function (err) {
         console.log(err);
       });
   };
-  React.useEffect(() => {}, [activeData]);
+
+  React.useEffect(() => {
+    getActiveAPI();
+  }, [isDataFetched]);
   return (
     <Container sx={{ paddingBlock: 12 }} maxWidth="md">
       <Typography variant="h3" fontWeight={"bold"} sx={{ mb: 3 }}>
