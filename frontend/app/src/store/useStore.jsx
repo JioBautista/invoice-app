@@ -29,4 +29,9 @@ export const useStore = create((set) => ({
   // MOBILE MENU STATE AND HANDLER
   mobileMenu: false,
   toggleMobileMenu: () => set((state) => ({ mobileMenu: !state.mobileMenu })),
+
+  // IS DATA FETCHED
+  isDataFetched: false,
+  setIsDataFetched: () =>
+    set((state) => ({ isDataFetched: !state.isDataFetched })),
 }));
