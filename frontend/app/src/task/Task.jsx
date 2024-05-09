@@ -15,6 +15,8 @@ import { useStore } from "../store/useStore";
 import { redirect } from "react-router-dom";
 
 function Task() {
+  // USER TOKEN
+  const token = sessionStorage.getItem("token");
   // STATES FROM STORE
   const { isDataFetched, setIsDataFetched } = useStore((state) => ({
     isDataFetched: state.isDataFetched,
@@ -43,8 +45,13 @@ function Task() {
   async function getActiveAPI() {
     try {
       const response = await axios.get(
-        // "https://clownfish-app-egma9.ondigitalocean.app/active/"
-        `http://127.0.0.1:8000/active/`
+        "https://clownfish-app-egma9.ondigitalocean.app/active/",
+        // `http://127.0.0.1:8000/active/`,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
       );
       setActiveData(response.data);
     } catch (error) {
@@ -56,8 +63,13 @@ function Task() {
   async function getCompletedAPI() {
     try {
       const response = await axios.get(
-        // "https://clownfish-app-egma9.ondigitalocean.app/completed/"
-        `http://127.0.0.1:8000/completed/`
+        "https://clownfish-app-egma9.ondigitalocean.app/completed/",
+        // `http://127.0.0.1:8000/completed/`,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
       );
       setCompletedData(response.data);
     } catch (error) {
@@ -69,10 +81,15 @@ function Task() {
   const postActiveAPI = () => {
     axios
       .post(
-        // "https://clownfish-app-egma9.ondigitalocean.app/active/"
-        `http://127.0.0.1:8000/active/`,
+        "https://clownfish-app-egma9.ondigitalocean.app/active/",
+        // `http://127.0.0.1:8000/active/`,
         {
           is_active: inputValue,
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
         }
       )
       .then(function (res) {
