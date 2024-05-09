@@ -107,7 +107,7 @@ function Task() {
     getCompletedAPI();
   }, [isDataFetched]);
   return (
-    <Container sx={{ paddingBlock: 12 }} maxWidth="md">
+    <Container sx={{ paddingBlock: 12 }}>
       <Typography variant="h3" fontWeight={"bold"} sx={{ mb: 3 }}>
         Task Manager
       </Typography>
