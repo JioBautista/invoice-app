@@ -19,11 +19,12 @@ function Overview() {
   const cardStyle = { maxWidth: 500 };
   const buttonStyle = { size: "small", variant: "outlined" };
   const h5Style = { mb: 3, fontWeight: 600, variant: "h5" };
+  const username = sessionStorage.getItem("name");
   return (
     <Container sx={{ paddingBlock: 12 }}>
       <Typography variant="subtitle1">May 04 2024</Typography>
       <Typography variant="h3" fontWeight={"bold"} sx={{ mb: 3 }}>
-        Welcome Back
+        Welcome Back {username} !
       </Typography>
       <Typography {...h5Style}>Overview</Typography>
       <Grid container spacing={2} marginBottom={3}>

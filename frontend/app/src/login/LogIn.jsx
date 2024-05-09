@@ -7,7 +7,7 @@ import {
   Button,
   Avatar,
 } from "@mui/material";
-import { Navigate } from "react-router-dom";
+import { Link, Navigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import axios from "axios";
@@ -23,9 +23,11 @@ function LogIn() {
       const token = response.data.token;
       const userEmail = response.data.email;
       const userFirstName = response.data.first_name;
+      const username = response.data.user_name;
       sessionStorage.setItem("token", token);
       sessionStorage.setItem("email", userEmail);
       sessionStorage.setItem("name", userFirstName);
+      sessionStorage.setItem("username", username);
       console.log(response);
     } catch (error) {
       console.log(error);
@@ -76,7 +78,6 @@ function LogIn() {
               fullWidth
               variant="contained"
               sx={{ mt: 3, mb: 2 }}
-              onClick={handleClick}
             >
               Sign In
             </Button>
