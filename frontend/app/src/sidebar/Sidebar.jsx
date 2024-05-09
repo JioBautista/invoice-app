@@ -33,7 +33,7 @@ function Sidebar() {
       <List sx={{ paddingBlockStart: 3 }}>
         {[
           { name: "Task Manager", icon: <AddTaskIcon />, link: "/tasks" },
-          { name: "Employee Editor", icon: <PeopleIcon />, link: "/" },
+          { name: "Employee Editor", icon: <PeopleIcon />, link: "/employees" },
           { name: "Invoice Log", icon: <DescriptionIcon />, link: "/clients" },
         ].map((items, index) => (
           <Link

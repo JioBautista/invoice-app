@@ -23,7 +23,7 @@ function Overview() {
     <Container sx={{ paddingBlock: 12 }}>
       <Typography variant="subtitle1">May 04 2024</Typography>
       <Typography variant="h3" fontWeight={"bold"} sx={{ mb: 3 }}>
-        Welcome Back jiopacho!
+        Welcome Back
       </Typography>
       <Typography {...h5Style}>Overview</Typography>
       <Grid container spacing={2} marginBottom={3}>

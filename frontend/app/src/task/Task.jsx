@@ -12,6 +12,7 @@ import {
 import TabPanel from "./TabPanel";
 import axios from "axios";
 import { useStore } from "../store/useStore";
+import { redirect } from "react-router-dom";
 
 function Task() {
   // STATES FROM STORE
@@ -42,10 +43,12 @@ function Task() {
   async function getActiveAPI() {
     try {
       const response = await axios.get(
-        "https://clownfish-app-egma9.ondigitalocean.app/active/"
+        // "https://clownfish-app-egma9.ondigitalocean.app/active/"
+        `http://127.0.0.1:8000/active/`
       );
       setActiveData(response.data);
     } catch (error) {
+      redirect("/login");
       console.log(error);
     }
   }
@@ -53,24 +56,31 @@ function Task() {
   async function getCompletedAPI() {
     try {
       const response = await axios.get(
-        "https://clownfish-app-egma9.ondigitalocean.app/completed/"
+        // "https://clownfish-app-egma9.ondigitalocean.app/completed/"
+        `http://127.0.0.1:8000/completed/`
       );
       setCompletedData(response.data);
     } catch (error) {
+      redirect("/login");
       console.log(error);
     }
   }
 
   const postActiveAPI = () => {
     axios
-      .post("https://clownfish-app-egma9.ondigitalocean.app/active/", {
-        is_active: inputValue,
-      })
+      .post(
+        // "https://clownfish-app-egma9.ondigitalocean.app/active/"
+        `http://127.0.0.1:8000/active/`,
+        {
+          is_active: inputValue,
+        }
+      )
       .then(function (res) {
         setActiveData(res.data);
         setIsDataFetched();
       })
       .catch(function (err) {
+        redirect("/login");
         console.log(err);
       });
   };
