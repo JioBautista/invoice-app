@@ -1,6 +1,6 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
-import App, { fetchData, fetchClientInfo, fetchUsers } from "./App.jsx";
+import App, { fetchClients, fetchClientInfo, fetchUsers } from "./App.jsx";
 import ClientList from "./components/ClientList.jsx";
 import ClientInfo from "./components/ClientInfo.jsx";
 import Overview from "./overview/Overview.jsx";
@@ -27,7 +27,7 @@ const router = createBrowserRouter([
       {
         path: "/clients",
         element: <ClientList />,
-        loader: fetchData,
+        loader: fetchClients,
       },
       {
         path: "/clients/:clientId",

@@ -29,7 +29,7 @@ export async function fetchUsers() {
   }
 }
 
-export async function fetchData() {
+export async function fetchClients() {
   try {
     const getToken = sessionStorage.getItem("token");
     const response = await axios.get(
