@@ -28,6 +28,8 @@ function NavBar() {
   const [theme, toggleTheme] = React.useContext(ThemeContext);
   const toggleMobileMenu = useStore((state) => state.toggleMobileMenu);
   const mobile = useMediaQuery("(max-width:500px)");
+  const username = sessionStorage.getItem("username");
+  const userEmail = sessionStorage.getItem("email");
 
   return (
     <>
@@ -62,21 +64,20 @@ function NavBar() {
                 flexItem
                 sx={{ marginInline: 2 }}
               />
-
               <List>
                 <ListItem disablePadding disableGutters>
                   <ListItemAvatar>
                     <Avatar />
                   </ListItemAvatar>
                   <ListItemText
-                    primary="jiopacho"
-                    secondary={<Typography>pachojio@gmail.com</Typography>}
+                    primary={`${username}`}
+                    secondary={<Typography>{userEmail}</Typography>}
                   />
-                  {/* <Switch
-                color="default"
-                checked={theme}
-                onChange={() => toggleTheme(!theme)}
-              /> */}
+                  <Switch
+                    color="default"
+                    checked={theme}
+                    onChange={() => toggleTheme(!theme)}
+                  />
                 </ListItem>
               </List>
             </>

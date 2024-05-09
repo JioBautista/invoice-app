@@ -6,11 +6,8 @@ import {
   Box,
   Button,
   Avatar,
-  Dialog,
-  DialogTitle,
-  DialogActions,
 } from "@mui/material";
-import { Link, redirect } from "react-router-dom";
+import { Link, Navigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import axios from "axios";
@@ -24,7 +21,14 @@ function LogIn() {
         data
       );
       const token = response.data.token;
+      const userEmail = response.data.email;
+      const userFirstName = response.data.first_name;
+      const username = response.data.user_name;
       sessionStorage.setItem("token", token);
+      sessionStorage.setItem("email", userEmail);
+      sessionStorage.setItem("name", userFirstName);
+      sessionStorage.setItem("username", username);
+      console.log(response);
     } catch (error) {
       console.log(error);
     }
@@ -34,12 +38,6 @@ function LogIn() {
     handleSubmit,
     formState: { errors, isSubmitSuccessful },
   } = useForm();
-
-  const [isOpen, setIsOpen] = React.useState(false);
-
-  const handleClick = () => {
-    setIsOpen(!isOpen);
-  };
 
   return (
     <>
@@ -80,23 +78,12 @@ function LogIn() {
               fullWidth
               variant="contained"
               sx={{ mt: 3, mb: 2 }}
-              onClick={handleClick}
             >
               Sign In
             </Button>
           </Box>
         </Box>
-
-        {isSubmitSuccessful && (
-          <Dialog open={isOpen} onClose={handleClick}>
-            <DialogTitle>Log in success!</DialogTitle>
-            <DialogActions>
-              <Link to="/" style={{ textDecoration: "none", color: "white" }}>
-                <Button onClick={handleClick}>close</Button>
-              </Link>
-            </DialogActions>
-          </Dialog>
-        )}
+        {isSubmitSuccessful && <Navigate to="/" />}
       </Container>
     </>
   );

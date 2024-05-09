@@ -19,21 +19,34 @@ import PeopleIcon from "@mui/icons-material/People";
 import DescriptionIcon from "@mui/icons-material/Description";
 import SettingsIcon from "@mui/icons-material/Settings";
 import LogoutIcon from "@mui/icons-material/Logout";
+import HomeIcon from "@mui/icons-material/Home";
+import { Navigate } from "react-router-dom";
 
 const drawerWidth = 240;
 
 function Sidebar() {
+  const [hasLogOut, setHasLogOut] = React.useState(false);
+
   const { mobileMenu, toggleMobileMenu } = useStore((state) => ({
     mobileMenu: state.mobileMenu,
     toggleMobileMenu: state.toggleMobileMenu,
   }));
+
+  const LogOut = (index) => {
+    if (index === 1) {
+      sessionStorage.clear();
+      setHasLogOut(true);
+    }
+  };
+
   const drawer = (
     <Box>
       <Toolbar />
       <List sx={{ paddingBlockStart: 3 }}>
         {[
+          { name: "Home", icon: <HomeIcon />, link: "/" },
           { name: "Task Manager", icon: <AddTaskIcon />, link: "/tasks" },
-          { name: "Employee Editor", icon: <PeopleIcon />, link: "/" },
+          { name: "Employee Editor", icon: <PeopleIcon />, link: "/employees" },
           { name: "Invoice Log", icon: <DescriptionIcon />, link: "/clients" },
         ].map((items, index) => (
           <Link
@@ -56,9 +69,9 @@ function Sidebar() {
         {[
           { name: "Settings", icon: <SettingsIcon /> },
           { name: "Logout", icon: <LogoutIcon /> },
-        ].map((items) => (
+        ].map((items, index) => (
           <ListItem>
-            <ListItemButton>
+            <ListItemButton onClick={() => LogOut(index)}>
               <ListItemIcon>{items.icon}</ListItemIcon>
               <ListItemText primary={items.name} />
             </ListItemButton>
@@ -67,6 +80,7 @@ function Sidebar() {
       </List>
     </Box>
   );
+
   return (
     <Box sx={{ width: { sm: drawerWidth }, flexShrink: { sm: 0 } }}>
       <Drawer
@@ -88,6 +102,7 @@ function Sidebar() {
       >
         {drawer}
       </Drawer>
+      {hasLogOut ? <Navigate to="/login" /> : null}
     </Box>
   );
 }

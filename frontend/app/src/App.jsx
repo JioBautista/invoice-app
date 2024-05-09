@@ -9,12 +9,32 @@ import NavBar from "./navbar/NavBar";
 import Sidebar from "./sidebar/Sidebar";
 import axios from "axios";
 
+export async function fetchUsers() {
+  try {
+    const getToken = sessionStorage.getItem("token");
+    const response = await axios.get(
+      // "https://clownfish-app-egma9.ondigitalocean.app/clients/",
+      "http://127.0.0.1:8000/users/",
+      {
+        headers: {
+          Authorization: `Bearer ${getToken}`,
+        },
+      }
+    );
+    const data = response.data;
+    return { data };
+  } catch (error) {
+    console.error("Error Fetching data", error);
+    return redirect("/login");
+  }
+}
+
 export async function fetchData() {
   try {
     const getToken = sessionStorage.getItem("token");
     const response = await axios.get(
-      "https://clownfish-app-egma9.ondigitalocean.app/clients/",
-      // "http://127.0.0.1:8000/clients/",
+      // "https://clownfish-app-egma9.ondigitalocean.app/clients/",
+      "http://127.0.0.1:8000/clients/",
       {
         headers: {
           Authorization: `Bearer ${getToken}`,
@@ -32,8 +52,8 @@ export async function fetchClientInfo({ params }) {
   try {
     const getToken = sessionStorage.getItem("token");
     const response = await axios.get(
-      `https://clownfish-app-egma9.ondigitalocean.app/clients/${params.clientId}`,
-      // `http://127.0.0.1:8000/clients/${params.clientId}`,
+      // `https://clownfish-app-egma9.ondigitalocean.app/clients/${params.clientId}`,
+      `http://127.0.0.1:8000/clients/${params.clientId}`,
       {
         headers: {
           Authorization: `Bearer ${getToken}`,
@@ -47,7 +67,6 @@ export async function fetchClientInfo({ params }) {
     console.log(error);
   }
 }
-
 export const ThemeContext = React.createContext();
 
 const darkTheme = createTheme({

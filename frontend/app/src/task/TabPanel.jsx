@@ -13,8 +13,11 @@ import DeleteIcon from "@mui/icons-material/Delete";
 import CheckCircleIcon from "@mui/icons-material/CheckCircle";
 import axios from "axios";
 import { useStore } from "../store/useStore";
+import { redirect } from "react-router-dom";
 
 function TabPanel(props) {
+  // GET TOKEN
+  const token = sessionStorage.getItem("token");
   const { children, value, index, id } = props;
 
   const { setIsDataFetched } = useStore((state) => ({
@@ -23,26 +26,45 @@ function TabPanel(props) {
 
   const deleteTaskAPI = () => {
     axios
-      .delete(`https://clownfish-app-egma9.ondigitalocean.app/active/${id}`)
+      .delete(
+        `https://clownfish-app-egma9.ondigitalocean.app/active/${id}`,
+        // `http://127.0.0.1:8000/active/${id}`,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      )
       .then(function (res) {
         console.log(res);
         setIsDataFetched();
       })
       .catch(function (err) {
+        redirect("/login");
         console.log(err);
       });
   };
 
   const completeTaskAPI = () => {
     axios
-      .post(`https://clownfish-app-egma9.ondigitalocean.app/completed/`, {
-        is_completed: children,
-      })
+      .post(
+        `https://clownfish-app-egma9.ondigitalocean.app/completed/`,
+        // `http://127.0.0.1:8000/completed/`,
+        {
+          is_completed: children,
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      )
       .then(function (res) {
         console.log(res);
         setIsDataFetched();
       })
       .catch(function (err) {
+        redirect("/login");
         console.log(err);
       });
 

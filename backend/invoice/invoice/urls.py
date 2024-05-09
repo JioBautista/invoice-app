@@ -18,6 +18,7 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path, include
 from rest_framework.authtoken import views
+from users.customviews import CustomTokenViews
 
 
 urlpatterns = [
@@ -27,5 +28,5 @@ urlpatterns = [
     path("", include("tasks.urls")),
 ]
 urlpatterns += [
-    path("api-token/", views.obtain_auth_token),
+    path("api-token/", CustomTokenViews.as_view()),
 ]
