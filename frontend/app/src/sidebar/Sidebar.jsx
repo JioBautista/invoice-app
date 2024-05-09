@@ -19,6 +19,7 @@ import PeopleIcon from "@mui/icons-material/People";
 import DescriptionIcon from "@mui/icons-material/Description";
 import SettingsIcon from "@mui/icons-material/Settings";
 import LogoutIcon from "@mui/icons-material/Logout";
+import HomeIcon from "@mui/icons-material/Home";
 
 const drawerWidth = 240;
 
@@ -32,6 +33,7 @@ function Sidebar() {
       <Toolbar />
       <List sx={{ paddingBlockStart: 3 }}>
         {[
+          { name: "Home", icon: <HomeIcon />, link: "/" },
           { name: "Task Manager", icon: <AddTaskIcon />, link: "/tasks" },
           { name: "Employee Editor", icon: <PeopleIcon />, link: "/employees" },
           { name: "Invoice Log", icon: <DescriptionIcon />, link: "/clients" },

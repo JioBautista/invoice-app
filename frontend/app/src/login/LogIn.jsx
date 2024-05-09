@@ -6,11 +6,8 @@ import {
   Box,
   Button,
   Avatar,
-  Dialog,
-  DialogTitle,
-  DialogActions,
 } from "@mui/material";
-import { Link, redirect } from "react-router-dom";
+import { Navigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import axios from "axios";
@@ -19,12 +16,17 @@ function LogIn() {
   async function onSubmit(data) {
     try {
       const response = await axios.post(
-        // "http://127.0.0.1:8000/api-token/",
-        "https://clownfish-app-egma9.ondigitalocean.app/api-token/",
+        "http://127.0.0.1:8000/api-token/",
+        // "https://clownfish-app-egma9.ondigitalocean.app/api-token/",
         data
       );
       const token = response.data.token;
+      const userEmail = response.data.email;
+      const userFirstName = response.data.first_name;
       sessionStorage.setItem("token", token);
+      sessionStorage.setItem("email", userEmail);
+      sessionStorage.setItem("name", userFirstName);
+      console.log(response);
     } catch (error) {
       console.log(error);
     }
@@ -34,12 +36,6 @@ function LogIn() {
     handleSubmit,
     formState: { errors, isSubmitSuccessful },
   } = useForm();
-
-  const [isOpen, setIsOpen] = React.useState(false);
-
-  const handleClick = () => {
-    setIsOpen(!isOpen);
-  };
 
   return (
     <>
@@ -86,17 +82,7 @@ function LogIn() {
             </Button>
           </Box>
         </Box>
-
-        {isSubmitSuccessful && (
-          <Dialog open={isOpen} onClose={handleClick}>
-            <DialogTitle>Log in success!</DialogTitle>
-            <DialogActions>
-              <Link to="/" style={{ textDecoration: "none", color: "white" }}>
-                <Button onClick={handleClick}>close</Button>
-              </Link>
-            </DialogActions>
-          </Dialog>
-        )}
+        {isSubmitSuccessful && <Navigate to="/" />}
       </Container>
     </>
   );
