@@ -9,11 +9,10 @@ import NavBar from "./navbar/NavBar";
 import Sidebar from "./sidebar/Sidebar";
 import axios from "axios";
 
-const token = sessionStorage.getItem("token");
-const headers = { headers: { Authorization: `Bearer ${token}` } };
-
 export async function fetchClients() {
   try {
+    const token = sessionStorage.getItem("token");
+    const headers = { headers: { Authorization: `Bearer ${token}` } };
     const response = await axios.get(
       "https://clownfish-app-egma9.ondigitalocean.app/clients/",
       // "http://127.0.0.1:8000/clients/",
@@ -28,6 +27,8 @@ export async function fetchClients() {
 }
 export async function fetchClientInfo({ params }) {
   try {
+    const token = sessionStorage.getItem("token");
+    const headers = { headers: { Authorization: `Bearer ${token}` } };
     const response = await axios.get(
       `https://clownfish-app-egma9.ondigitalocean.app/clients/${params.clientId}`,
       // `http://127.0.0.1:8000/clients/${params.clientId}`,
