@@ -21,11 +21,6 @@ export const useStore = create((set) => ({
       drawer: value,
     })),
 
-  // DELETE ITEM MODAL STATE AND HANDLER
-  deleteItemModal: false,
-  toggleDeleteItem: () =>
-    set((state) => ({ deleteItemModal: !state.deleteItemModal })),
-
   // MOBILE MENU STATE AND HANDLER
   mobileMenu: false,
   toggleMobileMenu: () => set((state) => ({ mobileMenu: !state.mobileMenu })),

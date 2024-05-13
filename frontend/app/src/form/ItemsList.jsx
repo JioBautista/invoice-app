@@ -16,7 +16,7 @@ function ItemsList(props) {
       {/* RENDER ITEMS */}
       {fields.map((item, index) => (
         <React.Fragment key={item.id}>
-          <Grid item xs={4} sm={4}>
+          <Grid item xs={6}>
             <TextField
               {...textFieldStyles}
               label="Item Name"
@@ -24,7 +24,7 @@ function ItemsList(props) {
             />
           </Grid>
 
-          <Grid item xs={2} sm={2}>
+          <Grid item xs={2}>
             <TextField
               {...textFieldStyles}
               label="Qty"
@@ -32,20 +32,12 @@ function ItemsList(props) {
             />
           </Grid>
 
-          <Grid item xs={2} sm={3}>
-            <TextField
-              {...textFieldStyles}
-              label="Price"
-              {...register(`items.${index}.price`)}
-            />
-          </Grid>
-
-          <Grid item xs={4} sm={3}>
+          <Grid item xs={4}>
             <Box sx={{ display: "flex", alignItems: "center", gap: 1 }}>
               <TextField
                 {...textFieldStyles}
-                label="Total"
-                {...register(`items.${index}.total`)}
+                label="Price"
+                {...register(`items.${index}.price`)}
               />
               <IconButton onClick={() => remove(index)}>
                 <DeleteIcon color="error" />

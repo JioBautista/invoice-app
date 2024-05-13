@@ -100,7 +100,6 @@ function ClientList() {
                     </Typography>
                   </Grid>
                   <Grid item xs={"auto"} sm={1}>
-                    {/* <Chip label={items.status} color="primary" size="small" /> */}
                     <Typography variant="button">{items.status}</Typography>
                   </Grid>
                   <Grid item xs={"auto"}>

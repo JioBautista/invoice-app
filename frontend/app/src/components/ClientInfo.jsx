@@ -22,6 +22,7 @@ import {
   Chip,
 } from "@mui/material";
 import DeleteIcon from "@mui/icons-material/Delete";
+import DeleteDialog from "./DeleteDialog";
 
 function ClientInfo() {
   // MEDIA QUERY FOR MOBILE
@@ -58,27 +59,16 @@ function ClientInfo() {
       .catch((err) => {
         console.log(err);
       });
-    toggleDeleteItem();
   };
   // STATE MANAGEMENT
-  const { deleteModal, toggleDelete, toggleDrawer, toggleDeleteItem } =
-    useStore((state) => ({
-      deleteModal: state.deleteModal,
-      toggleDelete: state.toggleDelete,
-      toggleDrawer: state.toggleDrawer,
-      deleteItemModal: state.deleteItemModal,
-      toggleDeleteItem: state.toggleDeleteItem,
-    }));
+  const { toggleDelete, toggleDrawer } = useStore((state) => ({
+    toggleDelete: state.toggleDelete,
+    toggleDrawer: state.toggleDrawer,
+    deleteItemModal: state.deleteItemModal,
+  }));
 
   return (
     <Container sx={{ paddingBlock: 12 }} maxWidth="md">
-      {/* CLIENT INFO BUTTONS */}
-      <Link to="/" style={{ textDecoration: "none" }}>
-        <Button variant="contained" sx={{ mb: 3 }}>
-          Go Back
-        </Button>
-      </Link>
-
       <Paper elevation={3} sx={{ padding: mobile ? 2 : 5, mb: 2 }}>
         <Stack
           direction={{ xs: "column", sm: "row" }}
@@ -227,9 +217,7 @@ function ClientInfo() {
               alignItems={"center"}
               color={"white"}
             >
-              <Typography variant={mobile ? "h6" : "h5"}>
-                Grand Total
-              </Typography>
+              <Typography variant={mobile ? "h6" : "h5"}>Total</Typography>
               <Typography variant={mobile ? "h6" : "h5"}>
                 {clientData.total}
               </Typography>
@@ -240,28 +228,7 @@ function ClientInfo() {
 
       {/* DRAWER COMPONENT */}
       <InvoiceForm clientData={clientData} />
-
-      {/* DELETE INVOICE DIALOG */}
-      <Dialog open={deleteModal} onClose={toggleDelete}>
-        <DialogTitle>{"Confirm Deletion"}</DialogTitle>
-        <DialogContent>
-          <DialogContentText>
-            Are you sure you want to delete this invoice? This action cannot be
-            undone.
-          </DialogContentText>
-          <DialogActions>
-            <Button onClick={toggleDelete}>Cancel</Button>
-            <Button
-              variant="contained"
-              color="error"
-              sx={{ borderRadius: "1.25rem" }}
-              onClick={() => deleteResource()}
-            >
-              Delete
-            </Button>
-          </DialogActions>
-        </DialogContent>
-      </Dialog>
+      <DeleteDialog />
     </Container>
   );
 }
