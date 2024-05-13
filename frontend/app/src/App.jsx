@@ -9,37 +9,15 @@ import NavBar from "./navbar/NavBar";
 import Sidebar from "./sidebar/Sidebar";
 import axios from "axios";
 
-export async function fetchUsers() {
-  try {
-    const getToken = sessionStorage.getItem("token");
-    const response = await axios.get(
-      "https://clownfish-app-egma9.ondigitalocean.app/clients/",
-      // "http://127.0.0.1:8000/users/",
-      {
-        headers: {
-          Authorization: `Bearer ${getToken}`,
-        },
-      }
-    );
-    const data = response.data;
-    return { data };
-  } catch (error) {
-    console.error("Error Fetching data", error);
-    return redirect("/login");
-  }
-}
+const token = sessionStorage.getItem("token");
+const headers = { headers: { Authorization: `Bearer ${token}` } };
 
 export async function fetchClients() {
   try {
-    const getToken = sessionStorage.getItem("token");
     const response = await axios.get(
       "https://clownfish-app-egma9.ondigitalocean.app/clients/",
       // "http://127.0.0.1:8000/clients/",
-      {
-        headers: {
-          Authorization: `Bearer ${getToken}`,
-        },
-      }
+      headers
     );
     const data = response.data;
     return { data };
@@ -50,17 +28,11 @@ export async function fetchClients() {
 }
 export async function fetchClientInfo({ params }) {
   try {
-    const getToken = sessionStorage.getItem("token");
     const response = await axios.get(
       `https://clownfish-app-egma9.ondigitalocean.app/clients/${params.clientId}`,
       // `http://127.0.0.1:8000/clients/${params.clientId}`,
-      {
-        headers: {
-          Authorization: `Bearer ${getToken}`,
-        },
-      }
+      headers
     );
-    console.log(response);
     const clientData = response.data;
     return { clientData };
   } catch (error) {

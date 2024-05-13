@@ -1,7 +1,6 @@
 import React from "react";
 import axios from "axios";
 import InvoiceForm from "./InvoiceForm";
-import DeleteItemsDialog from "./DeleteItemsDialog";
 import { Link, useLoaderData } from "react-router-dom";
 import { useStore } from "../store/useStore";
 import {
@@ -74,7 +73,7 @@ function ClientInfo() {
   return (
     <Container sx={{ paddingBlock: 12 }} maxWidth="md">
       {/* CLIENT INFO BUTTONS */}
-      <Link to="/clients/" style={{ textDecoration: "none" }}>
+      <Link to="/" style={{ textDecoration: "none" }}>
         <Button variant="contained" sx={{ mb: 3 }}>
           Go Back
         </Button>
@@ -241,9 +240,6 @@ function ClientInfo() {
 
       {/* DRAWER COMPONENT */}
       <InvoiceForm clientData={clientData} />
-
-      {/* DELETE ITEMS DIALOG */}
-      <DeleteItemsDialog clientData={clientData} />
 
       {/* DELETE INVOICE DIALOG */}
       <Dialog open={deleteModal} onClose={toggleDelete}>
