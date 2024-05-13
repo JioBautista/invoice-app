@@ -5,17 +5,12 @@ import {
   Container,
   Box,
   useMediaQuery,
-  FormControl,
-  InputLabel,
-  Select,
-  MenuItem,
   Button,
   Typography,
   Grid,
   Paper,
   Stack,
   IconButton,
-  Toolbar,
 } from "@mui/material";
 import { Link, useLoaderData } from "react-router-dom";
 import ArrowForwardIosIcon from "@mui/icons-material/ArrowForwardIos";
@@ -33,7 +28,7 @@ function ClientList() {
     toggleDrawer: state.toggleDrawer,
   }));
   return (
-    <Container sx={{ paddingBlock: 12 }} maxWidth="md">
+    <Container sx={{ paddingBlock: 13 }} maxWidth="md">
       <Box sx={{ mb: 5 }}>
         <Stack
           direction="row"
@@ -75,10 +70,7 @@ function ClientList() {
       {data.count != 0 ? (
         data.results.map((items) => (
           <React.Fragment key={items.id}>
-            <Link
-              to={`/clients/${items.id}`}
-              style={{ textDecoration: "none" }}
-            >
+            <Link to={`/${items.id}`} style={{ textDecoration: "none" }}>
               <Paper sx={{ mb: 3, padding: 3 }} elevation={3}>
                 <Grid
                   container
@@ -108,7 +100,6 @@ function ClientList() {
                     </Typography>
                   </Grid>
                   <Grid item xs={"auto"} sm={1}>
-                    {/* <Chip label={items.status} color="primary" size="small" /> */}
                     <Typography variant="button">{items.status}</Typography>
                   </Grid>
                   <Grid item xs={"auto"}>

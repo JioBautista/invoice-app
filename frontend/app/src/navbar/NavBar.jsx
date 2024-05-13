@@ -1,31 +1,20 @@
 import React from "react";
-import { ThemeContext } from "../App";
 import {
   Toolbar,
-  Switch,
   Typography,
   AppBar,
   IconButton,
-  Badge,
   List,
-  ListItemButton,
-  ListItemIcon,
   ListItemText,
   ListItem,
   ListItemAvatar,
   Avatar,
-  Collapse,
-  Divider,
   useMediaQuery,
 } from "@mui/material";
 import MenuIcon from "@mui/icons-material/Menu";
-import NotificationsIcon from "@mui/icons-material/Notifications";
-import ExpandLess from "@mui/icons-material/ExpandLess";
-import ExpandMore from "@mui/icons-material/ExpandMore";
 import { useStore } from "../store/useStore";
 
 function NavBar() {
-  const [theme, toggleTheme] = React.useContext(ThemeContext);
   const toggleMobileMenu = useStore((state) => state.toggleMobileMenu);
   const mobile = useMediaQuery("(max-width:500px)");
   const username = sessionStorage.getItem("username");
@@ -48,22 +37,11 @@ function NavBar() {
             <MenuIcon />
           </IconButton>
           <Typography variant="h6" sx={{ flexGrow: 1 }}>
-            Manager
+            Invoice
           </Typography>
 
-          <IconButton color="inherit">
-            <Badge badgeContent={0} color="error" showZero>
-              <NotificationsIcon />
-            </Badge>
-          </IconButton>
           {mobile ? null : (
             <>
-              <Divider
-                orientation="vertical"
-                variant="middle"
-                flexItem
-                sx={{ marginInline: 2 }}
-              />
               <List>
                 <ListItem disablePadding disableGutters>
                   <ListItemAvatar>
@@ -72,11 +50,6 @@ function NavBar() {
                   <ListItemText
                     primary={`${username}`}
                     secondary={<Typography>{userEmail}</Typography>}
-                  />
-                  <Switch
-                    color="default"
-                    checked={theme}
-                    onChange={() => toggleTheme(!theme)}
                   />
                 </ListItem>
               </List>

@@ -6,8 +6,9 @@ import {
   Box,
   Button,
   Avatar,
+  LinearProgress,
 } from "@mui/material";
-import { Link, Navigate } from "react-router-dom";
+import { Navigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import axios from "axios";
@@ -36,7 +37,7 @@ function LogIn() {
   const {
     register,
     handleSubmit,
-    formState: { errors, isSubmitSuccessful },
+    formState: { errors, isSubmitSuccessful, isSubmitting },
   } = useForm();
 
   return (
@@ -81,6 +82,7 @@ function LogIn() {
             >
               Sign In
             </Button>
+            {isSubmitting ? <LinearProgress /> : null}
           </Box>
         </Box>
         {isSubmitSuccessful && <Navigate to="/" />}

@@ -1,30 +1,27 @@
 import React from "react";
 import { useStore } from "../store/useStore";
+import { ThemeContext } from "../App";
 import { Link } from "react-router-dom";
 import {
   Drawer,
   Toolbar,
   Box,
-  Typography,
   List,
   ListItem,
   ListItemButton,
   ListItemIcon,
   ListItemText,
   Divider,
-  Button,
 } from "@mui/material";
-import AddTaskIcon from "@mui/icons-material/AddTask";
-import PeopleIcon from "@mui/icons-material/People";
 import DescriptionIcon from "@mui/icons-material/Description";
-import SettingsIcon from "@mui/icons-material/Settings";
 import LogoutIcon from "@mui/icons-material/Logout";
-import HomeIcon from "@mui/icons-material/Home";
+import DarkModeIcon from "@mui/icons-material/DarkMode";
 import { Navigate } from "react-router-dom";
 
 const drawerWidth = 240;
 
 function Sidebar() {
+  const [theme, toggleTheme] = React.useContext(ThemeContext);
   const [hasLogOut, setHasLogOut] = React.useState(false);
 
   const { mobileMenu, toggleMobileMenu } = useStore((state) => ({
@@ -37,37 +34,40 @@ function Sidebar() {
       sessionStorage.clear();
       setHasLogOut(true);
     }
+    if (index === 0) {
+      toggleTheme(!theme);
+    }
   };
 
   const drawer = (
     <Box>
       <Toolbar />
       <List sx={{ paddingBlockStart: 3 }}>
-        {[
-          { name: "Home", icon: <HomeIcon />, link: "/" },
-          { name: "Task Manager", icon: <AddTaskIcon />, link: "/tasks" },
-          { name: "Employee Editor", icon: <PeopleIcon />, link: "/employees" },
-          { name: "Invoice Log", icon: <DescriptionIcon />, link: "/clients" },
-        ].map((items, index) => (
-          <Link
-            style={{ textDecoration: "none", color: "inherit" }}
-            to={`${items.link}`}
-          >
-            <ListItem>
-              <ListItemButton>
-                <ListItemIcon>{items.icon}</ListItemIcon>
-                <ListItemText primary={items.name} />
-              </ListItemButton>
-            </ListItem>
-          </Link>
-        ))}
+        {[{ name: "Invoice Log", icon: <DescriptionIcon />, link: "/" }].map(
+          (items) => (
+            <Link
+              style={{ textDecoration: "none", color: "inherit" }}
+              to={`${items.link}`}
+            >
+              <ListItem>
+                <ListItemButton>
+                  <ListItemIcon>{items.icon}</ListItemIcon>
+                  <ListItemText primary={items.name} />
+                </ListItemButton>
+              </ListItem>
+            </Link>
+          )
+        )}
       </List>
 
       <Divider />
 
       <List>
         {[
-          { name: "Settings", icon: <SettingsIcon /> },
+          {
+            name: "Light/Dark Mode",
+            icon: <DarkModeIcon />,
+          },
           { name: "Logout", icon: <LogoutIcon /> },
         ].map((items, index) => (
           <ListItem>
