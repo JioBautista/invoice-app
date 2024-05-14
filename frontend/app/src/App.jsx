@@ -13,11 +13,7 @@ export async function fetchClients() {
   try {
     const token = sessionStorage.getItem("token");
     const headers = { headers: { Authorization: `Bearer ${token}` } };
-    const response = await axios.get(
-      "https://clownfish-app-egma9.ondigitalocean.app/clients/",
-      // "http://127.0.0.1:8000/clients/",
-      headers
-    );
+    const response = await axios.get("http://127.0.0.1:8000/clients/", headers);
     const data = response.data;
     return { data };
   } catch (error) {
@@ -30,8 +26,7 @@ export async function fetchClientInfo({ params }) {
     const token = sessionStorage.getItem("token");
     const headers = { headers: { Authorization: `Bearer ${token}` } };
     const response = await axios.get(
-      `https://clownfish-app-egma9.ondigitalocean.app/clients/${params.clientId}`,
-      // `http://127.0.0.1:8000/clients/${params.clientId}`,
+      `http://127.0.0.1:8000/clients/${params.clientId}`,
       headers
     );
     const clientData = response.data;

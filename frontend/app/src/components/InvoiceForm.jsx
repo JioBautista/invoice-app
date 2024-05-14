@@ -30,7 +30,7 @@ function InvoiceForm({ clientData }) {
   // SUBMIT FORM ELEMENT POST REQUEST
   const onSubmit = (data) => {
     axios
-      .post("https://clownfish-app-egma9.ondigitalocean.app/clients/", data, {
+      .post("http://127.0.0.1:8000/clients/", data, {
         ...headers,
       })
       .then((res) => console.log(res))
@@ -41,11 +41,9 @@ function InvoiceForm({ clientData }) {
   // SUBMIT FORM ELEMENT PUT REQUEST
   const editResource = (data) => {
     axios
-      .put(
-        `https://clownfish-app-egma9.ondigitalocean.app/clients/${clientData.id}/`,
-        data,
-        { ...headers }
-      )
+      .put(`http://127.0.0.1:8000/clients/${clientData.id}/`, data, {
+        ...headers,
+      })
       .then((res) => console.log(res))
       .catch((error) => console.log(error));
 
