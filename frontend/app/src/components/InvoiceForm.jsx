@@ -7,7 +7,7 @@ import ButtonsBox from "../form/ButtonsBox";
 import { useStore } from "../store/useStore";
 import { Drawer, Box, Typography, useMediaQuery } from "@mui/material";
 import { useForm, useFieldArray } from "react-hook-form";
-import { Navigate } from "react-router-dom";
+import { Navigate, useNavigate } from "react-router-dom";
 import axios from "axios";
 
 function InvoiceForm({ clientData }) {
@@ -23,17 +23,16 @@ function InvoiceForm({ clientData }) {
     control,
     name: "items",
   });
+
   const token = sessionStorage.getItem("token");
   const headers = { headers: { Authorization: `Bearer ${token}` } };
 
   // SUBMIT FORM ELEMENT POST REQUEST
   const onSubmit = (data) => {
     axios
-      .post(
-        "https://clownfish-app-egma9.ondigitalocean.app/clients/",
-        data,
-        headers
-      )
+      .post("https://clownfish-app-egma9.ondigitalocean.app/clients/", data, {
+        ...headers,
+      })
       .then((res) => console.log(res))
       .catch((error) => console.log(error));
     console.log(data);
@@ -45,7 +44,7 @@ function InvoiceForm({ clientData }) {
       .put(
         `https://clownfish-app-egma9.ondigitalocean.app/clients/${clientData.id}/`,
         data,
-        headers
+        { ...headers }
       )
       .then((res) => console.log(res))
       .catch((error) => console.log(error));
@@ -60,12 +59,16 @@ function InvoiceForm({ clientData }) {
   };
 
   // STATE MANAGEMENT
-  const { drawer, toggleDrawer, mode } = useStore((state) => ({
-    drawer: state.drawer,
-    toggleDrawer: state.toggleDrawer,
-    mode: state.mode,
-    formModal: state.formModal,
-  }));
+  const { drawer, toggleDrawer, setIsDataFetched, mode } = useStore(
+    (state) => ({
+      drawer: state.drawer,
+      toggleDrawer: state.toggleDrawer,
+      mode: state.mode,
+      formModal: state.formModal,
+      setIsDataFetched: state.setIsDataFetched,
+    })
+  );
+
   return (
     <>
       <Drawer
@@ -110,7 +113,7 @@ function InvoiceForm({ clientData }) {
         </form>
       </Drawer>
 
-      {isSubmitSuccessful ? <Navigate to="/" /> : <ErrorDialog />}
+      {isSubmitSuccessful && <Navigate to="/" />}
     </>
   );
 }

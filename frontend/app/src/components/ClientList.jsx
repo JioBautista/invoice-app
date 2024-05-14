@@ -24,9 +24,12 @@ function ClientList() {
   const mobile = useMediaQuery("(max-width:500px)");
 
   // STATE MANAGEMENT
-  const { toggleDrawer } = useStore((state) => ({
+  const { toggleDrawer, isDataFetched } = useStore((state) => ({
     toggleDrawer: state.toggleDrawer,
+    isDataFetched: state.isDataFetched,
   }));
+
+  React.useEffect(() => {}, [isDataFetched]);
   return (
     <Container sx={{ paddingBlock: 13 }} maxWidth="md">
       <Box sx={{ mb: 5 }}>
