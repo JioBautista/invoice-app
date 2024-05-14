@@ -113,7 +113,7 @@ function InvoiceForm({ clientData }) {
         </form>
       </Drawer>
 
-      {isSubmitSuccessful ? <Navigate to="/" /> : <ErrorDialog />}
+      {isSubmitSuccessful && <Navigate to="/" />}
     </>
   );
 }
