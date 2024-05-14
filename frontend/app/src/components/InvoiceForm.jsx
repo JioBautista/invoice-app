@@ -7,7 +7,7 @@ import ButtonsBox from "../form/ButtonsBox";
 import { useStore } from "../store/useStore";
 import { Drawer, Box, Typography, useMediaQuery } from "@mui/material";
 import { useForm, useFieldArray } from "react-hook-form";
-import { Navigate } from "react-router-dom";
+import { Navigate, useNavigate } from "react-router-dom";
 import axios from "axios";
 
 function InvoiceForm({ clientData }) {
@@ -59,12 +59,16 @@ function InvoiceForm({ clientData }) {
   };
 
   // STATE MANAGEMENT
-  const { drawer, toggleDrawer, mode } = useStore((state) => ({
-    drawer: state.drawer,
-    toggleDrawer: state.toggleDrawer,
-    mode: state.mode,
-    formModal: state.formModal,
-  }));
+  const { drawer, toggleDrawer, setIsDataFetched, mode } = useStore(
+    (state) => ({
+      drawer: state.drawer,
+      toggleDrawer: state.toggleDrawer,
+      mode: state.mode,
+      formModal: state.formModal,
+      setIsDataFetched: state.setIsDataFetched,
+    })
+  );
+
   return (
     <>
       <Drawer
