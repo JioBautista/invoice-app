@@ -218,13 +218,13 @@ function BillTo(props) {
 
       {/* CREATED AT */}
       <Grid item xs={6}>
-        <DateField
+        <TextField
           name="createdAt"
           label="Invoice Date"
           format="YYYY-MM-DD"
           size="small"
           margin="normal"
-          defaultValue={clientData ? dayjs(clientData.created_at) : null}
+          defaultValue={clientData ? clientData.created_at : null}
           {...register("created_at", { required: true })}
           fullWidth
         />
@@ -233,13 +233,13 @@ function BillTo(props) {
 
       {/* PAYMENT DUE */}
       <Grid item xs={6}>
-        <DateField
+        <TextField
           name="paymentDue"
           label="Invoice Due"
           format="YYYY-MM-DD"
           size="small"
           margin="normal"
-          defaultValue={clientData ? dayjs(clientData.payment_due) : null}
+          defaultValue={clientData ? clientData.payment_due : null}
           {...register("payment_due", { required: true })}
           fullWidth
         />

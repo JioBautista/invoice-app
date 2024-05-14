@@ -1,7 +1,10 @@
 import React from "react";
 import axios from "axios";
 import InvoiceForm from "./InvoiceForm";
-import { Link, useLoaderData } from "react-router-dom";
+import Status from "../client-info/Status";
+import Details from "../client-info/Details";
+import Total from "../client-info/Total";
+import { useLoaderData } from "react-router-dom";
 import { useStore } from "../store/useStore";
 import {
   useMediaQuery,
@@ -12,23 +15,22 @@ import {
   ButtonGroup,
   Typography,
   Stack,
-  Grid,
-  IconButton,
-  Dialog,
-  DialogTitle,
-  DialogContent,
-  DialogContentText,
-  DialogActions,
   Chip,
 } from "@mui/material";
-import DeleteIcon from "@mui/icons-material/Delete";
 import DeleteDialog from "./DeleteDialog";
+import ItemDetails from "../client-info/ItemDetails";
 
 function ClientInfo() {
   // MEDIA QUERY FOR MOBILE
   const mobile = useMediaQuery("(max-width:600px)");
+
   // FETCHED DATA FROM APP COMPONENT
   const { clientData } = useLoaderData();
+
+  const paperStyles = {
+    elevation: 3,
+    sx: { padding: mobile ? 2 : 5, mb: 3 },
+  };
 
   // DELETE RESOURCE
   const deleteResource = () => {
@@ -60,173 +62,35 @@ function ClientInfo() {
         console.log(err);
       });
   };
+
   // STATE MANAGEMENT
-  const { toggleDelete, toggleDrawer } = useStore((state) => ({
+  const { toggleDelete } = useStore((state) => ({
     toggleDelete: state.toggleDelete,
-    toggleDrawer: state.toggleDrawer,
-    deleteItemModal: state.deleteItemModal,
   }));
 
   return (
     <Container sx={{ paddingBlock: 12 }} maxWidth="md">
-      <Paper elevation={3} sx={{ padding: mobile ? 2 : 5, mb: 2 }}>
-        <Stack
-          direction={{ xs: "column", sm: "row" }}
-          alignItems={"center"}
-          justifyContent={"space-between"}
-          gap={4}
-        >
-          <Box display={"flex"} alignItems={"center"}>
-            <Typography variant="subtitle1" sx={{ mr: 1 }}>
-              STATUS:
-            </Typography>
-            <Chip
-              variant={clientData.status === "paid" ? "filled" : "outlined"}
-              color={clientData.status === "pending" ? "error" : "success"}
-              label={clientData.status.toUpperCase()}
-              size="medium"
-            />
-          </Box>
-          <ButtonGroup variant="contained">
-            <Button onClick={() => toggleDrawer("edit")}>Edit</Button>
-            <Button onClick={toggleDelete}>Delete</Button>
-          </ButtonGroup>
-        </Stack>
+      <Paper {...paperStyles}>
+        <Status clientData={clientData} />
       </Paper>
 
       {/* CLIENT DETAILS */}
-      <Paper elevation={3} sx={{ padding: mobile ? 2 : 5 }}>
-        <Grid container spacing={3} sx={{ mb: 10 }}>
-          {/* INVOICE NUMBER */}
-          <Grid item xs={12} sm={6}>
-            <Typography variant="h6">#{clientData.invoice_num}</Typography>
-            <Typography variant="subtitle1" fontWeight={600}>
-              {clientData.description}
-            </Typography>
-          </Grid>
-
-          {/* SENDER ADRESS */}
-          <Grid item xs={12} sm={6} textAlign={mobile ? "left" : "right"}>
-            {clientData && clientData.sender_address ? (
-              <>
-                <Typography>{clientData.sender_address.street}</Typography>
-                <Typography>{clientData.sender_address.city}</Typography>
-                <Typography>{clientData.sender_address.postCode}</Typography>
-                <Typography>{clientData.sender_address.country}</Typography>
-              </>
-            ) : null}
-          </Grid>
-
-          {/* CREATED AT */}
-          <Grid item xs={6} sm={2}>
-            <Typography>Invoice Date</Typography>
-            <Typography fontWeight={"bold"}>{clientData.created_at}</Typography>
-          </Grid>
-
-          {/* PAYMENT DUE */}
-          <Grid item xs={6} sm={3}>
-            <Typography>Payment Due</Typography>
-            <Typography fontWeight={"bold"}>
-              {clientData.payment_due}
-            </Typography>
-          </Grid>
-
-          {/* CLIENT ADDRESS */}
-          <Grid item xs={12} sm={3}>
-            <Typography>Bill To</Typography>
-            <Typography fontWeight={"bold"}>
-              {clientData.client_name}
-            </Typography>
-            {clientData && clientData.client_address ? (
-              <>
-                <Typography>{clientData.client_address.street}</Typography>
-                <Typography>{clientData.client_address.city}</Typography>
-                <Typography>{clientData.client_address.postCode}</Typography>
-                <Typography>{clientData.client_address.country}</Typography>
-              </>
-            ) : null}
-          </Grid>
-
-          {/* CLIENT EMAIL */}
-          <Grid item xs={12} sm={4}>
-            <Typography>Sent to</Typography>
-            <Typography fontWeight={"bold"}>
-              {clientData.client_email}
-            </Typography>
-          </Grid>
-        </Grid>
+      <Paper {...paperStyles}>
+        <Details clientData={clientData} mobile={mobile} />
 
         {/* ITEMS */}
-        <Paper elevation={0}>
-          <Box
-            sx={{
-              padding: mobile ? 2 : 4,
-              borderTopLeftRadius: "0.5rem",
-              borderTopRightRadius: "0.5rem",
-            }}
-          >
-            {/* ITEMS GRID */}
-            <Grid container spacing={mobile ? 1 : 2} alignItems={"center"}>
-              <Grid item xs={7}>
-                <Typography>Item Name</Typography>
-              </Grid>
-              <Grid item xs={5}>
-                <Typography>Total</Typography>
-              </Grid>
-              {clientData &&
-                clientData.items.map((items) => (
-                  <React.Fragment key={items.id}>
-                    <Grid item xs={6} sm={4}>
-                      <Typography fontWeight={"bold"}>{items.name}</Typography>
-                      <Typography fontWeight={"bold"}>
-                        {items.quantity} x {items.price}
-                      </Typography>
-                    </Grid>
-                    <Grid item xs={3} sm={4}>
-                      <Typography fontWeight={"bold"} textAlign={"right"}>
-                        {items.price}
-                      </Typography>
-                    </Grid>
-                    <Grid item xs={3} sm={4}>
-                      <Link
-                        to={`/${clientData.id}/`}
-                        style={{ textDecoration: "none" }}
-                      >
-                        <IconButton
-                          onClick={() => deleteItemResource(items.id)}
-                        >
-                          <DeleteIcon color="error" />
-                        </IconButton>
-                      </Link>
-                    </Grid>
-                  </React.Fragment>
-                ))}
-            </Grid>
-          </Box>
-          <Box
-            bgcolor={"#373B53"}
-            sx={{
-              padding: mobile ? 2 : 4,
-              borderBottomLeftRadius: "0.5rem",
-              borderBottomRightRadius: "0.5rem",
-            }}
-          >
-            <Stack
-              direction={"row"}
-              justifyContent={"space-between"}
-              alignItems={"center"}
-              color={"white"}
-            >
-              <Typography variant={mobile ? "h6" : "h5"}>Total</Typography>
-              <Typography variant={mobile ? "h6" : "h5"}>
-                {clientData.total}
-              </Typography>
-            </Stack>
-          </Box>
+        <Paper
+          elevation={0}
+          sx={{
+            borderBottomLeftRadius: "0.5rem",
+            borderBottomRightRadius: "0.5rem",
+          }}
+        >
+          <ItemDetails clientData={clientData} mobile={mobile} />
+          <Total clientData={clientData} mobile={mobile} />
         </Paper>
       </Paper>
 
-      {/* DRAWER COMPONENT */}
       <InvoiceForm clientData={clientData} />
       <DeleteDialog />
     </Container>

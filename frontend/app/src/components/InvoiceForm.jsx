@@ -23,17 +23,16 @@ function InvoiceForm({ clientData }) {
     control,
     name: "items",
   });
+
   const token = sessionStorage.getItem("token");
   const headers = { headers: { Authorization: `Bearer ${token}` } };
 
   // SUBMIT FORM ELEMENT POST REQUEST
   const onSubmit = (data) => {
     axios
-      .post(
-        "https://clownfish-app-egma9.ondigitalocean.app/clients/",
-        data,
-        headers
-      )
+      .post("https://clownfish-app-egma9.ondigitalocean.app/clients/", data, {
+        ...headers,
+      })
       .then((res) => console.log(res))
       .catch((error) => console.log(error));
     console.log(data);
@@ -45,7 +44,7 @@ function InvoiceForm({ clientData }) {
       .put(
         `https://clownfish-app-egma9.ondigitalocean.app/clients/${clientData.id}/`,
         data,
-        headers
+        { ...headers }
       )
       .then((res) => console.log(res))
       .catch((error) => console.log(error));
