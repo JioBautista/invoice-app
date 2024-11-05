@@ -56,7 +56,6 @@ function LogIn() {
           <Typography variant="h5">Sign In</Typography>
           <Box
             component="form"
-            noValidate
             sx={{ mt: 1 }}
             onSubmit={handleSubmit(onSubmit)}
           >
